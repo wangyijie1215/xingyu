@@ -14,6 +14,19 @@
 
 ---
 
+## 截图
+
+| | | |
+|---|---|---|
+| ![首页](docs-shots/home.jpg) | ![模拟手机](docs-shots/phone.jpg) | ![角色扮演](docs-shots/chat.jpg) |
+| **首页** · 今日状态与最近对话 | **模拟手机** · 18 个内置应用 | **角色扮演** · 有动作与神态描写 |
+| ![神社](docs-shots/shrine.jpg) | ![漂流瓶](docs-shots/bottle.jpg) | ![通话](docs-shots/call.jpg) |
+| **神社** · 每日一签，她为你解签 | **漂流瓶** · 43 条原创文案 | **语音通话** · 她真的会说话 |
+| ![生图](docs-shots/imagen.jpg) | ![YIJIE](docs-shots/yijie.jpg) | |
+| **生图** · 本地 ComfyUI 出图 | **YIJIE 助手** · 15 个技能 | |
+
+---
+
 ## 它是什么
 
 不是"ChatGPT 套个角色卡壳"，而是让角色**有自己的生活**：
@@ -46,7 +59,7 @@ App 里有一个**模拟手机**——微信风的聊天、朋友圈、角色库
 ### 1. 装 APK
 
 ```
-dist/EchoFlow-v4.0-语音输入.apk
+dist/EchoFlow-v4.1-开源版.apk
 ```
 
 需要 Android 8.0+（minSdk 26）。
@@ -196,8 +209,28 @@ shots-android/                   模拟器验证截图
 
 ## 许可
 
-代码供学习参考。内置角色形象、文案均为本项目原创。
+[MIT](LICENSE) —— 可自由使用、修改、分发，保留版权声明即可。
 
-第三方依赖：
-- [edge-tts](https://github.com/rany2/edge-tts)（微软在线语音，需联网）
-- [Pony Diffusion V6 XL](https://civitai.com/models/257749)（生图模型，自行下载）
+内置角色形象与全部文案为本项目原创，随 MIT 许可一并提供。
+
+**第三方依赖**（各有自己的条款，不在 MIT 范围内）：
+
+| 依赖 | 说明 |
+|---|---|
+| [edge-tts](https://github.com/rany2/edge-tts) | 微软在线语音合成，需联网 |
+| [Pony Diffusion V6 XL](https://civitai.com/models/257749) | 生图模型，自行下载 |
+| [Pollinations](https://pollinations.ai) | 免费生图服务 |
+| 阿里云百炼 | CosyVoice / paraformer |
+
+---
+
+## 参与
+
+欢迎提 Issue 和 PR。几个我知道但还没做的地方：
+
+- `PhoneAppActivity` 986 行，塞了五个 app，该拆
+- 老配置体系 `ChatStore` 的调用点没迁移完（靠双写维持一致）
+- 桌宠不避让桌面图标，重启后不自动恢复
+- 语音识别只验证了权限流程，**真机效果未测**（模拟器没有麦克风）
+
+提交前请确认 `gradle assembleDebug` 能过 —— CI 也会跑一遍。

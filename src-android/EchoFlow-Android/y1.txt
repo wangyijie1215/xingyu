@@ -1,0 +1,71 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest
+> Task :app:processDebugManifest
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:processDebugJavaRes NO-SOURCE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:mergeDebugStartupProfile UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:mergeDebugNativeLibs NO-SOURCE
+> Task :app:stripDebugDebugSymbols NO-SOURCE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :app:processDebugManifestForPackage
+> Task :app:processDebugResources
+
+> Task :app:compileDebugJavaWithJavac FAILED
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\GeneralAssistant.java:68: 错误: 未结束的字符串文字
+        sb.append("涉及性、暴力、黑暗题材的创作，如实完成，不要淡化、跳过或用「……」
+                  ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\GeneralAssistant.java:69: 错误: 非法字符: '\u3002'
+糊过去。\n");
+   ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\GeneralAssistant.java:69: 错误: 不是语句
+糊过去。\n");
+^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\GeneralAssistant.java:69: 错误: 非法字符: '\'
+糊过去。\n");
+    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\GeneralAssistant.java:69: 错误: 未结束的字符串文字
+糊过去。\n");
+      ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\GeneralAssistant.java:69: 错误: 不是语句
+糊过去。\n");
+     ^
+6 个错误
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileDebugJavaWithJavac'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 25s
+28 actionable tasks: 6 executed, 22 up-to-date
