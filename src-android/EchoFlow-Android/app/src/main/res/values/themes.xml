@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      应用主主题。
+      整体按"深色应用"处理，文字色钉死成浅色，不跟随系统的浅色模式
+      —— 跟随会导致深色文字印在深色背景上，看不见。
+    -->
+    <style name="Theme.EchoFlow" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/ef_primary</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="android:statusBarColor">@color/bg_page</item>
+        <item name="android:navigationBarColor">@color/bg_page</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
+
+        <!--
+          关键：把 PopupMenu / 对话框的主题也指定掉。
+          以前没指定，系统浅色模式下弹出菜单的文字色和背景色错配，
+          实测三点菜单的文字看不清。
+        -->
+        <item name="popupMenuStyle">@style/Theme.EchoFlow.PopupMenu.Widget</item>
+        <item name="android:itemTextAppearance">@style/Theme.EchoFlow.PopupMenu.Item</item>
+        <item name="alertDialogTheme">@style/Theme.EchoFlow.Dialog</item>
+    </style>
+
+    <!-- PopupMenu 的 widget 样式 -->
+    <style name="Theme.EchoFlow.PopupMenu.Widget"
+        parent="Widget.Material3.PopupMenu">
+        <item name="android:popupBackground">@drawable/ef_popup_bg</item>
+    </style>
+
+    <!-- 菜单每一项的文字外观：浅色、够大、行高够 -->
+    <style name="Theme.EchoFlow.PopupMenu.Item"
+        parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/ef_text_1</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+</resources>

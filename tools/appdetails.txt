@@ -1,0 +1,45 @@
+    /** 音乐：点进去看她为什么在听这首（用本地模型生成一句） */
+    private void showMusicDetail(String name, String cardId) {
+        Schedule.Now now = Schedule.now(Schedule.load(this, cardId));
+        EmotionState emo = CharacterStateStore.loadEmotion(this, cardId);
+        String[] songs = songsFor(cardId);
+        StringBuilder sb = new StringBuilder();
+        sb.append("此刻：").append(now.what == null ? "空闲" : now.what).append("\n");
+        sb.append("情绪：").append(emo == null || emo.mood == null ? "平静" : emo.mood).append("\n\n");
+        sb.append("歌单：\n");
+        for (String s : songs) {
+            sb.append("♪ ").append(s).append("\n");
+        }
+        sb.append("\n（播放功能还没接 —— 这里只是她的歌单。" +
+                "要真的放音得接一个音频源，那是另一件事。）");
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle(name + " 在听")
+                .setMessage(sb.toString())
+                .setPositiveButton("好", null)
+                .show();
+    }
+
+    /** 相册：点开放大看 */
+    private void showPhoto(String name, String cardId, int drawableRes) {
+        android.widget.ImageView big = new android.widget.ImageView(this);
+        big.setAdjustViewBounds(true);
+        big.setScaleType(android.widget.ImageView.ScaleType.FIT_CENTER);
+        if (drawableRes == 0) {
+            android.graphics.Bitmap bmp = CardStore.loadAvatar(this, cardId);
+            if (bmp != null) {
+                big.setImageBitmap(bmp);
+            }
+        } else {
+            big.setImageResource(drawableRes);
+        }
+        int pad = dp(8);
+        big.setPadding(pad, pad, pad, pad);
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle(name + " 的照片")
+                .setView(big)
+                .setPositiveButton("关", null)
+                .show();
+    }
+

@@ -1,0 +1,70 @@
+plugins {
+    id 'com.android.application'
+}
+
+// ── 签名凭证从 keystore.properties 读 ────────────────
+//
+// 原来密码是硬编码在这个文件里的，而这个文件会进 git ——
+// 等于把密钥库密码公开了。抽到 keystore.properties（已在 .gitignore 里）。
+//
+// 没有这个文件时不做 release 签名，debug 构建不受影响。
+def keystoreProps = new Properties()
+def keystoreFile = rootProject.file('keystore.properties')
+def hasKeystore = keystoreFile.exists()
+if (hasKeystore) {
+    keystoreProps.load(new FileInputStream(keystoreFile))
+}
+
+android {
+    namespace 'com.echoflow.chat'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.echoflow.chat"
+        minSdk 26
+        targetSdk 34
+        versionCode 6
+        versionName "3.6.0"
+    }
+
+    signingConfigs {
+        // 自签名 release：便于直接安装分发（非应用商店发布用）
+        release {
+            if (hasKeystore) {
+                storeFile file(keystoreProps['storeFile'])
+                storePassword keystoreProps['storePassword']
+                keyAlias keystoreProps['keyAlias']
+                keyPassword keystoreProps['keyPassword']
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if (hasKeystore) {
+                signingConfig signingConfigs.release
+            }
+        }
+        debug {
+            // 没有 keystore.properties 时用 debug 签名，不要在这里硬绑 release
+            if (hasKeystore) {
+                signingConfig signingConfigs.release
+            }
+            // 仅供本地验证：允许 run-as 注入测试数据
+            debuggable true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+}

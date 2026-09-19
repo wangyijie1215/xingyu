@@ -1,0 +1,40 @@
+{
+  "color": [
+    { "name": "ef_night_900",     "value": "#07070D" },
+    { "name": "ef_night_800",     "value": "#0B0B14" },
+    { "name": "ef_night_700",     "value": "#12121E" },
+    { "name": "ef_night_600",     "value": "#1A1A28" },
+    { "name": "ef_night_500",     "value": "#242438" },
+
+    { "name": "ef_primary",       "value": "#9B7BFF" },
+    { "name": "ef_primary_light", "value": "#C7A8FF" },
+    { "name": "ef_primary_deep",  "value": "#7A54F0" },
+    { "name": "ef_primary_16",    "value": "#2A9B7BFF" },
+    { "name": "ef_primary_42",    "value": "#6B9B7BFF" },
+
+    { "name": "ef_bond",          "value": "#FFA657" },
+    { "name": "ef_bond_light",    "value": "#FFC78A" },
+    { "name": "ef_bond_14",       "value": "#24FFA657" },
+
+    { "name": "ef_emotion",       "value": "#FF9BB0" },
+    { "name": "ef_emotion_14",    "value": "#24FF9BB0" },
+
+    { "name": "ef_memory",        "value": "#7FE0C4" },
+    { "name": "ef_memory_14",     "value": "#247FE0C4" },
+
+    { "name": "ef_voice",         "value": "#79D3F5" },
+    { "name": "ef_voice_14",      "value": "#2479D3F5" },
+
+    { "name": "ef_growth",        "value": "#B9E07F" },
+
+    { "name": "ef_text_1",        "value": "#F4F2FF" },
+    { "name": "ef_text_2",        "value": "#ABA6C6" },
+    { "name": "ef_text_3",        "value": "#6F6A8B" },
+
+    { "name": "ef_hairline",      "value": "#14FFFFFF" },
+    { "name": "ef_glass",         "value": "#0EFFFFFF" },
+    { "name": "ef_glass_2",       "value": "#17FFFFFF" },
+    { "name": "ef_track",         "value": "#1AFFFFFF" },
+    { "name": "ef_mask",          "value": "#99040409" }
+  ]
+}

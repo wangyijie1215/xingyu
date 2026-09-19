@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 模拟手机：状态栏（真实时间 + 信号 + 电量） -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="28dp"
+    android:background="#F7F7F7"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="14dp">
+
+    <TextView
+        android:id="@+id/sb_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12:00"
+        android:textColor="#181818"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/sb_carrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5G"
+        android:textColor="#181818"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/sb_signal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="▂▄▆█"
+        android:textColor="#181818"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/sb_battery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="100"
+        android:textColor="#181818"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/sb_battery_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="▮"
+        android:textColor="#181818"
+        android:textSize="11sp" />
+</LinearLayout>

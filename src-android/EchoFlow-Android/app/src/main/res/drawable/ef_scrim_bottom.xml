@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 立绘底部渐隐：让大图无缝过渡到页面底色 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="270"
+        android:startColor="#00101018"
+        android:centerColor="#66101018"
+        android:endColor="@color/ef_night_800"
+        android:type="linear" />
+</shape>

@@ -1,0 +1,61 @@
+    /**
+     * 挂上角色的 Q 版形象；没有就先用圆形头像兜底，同时后台生成 Q 版。
+     */
+    private void attachAvatar() {
+        Bitmap q = PetAvatar.load(this, cardId);
+        if (q != null) {
+            renderer.setBitmap(q);
+            return;
+        }
+        // 兜底：角色头像裁圆 —— 至少不会是一只空球
+        Bitmap raw = CardStore.loadAvatar(this, cardId);
+        if (raw != null) {
+            renderer.setBitmap(circleCrop(raw));
+        }
+        // 后台生成真正的 Q 版图
+        CharacterCard c = CardStore.getCard(this, cardId);
+        PetAvatar.generate(this, c, new PetAvatar.GenerateCallback() {
+            @Override
+            public void onDone(Bitmap bmp) {
+                handler.post(() -> {
+                    renderer.setBitmap(bmp);
+                    redraw(squashY);
+                });
+            }
+
+            @Override
+            public void onError(String msg) {
+                android.util.Log.w(TAG, "Q版生成失败: " + msg);
+                // 失败就一直用头像兜底，不再重试（避免反复请求）
+            }
+        });
+    }
+
+    /** 把方形头像裁成圆 */
+    private Bitmap circleCrop(Bitmap src) {
+        int side = Math.min(src.getWidth(), src.getHeight());
+        Bitmap out = Bitmap.createBitmap(side, side, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(out);
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        BitmapShader sh = new BitmapShader(src, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+        Matrix m = new Matrix();
+        m.setScale((float) side / src.getWidth(), (float) side / src.getHeight());
+        sh.setLocalMatrix(m);
+        p.setShader(sh);
+        c.drawCircle(side / 2f, side / 2f, side / 2f, p);
+        return out;
+    }
+
+    /** 重绘悬浮窗内容 */
+    private void redraw(float squash) {
+        if (petView == null) {
+            return;
+        }
+        int w = petView.getWidth() > 0 ? petView.getWidth() : (int) size;
+        int h = petView.getHeight() > 0 ? petView.getHeight() : (int) size;
+        Bitmap bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(bmp);
+        renderer.draw(c, squash, PetBall.colorFor(cardId), grounded);
+        petView.setImageBitmap(bmp);
+    }
+

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 手机壁纸：深紫夜空 + 底部微光，与「星轨」设计系统同色系 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:startColor="#241540"
+                android:centerColor="#3A2560"
+                android:endColor="#0E0A18"
+                android:type="linear" />
+        </shape>
+    </item>
+    <item android:gravity="top">
+        <shape android:shape="oval">
+            <solid android:color="#33E8C87A" />
+            <size android:width="220dp" android:height="220dp" />
+        </shape>
+    </item>
+</layer-list>

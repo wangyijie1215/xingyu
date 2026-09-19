@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 微信风：自己气泡（微信绿） -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#95EC69" />
+    <corners
+        android:topLeftRadius="8dp"
+        android:topRightRadius="4dp"
+        android:bottomLeftRadius="8dp"
+        android:bottomRightRadius="4dp" />
+</shape>

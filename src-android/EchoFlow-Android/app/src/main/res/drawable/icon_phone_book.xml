@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 世界书 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp" android:height="48dp"
+    android:viewportWidth="48" android:viewportHeight="48">
+    <path android:fillColor="#8D6E63"
+        android:pathData="M10,2 L38,2 A8,8 0 0 1 46,10 L46,38 A8,8 0 0 1 38,46 L10,46 A8,8 0 0 1 2,38 L2,10 A8,8 0 0 1 10,2 Z" />
+    <path android:fillColor="#FFFFFF" android:pathData="M12,12 L23,12 L23,36 L12,36 Z" />
+    <path android:fillColor="#F5F0E8" android:pathData="M25,12 L36,12 L36,36 L25,36 Z" />
+    <path android:fillColor="#8D6E63" android:pathData="M15,17 L20,17 L20,19 L15,19 Z" />
+    <path android:fillColor="#8D6E63" android:pathData="M15,22 L20,22 L20,24 L15,24 Z" />
+    <path android:fillColor="#8D6E63" android:pathData="M28,17 L33,17 L33,19 L28,19 Z" />
+    <path android:fillColor="#8D6E63" android:pathData="M28,22 L33,22 L33,24 L28,24 Z" />
+</vector>

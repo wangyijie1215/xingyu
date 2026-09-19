@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  顶部「夜色天幕」。
+  设计意图：不做纯色块，而是给页面"空间感"——
+  左上角一盏灯（主色光晕），右上远处一点暖光，底部渐隐到页面底色。
+  这样标题、卡片压上去时是有纵深的，而不是"贴在一块色板上"。
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:startColor="@color/ef_night_500"
+                android:centerColor="@color/ef_night_600"
+                android:endColor="@color/ef_night_800"
+                android:type="linear" />
+        </shape>
+    </item>
+
+    <!-- 左上主色光晕 -->
+    <item android:gravity="top|start" android:top="-90dp" android:left="-70dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="150dp"
+                android:startColor="#3D9B7BFF"
+                android:centerColor="#149B7BFF"
+                android:endColor="#009B7BFF" />
+            <size android:width="300dp" android:height="300dp" />
+        </shape>
+    </item>
+
+    <!-- 右上暖光 -->
+    <item android:gravity="top|end" android:top="-110dp" android:right="-100dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="130dp"
+                android:startColor="#26E8C87A"
+                android:endColor="#00E8C87A" />
+            <size android:width="260dp" android:height="260dp" />
+        </shape>
+    </item>
+
+    <!-- 底部渐隐，让下方卡片无缝衔接 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:startColor="#000D0A18"
+                android:centerColor="#800D0A18"
+                android:endColor="@color/bg_page"
+                android:type="linear" />
+        </shape>
+    </item>
+</layer-list>

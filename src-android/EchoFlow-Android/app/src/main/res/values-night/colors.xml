@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="brand_blue">#4C9AFF</color>
+    <color name="bg_page">#111111</color>
+    <color name="bg_ai_bubble">#1C1C1E</color>
+    <color name="text_primary">#E8EAED</color>
+    <color name="text_secondary">#9AA0A6</color>
+    <color name="divider">#2C2C2E</color>
+</resources>

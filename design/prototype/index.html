@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EchoFlow · 沉浸式 AI 角色陪伴平台 — UI 设计原型</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="shrine.css">
+</head>
+<body>
+
+<!-- ==================== 左侧设计说明 ==================== -->
+<aside class="legend">
+  <h1>EchoFlow <span>星轨 · UI 设计原型</span></h1>
+  <p>HarmonyOS NEXT 原生客户端重制版高保真原型。视觉语言原创，不复制任何现有产品素材。内置角色为原有「少女骑士 爱丽丝」。</p>
+  <div class="swatches">
+    <i style="background:#0B0B14"></i><i style="background:#1A1A28"></i>
+    <i style="background:#9B7BFF"></i><i style="background:#FFA657"></i>
+    <i style="background:#FF9BB0"></i><i style="background:#7FE0C4"></i>
+    <i style="background:#79D3F5"></i>
+  </div>
+  <div class="jump" id="jump"></div>
+  <div class="tokens">
+    <code>--violet-500</code> 星轨紫 #9B7BFF · 主色<br>
+    <code>--amber-500</code> 灯火橙 #FFA657 · 羁绊<br>
+    <code>--rose-400</code> 蔷薇 #FF9BB0 · 情绪<br>
+    <code>--mint-400</code> 薄荷 #7FE0C4 · 记忆<br>
+    <code>--cyan-400</code> 天青 #79D3F5 · 语音<br>
+    圆角 8/12/16/20/28/999 · 字阶 11→30 · 动效 260ms cubic-bezier(.22,.61,.36,1)
+  </div>
+</aside>
+
+<!-- ==================== 手机 ==================== -->
+<div class="phone">
+  <div class="statusbar">
+    <span>20:39</span>
+    <span class="sb-right">▮▮▮ ⌾ ▰</span>
+  </div>
+
+  <div class="viewport" id="viewport">
+
+  <!-- ============ 1. 首页 · 陪伴 ============ -->
+  <section class="screen active" data-screen="home" data-title="陪伴">
+    <div class="topbar">
+      <div class="grow">
+        <div class="eyebrow">2026年9月17日 周四 · 夜</div>
+        <div class="h1">晚上好，旅人</div>
+      </div>
+      <button class="iconbtn bare" title="全局搜索">🔍</button>
+      <button class="iconbtn bare" title="通知">🔔</button>
+    </div>
+
+    <div class="proactive" data-go="chat">
+      <span class="dot"></span>
+      <div class="grow">
+        <div class="row tight">
+          <b style="font-size:14px">爱丽丝</b>
+          <span class="chip amber" style="padding:2px 7px">主动消息</span>
+          <span style="font-size:11px;color:var(--text-3);margin-left:auto">3 小时前</span>
+        </div>
+        <div style="font-size:13px;color:var(--text-2);line-height:1.6;margin-top:5px">
+          今天下雨了。突然想起上次和你聊到很晚的那天。你今天呢？
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="hero-card" data-go="charhome">
+        <img src="assets/alice-portrait.jpg" alt="爱丽丝 立绘">
+        <div class="scrim"></div>
+        <div class="body">
+          <div class="name-row">
+            <span class="name">爱丽丝</span>
+            <span class="chip violet">熟悉的骑士</span>
+          </div>
+          <div class="line">与你相识 <b>38</b> 天 · 羁绊 <b>72</b> · 此刻情绪「期待」</div>
+          <div class="row tight" style="margin-top:9px">
+            <button class="btn sm" data-go="chat">继续聊天</button>
+            <button class="btn sm ghost" data-go="charhome">角色主页</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="shrine-card gold" data-go="shrine">
+        <div class="row">
+          <div style="width:52px;height:52px;border-radius:14px;flex:0 0 auto;border:1px solid rgba(232,200,122,.35);
+                      background:linear-gradient(150deg,#3A2A44,#1E1630);display:grid;place-items:center;
+                      font-size:22px;color:var(--shrine-gold)">⛩</div>
+          <div class="grow" style="margin-left:12px">
+            <div class="row tight">
+              <b style="font-size:15px">银月神社 · 今日运势</b>
+              <span class="chip amber" style="padding:2px 7px">吉</span>
+            </div>
+            <div class="sub" style="margin-top:4px">连续参拜 5 天 · 今日缘签 大吉 · 她陪你去</div>
+          </div>
+          <div class="seal" style="width:44px;height:44px;font-size:11px">已<br>参拜</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>即将到来的日子</h3><a>纪念日 ›</a></div>
+      <div class="anniv">
+        <div class="anniv-card">
+          <div class="d">2<small>天</small></div>
+          <div class="t">相识 40 天</div>
+          <div class="s">9月19日 · 她说想一起过</div>
+        </div>
+        <div class="anniv-card">
+          <div class="d">8<small>天</small></div>
+          <div class="t">中秋</div>
+          <div class="s">9月25日 · 已列入主动消息</div>
+        </div>
+        <div class="anniv-card">
+          <div class="d">12<small>天</small></div>
+          <div class="t">她的生日</div>
+          <div class="s">9月29日 · 银月骑士团授勋日</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>我的角色</h3><a data-go="discover">角色库 · 12</a></div>
+      <div class="rail">
+        <div class="mini-char" data-go="charhome">
+          <div class="pic"><img src="assets/alice-portrait.jpg" alt=""><span class="badge chip amber">72</span></div>
+          <div class="meta"><div class="nm">爱丽丝</div><div class="tg">少女骑士 · 熟悉</div></div>
+        </div>
+        <div class="mini-char">
+          <div class="pic" style="background:linear-gradient(160deg,#2a2140,#3a2a4f)"><img src="assets/rin-portrait.jpg" alt="" onerror="this.remove()"><span class="badge chip violet">58</span></div>
+          <div class="meta"><div class="nm">凛</div><div class="tg">剑道部 · 信赖</div></div>
+        </div>
+        <div class="mini-char">
+          <div class="pic" style="background:linear-gradient(160deg,#1d2a33,#26404a)"><img src="assets/hakuyo-portrait.jpg" alt="" onerror="this.remove()"><span class="badge chip mint">31</span></div>
+          <div class="meta"><div class="nm">白夜</div><div class="tg">天文学家 · 初识</div></div>
+        </div>
+        <div class="mini-char">
+          <div class="pic" style="background:linear-gradient(160deg,#3a2630,#4a2f38)"><img src="assets/rocco-portrait.jpg" alt="" onerror="this.remove()"><span class="badge chip rose">14</span></div>
+          <div class="meta"><div class="nm">洛可</div><div class="tg">机械师 · 陌生</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>今晚的世界</h3><a data-go="moments">朋友圈</a></div>
+      <div class="card raised">
+        <div class="row">
+          <img class="avatar sm" src="assets/alice-portrait.jpg" alt="">
+          <div class="grow">
+            <div style="font-size:14px;font-weight:700;color:var(--violet-400)">爱丽丝</div>
+            <div style="font-size:11px;color:var(--text-3)">2 小时前 · 小雨 18℃</div>
+          </div>
+          <span class="chip cyan">期待</span>
+        </div>
+        <p style="font-size:14px;line-height:1.7;margin-top:10px">
+          巡夜结束，靴子上全是泥。不过雨落在盾牌上的声音还挺好听的……有点像你说的那种白噪音。
+        </p>
+        <img src="assets/rainy-night.jpg" alt="" style="width:100%;border-radius:14px;margin-top:10px;border:1px solid var(--hairline)">
+        <div class="row tight" style="margin-top:10px;color:var(--text-3);font-size:11px">
+          <span>♡ 12</span><span>💬 3</span><span style="margin-left:auto">已生成 · 角色照片</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. 角色主页 ============ -->
+  <section class="screen flush" data-screen="charhome" data-title="角色主页">
+    <div class="profile-hero">
+      <img src="assets/alice-portrait.jpg" alt="爱丽丝 立绘">
+      <div class="scrim"></div>
+      <div class="nav">
+        <button class="iconbtn glass" data-back="home">‹</button>
+        <div class="row tight">
+          <button class="iconbtn glass" title="分享角色卡">↗</button>
+          <button class="iconbtn glass" data-go="settings">⋯</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-body">
+      <div class="profile-id">
+        <div class="aura"><img class="avatar" src="assets/alice-portrait.jpg" alt=""></div>
+        <div class="grow" style="padding-bottom:6px">
+          <div class="row tight">
+            <span class="h2">爱丽丝</span>
+            <span class="chip ghost" style="padding:2px 7px">v1.2</span>
+          </div>
+          <div class="sub" style="margin-top:4px">少女骑士 · 银月骑士团见习骑士</div>
+        </div>
+        <div class="ring">
+          <svg width="62" height="62" viewBox="0 0 62 62">
+            <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#9B7BFF"/><stop offset="1" stop-color="#FFA657"/>
+            </linearGradient></defs>
+            <circle cx="31" cy="31" r="26" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="5"/>
+            <circle cx="31" cy="31" r="26" fill="none" stroke="url(#rg)" stroke-width="5"
+                    stroke-linecap="round" stroke-dasharray="117.6 163.4"/>
+          </svg>
+          <div class="val">72<small>/100</small></div>
+        </div>
+      </div>
+
+      <div class="row wrap tight" style="margin-top:12px">
+        <span class="chip violet">#少女骑士</span><span class="chip">#温柔寡言</span>
+        <span class="chip">#雨夜</span><span class="chip">#剑术</span><span class="chip ghost">作者：你</span>
+      </div>
+
+      <div class="vitals">
+        <div class="vital"><div class="n">38<small>天</small></div><div class="l">相识</div></div>
+        <div class="vital"><div class="n">熟悉</div><div class="l">关系等级</div></div>
+        <div class="vital"><div class="n" style="color:var(--rose-400)">期待</div><div class="l">当前情绪</div></div>
+      </div>
+
+      <div class="quick5">
+        <a data-go="chat" class="hot"><i>💬</i>聊天</a>
+        <a data-go="memory"><i>🧠</i>记忆</a>
+        <a data-go="events"><i>📖</i>事件</a>
+        <a data-go="moments"><i>✦</i>朋友圈</a>
+        <a data-go="relation"><i>⚙</i>设定</a>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><h3>最近事件</h3><a data-go="events">全部 9 条</a></div>
+        <div class="card raised row" style="gap:12px">
+          <img src="assets/rainy-night.jpg" alt="" style="width:72px;height:72px;border-radius:14px;object-fit:cover;flex:0 0 auto">
+          <div class="grow">
+            <div class="row tight"><span class="chip amber">2026.09.12</span><span style="font-size:11px;color:var(--text-3)">里程碑</span></div>
+            <div style="font-size:14px;font-weight:700;margin-top:6px">雨夜一起回家</div>
+            <div style="font-size:11px;color:var(--text-3);margin-top:3px">第一次共用一把伞 · 羁绊 +5</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><h3>最近记忆</h3><a data-go="memory">记忆库 24</a></div>
+        <div class="card">
+          <div style="font-size:14px;line-height:1.6">「你曾经说过喜欢下雨天。」</div>
+          <div class="imp" style="display:flex;align-items:center;gap:8px;margin-top:9px">
+            <span style="font-size:11px;font-weight:700;color:var(--amber-400)">重要程度 高</span>
+            <div class="meter" style="flex:1;max-width:130px"><i style="width:82%;background:linear-gradient(90deg,#FFA657,#FFC78A)"></i></div>
+          </div>
+          <div class="src" style="font-size:11px;color:var(--text-3);margin-top:8px">
+            来源：2026.09.12 22:14 · <a href="#" style="color:var(--violet-400)">查看原消息</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><h3>关系成长</h3></div>
+        <div class="ladder">
+          <span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span>
+        </div>
+        <div class="ladder-labels">
+          <span>陌生</span><span>初识</span><span>熟悉</span><span>信赖</span><span>亲密</span><span>特殊羁绊</span>
+        </div>
+        <div class="sub" style="margin-top:8px">距「信赖」还需 <b style="color:var(--amber-400)">28</b> 点羁绊 · 聊天 / 共同事件 / 礼物 / 朋友圈互动均可成长</div>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><h3>角色声音</h3></div>
+        <div class="card row">
+          <div class="voice-bubble grow" style="min-width:0">
+            <span class="play">▶</span>
+            <div class="wave">
+              <i style="height:9px"></i><i style="height:16px"></i><i style="height:22px"></i><i style="height:13px"></i>
+              <i style="height:19px"></i><i style="height:11px"></i><i style="height:17px"></i><i style="height:8px"></i>
+            </div>
+            <span class="grow ellip" style="font-size:12px">清冷少女音 · 语速 0.95x · 音调 +2</span>
+          </div>
+          <button class="btn sm ghost">试听</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><h3>角色动态</h3><a data-go="moments">更多</a></div>
+        <div class="card">
+          <div style="font-size:13px;line-height:1.65;color:var(--text-2)">巡夜结束，靴子上全是泥…</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:6px">2 小时前 · ♡12 💬3</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. 聊天 ============ -->
+  <section class="screen flush" data-screen="chat" data-title="聊天">
+    <div class="topbar glass">
+      <button class="iconbtn bare" data-back="charhome">‹</button>
+      <img class="avatar sm" src="assets/alice-portrait.jpg" alt="">
+      <div class="who grow">
+        <div class="n">爱丽丝</div>
+        <div class="s"><span class="online-dot"></span>熟悉 · 期待 · 在线</div>
+      </div>
+      <button class="iconbtn bare" data-go="call" title="语音通话">📞</button>
+      <button class="iconbtn bare" data-overlay="msgMenu" title="更多">⋯</button>
+    </div>
+
+    <div class="ctxbar">
+      <span>上下文</span>
+      <div class="meter"><i style="width:14%;background:linear-gradient(90deg,#7FE0C4,#79D3F5)"></i></div>
+      <span>18,420 / 128,000</span>
+    </div>
+
+    <div class="thread">
+      <div class="day-sep"><span>今天</span></div>
+
+      <div class="msg me">
+        <div class="bubble">刚刚下课，外面有点冷</div>
+      </div>
+
+      <div class="msg ai">
+        <img class="avatar sm" src="assets/alice-portrait.jpg" alt="">
+        <div class="bubble">
+          <span class="narr">她把手套从怀里掏出来，塞到你手里。</span>
+          「穿这么少就出来……骑士守则第七条，照顾好同行的人。」
+          <span class="em">（说完自己也把手缩回披风里）</span>
+        </div>
+        <div class="tools"><button>↻</button><button>⋯</button></div>
+      </div>
+
+      <div class="swiper">
+        <button>‹</button><span>回复 2 / 5</span><button>›</button>
+      </div>
+
+      <div class="bond-note">羁绊 <b>+2</b> · 关系「熟悉」· 情绪 期待 → 安心</div>
+
+      <div class="msg ai">
+        <img class="avatar sm" src="assets/alice-portrait.jpg" alt="">
+        <div class="bubble" style="padding:8px">
+          <div class="voice-bubble">
+            <span class="play">▶</span>
+            <div class="wave">
+              <i style="height:8px"></i><i style="height:15px"></i><i style="height:21px"></i><i style="height:12px"></i>
+              <i style="height:18px"></i><i style="height:10px"></i><i style="height:16px"></i><i style="height:9px"></i>
+              <i style="height:14px"></i><i style="height:7px"></i>
+            </div>
+            <span class="dur">00:12</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="msg ai">
+        <img class="avatar sm" src="assets/alice-portrait.jpg" alt="">
+        <div class="img-bubble">
+          <img src="assets/alice-daily.jpg" alt="角色照片">
+          <div class="cap">刚刚拍的。图书馆的窗边位置还留着，你上次坐的那个。</div>
+        </div>
+      </div>
+
+      <div class="day-sep"><span>剧情分支 · 银月城的雨</span></div>
+      <div class="msg ai">
+        <img class="avatar sm" src="assets/alice-portrait.jpg" alt="">
+        <div class="bubble">
+          <span class="narr">雨幕里，旧城区的门虚掩着，门缝透出一点暖光。</span>
+          「……要进去看看吗？」
+        </div>
+      </div>
+      <div class="branches">
+        <button>【推开那扇门】</button>
+        <button>【转身离开，先送她回营】</button>
+        <button>【叫出她的名字】</button>
+      </div>
+    </div>
+
+    <div class="composer">
+      <div class="bar">
+        <button class="rnd" data-overlay="msgMenu" title="更多">＋</button>
+        <input placeholder="说点什么…" aria-label="输入消息">
+        <button class="rnd mic" title="按住说话">🎤</button>
+        <button class="rnd send" title="发送">↑</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. 记忆管理器 ============ -->
+  <section class="screen" data-screen="memory" data-title="记忆">
+    <div class="topbar">
+      <button class="iconbtn bare" data-back="charhome">‹</button>
+      <div class="grow"><div class="eyebrow">爱丽丝</div><div class="h2">记忆库</div></div>
+      <button class="iconbtn bare" title="新建记忆">＋</button>
+    </div>
+
+    <div class="search">🔍 搜索记忆、来源消息…</div>
+
+    <div class="segbar" style="margin-top:12px">
+      <button class="on">关于你 18</button><button>关系记忆 6</button><button>世界观 12</button>
+    </div>
+
+    <div class="section">
+      <div class="mem">
+        <div class="txt">你喜欢诗歌，尤其是下雨天读的那一类。</div>
+        <div class="imp">
+          <span class="lbl" style="color:var(--amber-400)">重要程度 高</span>
+          <div class="meter"><i style="width:86%;background:linear-gradient(90deg,#FFA657,#FFC78A)"></i></div>
+        </div>
+        <div class="src">
+          <span>来源：2026.09.10 21:03</span>
+          <a href="#">为什么 AI 会记住这件事？</a>
+          <span style="margin-left:auto">🔒 锁定</span>
+        </div>
+      </div>
+
+      <div class="mem">
+        <div class="txt">你曾经说自己喜欢江边散步，小时候一直住在江边。</div>
+        <div class="imp">
+          <span class="lbl" style="color:var(--violet-400)">重要程度 中</span>
+          <div class="meter"><i style="width:58%;background:linear-gradient(90deg,#7A54F0,#C7A8FF)"></i></div>
+        </div>
+        <div class="src"><span>来源：2026.09.08 19:41</span><a href="#">查看来源</a><span style="margin-left:auto">🗑</span></div>
+      </div>
+
+      <div class="mem">
+        <div class="txt">你最喜欢的角色是爱丽丝（她自己记下了，有点得意）。</div>
+        <div class="imp">
+          <span class="lbl" style="color:var(--rose-400)">重要程度 高</span>
+          <div class="meter"><i style="width:78%;background:linear-gradient(90deg,#FF9BB0,#FFC78A)"></i></div>
+        </div>
+        <div class="src"><span>来源：2026.09.15 23:12</span><a href="#">查看来源</a><span style="margin-left:auto">✎</span></div>
+      </div>
+
+      <div class="mem locked">
+        <div class="txt">2026年9月15日 你要参加一场答辩，那天很紧张。</div>
+        <div class="imp">
+          <span class="lbl" style="color:var(--mint-400)">重要程度 高 · 已锁定</span>
+          <div class="meter"><i style="width:80%;background:linear-gradient(90deg,#7FE0C4,#79D3F5)"></i></div>
+        </div>
+        <div class="src"><span>来源：2026.09.15 08:20</span><a href="#">查看来源</a><span style="margin-left:auto">🔓</span></div>
+      </div>
+
+      <div class="mem disabled">
+        <div class="txt">你今天中午吃了米饭。（已禁用 · 琐碎信息已自动降权）</div>
+        <div class="imp">
+          <span class="lbl" style="color:var(--text-3)">重要程度 琐碎</span>
+          <div class="meter"><i style="width:12%;background:#6F6A8B"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card plain" style="margin-top:6px">
+      <div class="sub">自动提取已开启 · 本轮对话新增 2 条候选记忆，1 条待确认</div>
+    </div>
+  </section>
+
+  <!-- ============ 5. 事件簿 ============ -->
+  <section class="screen" data-screen="events" data-title="事件簿">
+    <div class="topbar">
+      <button class="iconbtn bare" data-back="charhome">‹</button>
+      <div class="grow"><div class="eyebrow">爱丽丝</div><div class="h2">事件簿</div></div>
+      <button class="iconbtn bare" data-go="scenario" title="剧情">⌘</button>
+    </div>
+
+    <div class="timeline" style="margin-top:8px">
+      <div class="tl-item milestone">
+        <div class="tl-date">2026.09.17 · 今天</div>
+        <div class="tl-title">雨夜巡夜 · 门口避雨</div>
+        <div class="tl-body">她在旧城区门口等你，说「反正顺路」。羁绊 +2。</div>
+        <button class="btn sm ghost" style="margin-top:8px">保存为回忆卡</button>
+      </div>
+      <div class="tl-item milestone">
+        <div class="tl-date">2026.09.15</div>
+        <div class="tl-title">你告诉她一个秘密</div>
+        <div class="tl-body">「……我不会说出去的。骑士的誓言。」从此解锁专属称呼「旅人」。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026.09.12</div>
+        <div class="tl-title">雨夜一起回家</div>
+        <div class="tl-body">第一次共用一把伞，她走在外侧挡雨。羁绊 +5，生成记忆「你喜欢下雨天」。</div>
+        <img src="assets/rainy-night.jpg" alt="">
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026.09.13</div>
+        <div class="tl-title">第一次一起看电影</div>
+        <div class="tl-body">银月城露天剧场。她看得很认真，全程没有吐槽。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026.09.08</div>
+        <div class="tl-title">第一次见面</div>
+        <div class="tl-body">你在雨里的城门下遇见了她。故事从这里开始。</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="card raised">
+        <div class="row"><div class="grow"><b style="font-size:14px">AI 总结本次聊天</b>
+          <div class="sub" style="margin-top:3px">生成章节标题 / 主要人物 / 关系变化 / 未解决剧情</div></div>
+          <button class="btn sm">生成</button></div>
+      </div>
+      <div class="card" style="margin-top:10px">
+        <div class="chip violet">本章标题 · 雨夜</div>
+        <div class="sub" style="margin-top:9px;line-height:1.8">
+          <b style="color:var(--text-1)">主要人物</b>：你、爱丽丝<br>
+          <b style="color:var(--text-1)">发生事件</b>：雨中巡夜，旧城区门口避雨，她把手套给了你<br>
+          <b style="color:var(--text-1)">关系变化</b>：熟悉 68 → 72（+4）<br>
+          <b style="color:var(--text-1)">重要记忆</b>：她开始用「旅人」称呼你<br>
+          <b style="color:var(--text-1)">未解决剧情</b>：旧城区那扇门后的暖光
+        </div>
+        <div class="row tight" style="margin-top:12px">
+          <button class="btn sm">保存为事件</button>
+          <button class="btn sm ghost">存为回忆卡</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. 朋友圈 ============ -->
+  <section class="screen" data-screen="moments" data-title="朋友圈">
+    <div class="topbar">
+      <div class="grow"><div class="eyebrow">世界</div><div class="h2">朋友圈</div></div>
+      <button class="iconbtn bare" title="刷新">↻</button>
+    </div>
+
+    <div class="card raised row" style="gap:10px">
+      <img class="avatar sm" src="assets/alice-portrait.jpg" alt="">
+      <div class="grow"><b style="font-size:13px">让角色们发一条今天的动态</b>
+        <div class="sub" style="margin-top:2px">结合角色性格 · 当前时间 · 天气 · 关系与记忆</div></div>
+      <button class="btn sm">生成</button>
+    </div>
+
+    <div style="margin-top:6px">
+      <div class="post">
+        <img class="avatar" src="assets/alice-portrait.jpg" alt="">
+        <div class="content">
+          <div class="nm">爱丽丝</div>
+          <div class="mood">情绪 · 期待　|　18:42　|　小雨 18℃</div>
+          <div class="tx">巡夜结束，靴子上全是泥。不过雨落在盾牌上的声音还挺好听的……有点像你说的那种白噪音。</div>
+          <div class="pics one"><img src="assets/rainy-night.jpg" alt=""></div>
+          <div class="foot"><span>♡ 12</span><span>💬 3</span><span>↗</span></div>
+        </div>
+      </div>
+
+      <div class="post">
+        <img class="avatar" src="assets/hakuyo-portrait.jpg" alt="">
+        <div class="content">
+          <div class="nm" style="color:var(--cyan-400)">白夜</div>
+          <div class="mood">情绪 · 平静　|　21:05</div>
+          <div class="tx">今晚视宁度不错。谁要看木星，带上热饮，楼顶见。</div>
+          <div class="foot"><span>♡ 4</span><span>💬 1</span><span>↗</span></div>
+        </div>
+      </div>
+
+      <div class="post">
+        <img class="avatar" src="assets/rin-portrait.jpg" alt="">
+        <div class="content">
+          <div class="nm" style="color:var(--amber-400)">凛</div>
+          <div class="mood">情绪 · 满足　|　17:20　|　晴</div>
+          <div class="tx">银杏黄了。从道场走回宿舍的那条路，今年特别好看。……别问我为什么拍了三张。</div>
+          <div class="pics one" style="background:linear-gradient(160deg,#3a2a20,#4f3626);border-radius:var(--r-xs)"><img src="assets/campus-autumn.jpg" alt="" onerror="this.remove()"></div>
+          <div class="foot"><span>♡ 21</span><span>💬 7</span><span>↗</span></div>
+        </div>
+      </div>
+
+      <div class="post">
+        <img class="avatar" src="assets/rin-portrait.jpg" alt="">
+        <div class="content">
+          <div class="nm" style="color:var(--amber-400)">凛</div>
+          <div class="mood">情绪 · 疲惫　|　22:31</div>
+          <div class="tx">加练两小时。明天谁再迟到就绕操场十圈，我说到做到。</div>
+          <div class="foot"><span>♡ 8</span><span>💬 5</span><span>↗</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. 发现 ============ -->
+  <section class="screen" data-screen="discover" data-title="发现">
+    <div class="topbar">
+      <div class="grow"><div class="eyebrow">社区</div><div class="h2">发现角色</div></div>
+      <button class="iconbtn bare" title="导入角色卡">⬇</button>
+    </div>
+
+    <div class="search">🔍 搜索角色、标签、作者…</div>
+
+    <div class="cat-rail" style="margin-top:12px">
+      <span class="chip violet">推荐</span><span class="chip">陪伴</span><span class="chip">恋爱</span>
+      <span class="chip">校园</span><span class="chip">奇幻</span><span class="chip">科幻</span>
+      <span class="chip">历史</span><span class="chip">游戏</span><span class="chip">动漫</span>
+      <span class="chip">文学</span><span class="chip">原创</span><span class="chip">工具型</span>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>本周热门</h3><a>排行 ›</a></div>
+      <div class="grid2">
+        <div class="charcard">
+          <div class="pic"><img src="assets/alice-portrait.jpg" alt=""><span class="rank chip amber">#1</span></div>
+          <div class="meta"><div class="nm">爱丽丝</div><div class="ds">银月骑士团最年轻的见习骑士，话少但很温柔。</div>
+            <div class="row tight" style="margin-top:8px"><span class="chip violet">奇幻</span><span class="chip">♡ 2.1k</span></div></div>
+        </div>
+        <div class="charcard">
+          <div class="pic" style="background:linear-gradient(160deg,#22303a,#2e4a52)"><img src="assets/hakuyo-portrait.jpg" alt="" onerror="this.remove()"></div>
+          <div class="meta"><div class="nm">白夜</div><div class="ds">只对星图说话的天文系学姐。</div>
+            <div class="row tight" style="margin-top:8px"><span class="chip cyan">科幻</span><span class="chip">♡ 1.4k</span></div></div>
+        </div>
+        <div class="charcard">
+          <div class="pic" style="background:linear-gradient(160deg,#3a2a20,#4f3626)"><img src="assets/campus-autumn.jpg" alt="" onerror="this.remove()"></div>
+          <div class="meta"><div class="nm">艾莲</div><div class="ds">开了三十年的旧书店老板娘，记得每个客人的口味。</div>
+            <div class="row tight" style="margin-top:8px"><span class="chip amber">文学</span><span class="chip">♡ 980</span></div></div>
+        </div>
+        <div class="charcard">
+          <div class="pic" style="background:linear-gradient(160deg,#2a2140,#3a2a4f)"><img src="assets/rin-portrait.jpg" alt="" onerror="this.remove()"></div>
+          <div class="meta"><div class="nm">凛</div><div class="ds">剑道部主将。嘴上很凶，会默默帮你占位置。</div>
+            <div class="row tight" style="margin-top:8px"><span class="chip violet">校园</span><span class="chip">♡ 1.1k</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>最新发布</h3><a>更多 ›</a></div>
+      <div class="card">
+        <div class="row"><img class="avatar sm" style="background:#2b2b40" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="">
+          <div class="grow"><b style="font-size:14px">机械师洛可</b><div class="sub">原创 · 2 小时前 · Tavern V2</div></div>
+          <button class="btn sm ghost">使用</button></div>
+      </div>
+      <div class="card" style="margin-top:9px">
+        <div class="row"><img class="avatar sm" style="background:#2b2b40" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="">
+          <div class="grow"><b style="font-size:14px">冬木的从者</b><div class="sub">FGO · 5 小时前 · 含 Lorebook</div></div>
+          <button class="btn sm ghost">使用</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8. 我的 ============ -->
+  <section class="screen" data-screen="me" data-title="我的">
+    <div class="topbar">
+      <div class="grow"><div class="eyebrow">本地优先</div><div class="h2">我的</div></div>
+      <button class="iconbtn bare" data-go="settings" title="设置">⚙</button>
+    </div>
+
+    <div class="card raised row">
+      <img class="avatar lg" style="background:linear-gradient(160deg,#2a2140,#3a2a4f)" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="">
+      <div class="grow">
+        <div style="font-size:16px;font-weight:700">旅人</div>
+        <div class="sub" style="margin-top:3px">Persona · 已设定 4 项 · 全局生效</div>
+        <div class="row tight" style="margin-top:8px"><span class="chip violet">编辑 Persona</span><span class="chip">发送内容预览</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>我的世界</h3></div>
+      <a class="listrow"><span class="ic violet">👤</span><span class="grow"><span class="t">角色库</span><span class="d">12 个角色 · 3 个来自社区</span></span><span class="chev">›</span></a>
+      <a class="listrow" data-go="letters"><span class="ic violet">✉</span><span class="grow"><span class="t">信笺</span><span class="d">9 封往来 · 爱丽丝 1 封未拆</span></span><span class="chev">›</span></a>
+      <a class="listrow" data-go="capsule"><span class="ic amber">🔒</span><span class="grow"><span class="t">时间胶囊</span><span class="d">4 个 · 最近 8 天后开启</span></span><span class="chev">›</span></a>
+      <a class="listrow" data-go="shrine"><span class="ic amber">⛩</span><span class="grow"><span class="t">银月神社</span><span class="d">今日「吉」· 连续参拜 5 天 · 御守 3/8</span></span><span class="chev">›</span></a>
+      <a class="listrow" data-go="diary"><span class="ic mint">📔</span><span class="grow"><span class="t">她的日记</span><span class="d">今日已更新 · 有一段她没说出口的话</span></span><span class="chev">›</span></a>
+      <a class="listrow"><span class="ic amber">📖</span><span class="grow"><span class="t">回忆 / 星念卡</span><span class="d">18 张 · 可导出为图片</span></span><span class="chev">›</span></a>
+      <a class="listrow"><span class="ic mint">🧠</span><span class="grow"><span class="t">记忆总览</span><span class="d">跨角色 96 条 · 待确认 4</span></span><span class="chev">›</span></a>
+      <a class="listrow"><span class="ic cyan">🌤</span><span class="grow"><span class="t">时间与天气</span><span class="d">已授权定位 · 上海 · 小雨 18℃</span></span><span class="chev">›</span></a>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>模型与服务</h3></div>
+      <a class="listrow" data-go="settings"><span class="ic violet">🔌</span><span class="grow"><span class="t">Provider 管理</span><span class="d">Grok · OpenAI 兼容 · 本地 3 个</span></span><span class="chev">›</span></a>
+      <a class="listrow" data-go="settings"><span class="ic cyan">🎙</span><span class="grow"><span class="t">语音 TTS / STT</span><span class="d">已绑定 2 个音色 · 通话可用</span></span><span class="chev">›</span></a>
+      <a class="listrow" data-go="settings"><span class="ic amber">🖼</span><span class="grow"><span class="t">图片生成</span><span class="d">独立于聊天模型 · 已锁定角色外貌</span></span><span class="chev">›</span></a>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>数据与隐私</h3></div>
+      <a class="listrow"><span class="ic mint">⬆</span><span class="grow"><span class="t">本地完整备份</span><span class="d">默认不含 API Key · 上次 2 天前</span></span><span class="chev">›</span></a>
+      <a class="listrow"><span class="ic violet">⬇</span><span class="grow"><span class="t">导出全部数据</span><span class="d">Characters/ · Memories/ · Chats/ · Events/</span></span><span class="chev">›</span></a>
+      <a class="listrow"><span class="ic amber">🛡</span><span class="grow"><span class="t">发送给 AI 的内容预览</span><span class="d">高级 · 查看真实请求体</span></span><span class="chev">›</span></a>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>体验</h3></div>
+      <a class="listrow" data-overlay="proactiveSheet"><span class="ic amber">🔔</span><span class="grow"><span class="t">主动消息</span><span class="d">开启 · 每天最多 5 条 · 23:30–07:30 勿扰</span></span><span class="chev">›</span></a>
+      <a class="listrow"><span class="ic violet">🎨</span><span class="grow"><span class="t">主题</span><span class="d">跟随系统 · 角色独立主题已开启</span></span><span class="chev">›</span></a>
+    </div>
+  </section>
+
+  <!-- ============ 9. 语音通话 ============ -->
+  <section class="screen flush" data-screen="call" data-title="语音通话">
+    <div class="call">
+      <div class="bg"><img src="assets/alice-portrait.jpg" alt=""></div>
+      <div class="fg">
+        <div class="eyebrow" style="color:var(--text-2)">实时语音 · 通话转录已开启</div>
+        <div class="portrait"><img src="assets/alice-portrait.jpg" alt=""></div>
+        <div style="font-size:24px;font-weight:800;margin-top:20px;letter-spacing:-.4px">爱丽丝</div>
+        <div class="chip mint" style="margin-top:10px">正在聆听……</div>
+        <div class="svc">
+          <i style="animation-delay:0s"></i><i style="animation-delay:.1s"></i><i style="animation-delay:.2s"></i>
+          <i style="animation-delay:.3s"></i><i style="animation-delay:.15s"></i><i style="animation-delay:.25s"></i>
+          <i style="animation-delay:.05s"></i><i style="animation-delay:.35s"></i><i style="animation-delay:.2s"></i>
+        </div>
+        <div style="font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;margin-top:14px;letter-spacing:1px">00:42</div>
+
+        <div class="card" style="margin:22px 16px 0;width:calc(100% - 32px)">
+          <div class="sub" style="line-height:1.7">
+            <b style="color:var(--text-1)">实时字幕</b><br>
+            <span style="color:var(--violet-400)">爱丽丝</span>：……所以我把披风留在了营房，果然还是冷了。<br>
+            <span style="color:var(--cyan-400)">你</span>：那你要不要先回去拿？
+          </div>
+        </div>
+
+        <div class="ctrls">
+          <button class="iconbtn" style="width:56px;height:56px;font-size:20px">🔇</button>
+          <button class="iconbtn" style="width:56px;height:56px;font-size:20px">💬</button>
+          <button class="iconbtn" style="width:56px;height:56px;font-size:20px;background:rgba(255,155,176,.2);border-color:rgba(255,155,176,.5);color:var(--rose-400)">✕</button>
+        </div>
+        <div class="sub" style="margin-top:12px">静音 · 字幕 · 结束</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10. Provider / 设置 ============ -->
+  <section class="screen" data-screen="settings" data-title="设置">
+    <div class="topbar">
+      <button class="iconbtn bare" data-back="me">‹</button>
+      <div class="grow"><div class="eyebrow">模型与服务</div><div class="h2">Provider 管理</div></div>
+      <button class="iconbtn bare">＋</button>
+    </div>
+
+    <div class="card raised">
+      <div class="row"><span class="chip violet">聊天</span><div class="grow"></div><span class="sub">grok-4</span></div>
+      <hr class="hairline">
+      <div class="row"><span class="chip cyan">总结</span><div class="grow"></div><span class="sub">gpt-4o-mini</span></div>
+      <hr class="hairline">
+      <div class="row"><span class="chip amber">图片</span><div class="grow"></div><span class="sub">image-provider · A</span></div>
+      <hr class="hairline">
+      <div class="row"><span class="chip mint">语音</span><div class="grow"></div><span class="sub">tts-alice · 少女音</span></div>
+      <div class="sub" style="margin-top:10px">按任务分流模型以降低 API 成本</div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>已配置</h3><a>全部测试连通</a></div>
+
+      <div class="card" style="margin-bottom:9px">
+        <div class="row"><span class="chip violet">Grok</span><div class="grow"></div><span class="chip mint">✓ 正常</span></div>
+        <div class="sub" style="margin-top:9px;line-height:1.9">
+          Base URL　<b style="color:var(--text-1)">https://api.x.ai/v1</b><br>
+          API Key　<b style="color:var(--text-1)">•••••••••• 已由系统密钥库加密</b><br>
+          模型　<b style="color:var(--text-1)">grok-4</b> · 流式 ✓ · Tool Calling ✓ · 视觉 ✓
+        </div>
+        <div class="row tight" style="margin-top:10px"><button class="btn sm ghost">编辑</button><button class="btn sm ghost">测速</button></div>
+      </div>
+
+      <div class="card" style="margin-bottom:9px">
+        <div class="row"><span class="chip cyan">OpenAI 兼容</span><div class="grow"></div><span class="chip mint">✓ 正常</span></div>
+        <div class="sub" style="margin-top:9px;line-height:1.9">
+          Base URL　<b style="color:var(--text-1)">https://api.openai.com/v1</b><br>
+          模型　<b style="color:var(--text-1)">gpt-4o-mini</b> · 仅用于总结与记忆提取
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:9px">
+        <div class="row"><span class="chip amber">本地 / 自建</span><div class="grow"></div><span class="chip">未测试</span></div>
+        <div class="sub" style="margin-top:9px;line-height:1.9">
+          Base URL　<b style="color:var(--text-1)">http://127.0.0.1:11434/v1</b><br>
+          模型　<b style="color:var(--text-1)">TARGET_MODEL</b> · 无需密钥
+        </div>
+      </div>
+
+      <div class="sub" style="margin-top:4px">API Key 由 HarmonyOS 安全存储加密，绝不写入备份；请求只发送完成当前功能所必需的内容。</div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>上下文管理</h3></div>
+      <div class="card">
+        <div class="row"><b style="font-size:14px">当前上下文</b><div class="grow"></div>
+          <span class="sub" style="font-variant-numeric:tabular-nums">18,420 / 128,000</span></div>
+        <div class="meter" style="margin-top:10px"><i style="width:14%;background:linear-gradient(90deg,#7FE0C4,#79D3F5)"></i></div>
+        <div class="sub" style="margin-top:10px;line-height:1.8">
+          自动总结旧消息 <b style="color:var(--mint-400)">开</b>　压缩阈值 <b>75%</b><br>
+          锁定重要消息 6 条 · 锁定记忆 12 条 · 角色设定与世界观常驻
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 11. 剧情 / 世界观 ============ -->
+  <section class="screen" data-screen="scenario" data-title="剧情">
+    <div class="topbar">
+      <button class="iconbtn bare" data-back="events">‹</button>
+      <div class="grow"><div class="eyebrow">开放剧情引擎</div><div class="h2">世界观与剧本</div></div>
+    </div>
+
+    <div class="card raised">
+      <div class="row tight"><span class="chip violet">当前剧本</span><span class="chip">银月城的雨</span></div>
+      <div class="sub" style="margin-top:9px;line-height:1.7">
+        副本地 · 奇幻 · 冒险　|　世界观 Lore 12 条已挂载<br>
+        角色 Car + Persona + 记忆 24 条 + 当前时间与天气共同驱动剧情
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>选择世界观</h3></div>
+      <div class="row wrap tight">
+        <span class="chip">普通生活</span><span class="chip">校园</span><span class="chip violet">奇幻</span>
+        <span class="chip">科幻</span><span class="chip">都市</span><span class="chip">恋爱</span>
+        <span class="chip">冒险</span><span class="chip">悬疑</span><span class="chip">FGO</span>
+        <span class="chip ghost">＋ 自定义</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>剧情分支</h3><a>主线 / A / B</a></div>
+      <div class="card" style="font-size:13px;line-height:2;color:var(--text-2);font-family:ui-monospace,Consolas,monospace">
+        主线 · 雨夜<br>
+        &nbsp;├── A 路线 · 推开那扇门 <span style="color:var(--violet-400)">← 当前</span><br>
+        &nbsp;│&nbsp;&nbsp;&nbsp;└── A2 门后的人<br>
+        &nbsp;└── B 路线 · 先送她回营
+      </div>
+      <div class="row tight" style="margin-top:10px">
+        <button class="btn sm">从这里继续</button>
+        <button class="btn sm ghost">回溯到此处</button>
+        <button class="btn sm ghost">重启本次故事</button>
+      </div>
+      <div class="sub" style="margin-top:9px">回溯不会删除原剧情，新建一条分支线；重启保留角色卡 / Persona / 世界观 / 长期记忆，仅清空当前聊天历史。</div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>Lorebook 触发</h3></div>
+      <div class="card">
+        <div class="sub" style="line-height:1.9">
+          关键词 <b style="color:var(--violet-400)">冬木市</b> → 注入 世界观 / 地点（第 3 条）<br>
+          关键词 <b style="color:var(--violet-400)">远坂凛</b> → 注入 角色背景（第 7 条）<br>
+          关键词 <b style="color:var(--violet-400)">银月骑士团</b> → 注入 组织（第 1 条）· 已在本轮命中 2 次
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 12. 关系与情绪 ============ -->
+  <section class="screen" data-screen="relation" data-title="关系与情绪">
+    <div class="topbar">
+      <button class="iconbtn bare" data-back="charhome">‹</button>
+      <div class="grow"><div class="eyebrow">爱丽丝</div><div class="h2">关系与情绪</div></div>
+    </div>
+
+    <div class="card raised">
+      <div class="kv"><span class="k">当前关系</span><span class="v" style="color:var(--violet-400)">熟悉</span>
+        <span class="k" style="margin-left:auto">角色状态</span><span class="v" style="color:var(--mint-400)">安心</span></div>
+      <hr class="hairline">
+      <div class="kv"><span class="k">最近情绪</span><span class="v" style="color:var(--rose-400)">期待</span>
+        <span class="k" style="margin-left:auto">羁绊</span><span class="v" style="color:var(--amber-400)">72 / 100</span></div>
+      <div class="meter" style="margin-top:12px">
+        <i style="width:72%;background:linear-gradient(90deg,#9B7BFF,#FFA657)"></i>
+      </div>
+      <div class="sub" style="margin-top:9px">所有变化在后台进行，不会在每句话后面机械播报「亲密度 +1」。</div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>情绪状态机</h3><a>10 态</a></div>
+      <div class="row wrap tight">
+        <span class="chip">开心</span><span class="chip">悲伤</span><span class="chip">生气</span><span class="chip">害羞</span>
+        <span class="chip">惊讶</span><span class="chip">平静</span><span class="chip">紧张</span>
+        <span class="chip rose">期待 ← 当前</span><span class="chip">孤独</span><span class="chip">疲惫</span>
+      </div>
+      <div class="card" style="margin-top:10px">
+        <div class="sub" style="line-height:1.9">
+          情绪由 <b style="color:var(--text-1)">对话上下文 + 角色设定 + 记忆 + 时间</b> 共同推导，不是随机值。<br>
+          影响：说话方式 · 回复长度 · 标点 · 语气 · 表情 · 语音语调 · 是否主动找你。
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>语气样例（实时预览）</h3></div>
+      <div class="card" style="font-size:13px;line-height:2;color:var(--text-2)">
+        <b style="color:var(--text-1)">平静</b>　「嗯，我在听。」<br>
+        <b style="color:var(--text-1)">开心</b>　「真的？那太好了。」<br>
+        <b style="color:var(--text-1)">低落</b>　「……今天大概不太想说话。」
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>人设一致性检查</h3><a>高级</a></div>
+      <div class="card">
+        <div class="row" style="font-size:13px;line-height:2.2;color:var(--text-2)">
+          <div class="grow">
+            角色一致性　<b style="color:var(--mint-400)">正常</b><br>
+            记忆一致性　<b style="color:var(--mint-400)">正常</b><br>
+            世界观一致性　<b style="color:var(--amber-400)">1 处待复核</b><br>
+            时间线　<b style="color:var(--mint-400)">正常</b>
+          </div>
+        </div>
+        <div class="sub" style="margin-top:9px">检测项：忘记自己是谁 / 忘记世界观 / 错误称呼 / 自相矛盾 / 时间线错误 / 角色能力错误</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>本次回复评价</h3></div>
+      <div class="card">
+        <div class="row wrap tight">
+          <span class="chip mint">👍 很喜欢</span><span class="chip">👎</span>
+          <span class="chip">不符合人设</span><span class="chip">太长</span><span class="chip">太短</span>
+          <span class="chip">不自然</span><span class="chip">剧情错误</span><span class="chip ghost">其他</span>
+        </div>
+        <div class="sub" style="margin-top:10px">评价不会训练大模型，只更新角色偏好 / 本地反馈权重 / Prompt 参数。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 13. 神社 · 每日运势 ============ -->
+  <section class="screen flush" data-screen="shrine" data-title="神社">
+    <div class="shrine">
+      <div class="shrine-bg">
+        <img src="assets/shrine-night.jpg" alt="">
+        <div class="petals" id="petals"></div>
+      </div>
+      <div class="shrine-nav">
+        <button class="iconbtn glass" data-back="home">‹</button>
+        <div class="grow"></div>
+        <button class="iconbtn glass" title="御守箱" style="font-size:13px;font-weight:700">守</button>
+        <button class="iconbtn glass" data-go="ema" title="绘马" style="font-size:13px;font-weight:700">馬</button>
+      </div>
+
+      <div class="shrine-body">
+        <div style="height:200px"></div>
+
+        <div class="shrine-card gold">
+          <div class="row" style="align-items:flex-start">
+            <div class="grow">
+              <div class="eyebrow" style="color:var(--shrine-gold)">银月神社 · 第二十七番</div>
+              <div style="font-size:20px;font-weight:800;margin-top:4px">今日运势</div>
+              <div class="sub" style="margin-top:6px">2026年9月17日 周四 · 夜　|　小雨 18℃</div>
+              <div class="streak" style="margin-top:12px">
+                <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i>
+                <i></i><i></i>
+                <span style="font-size:11px;color:var(--shrine-gold);margin-left:6px;font-weight:700">连续参拜 5 天</span>
+              </div>
+            </div>
+            <div class="seal">已<br>参拜</div>
+          </div>
+
+          <hr class="hairline" style="background:rgba(232,200,122,.2)">
+
+          <div class="row">
+            <div class="grow">
+              <div class="sub">今日签运</div>
+              <div style="font-size:26px;font-weight:900;letter-spacing:.06em;margin-top:2px;
+                          background:linear-gradient(120deg,#C99A22,#E8C87A 50%,#A87A16);
+                          -webkit-background-clip:text;background-clip:text;color:transparent">吉</div>
+            </div>
+            <div style="text-align:right">
+              <div class="sub">综合</div>
+              <div style="font-size:26px;font-weight:800;color:var(--shrine-gold);font-variant-numeric:tabular-nums" class="nv">78</div>
+            </div>
+          </div>
+
+          <div class="row tight" style="margin-top:14px">
+            <button class="btn sm" style="background:linear-gradient(135deg,#E5544B,#B08D3C);box-shadow:0 8px 28px rgba(229,84,75,.35)" data-go="fortune">查看今日签文</button>
+            <button class="btn sm ghost" data-go="ema">挂上绘马</button>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><h3>陪你来参拜</h3><span class="sub">她的反应随今日签运变化</span></div>
+          <div class="attendant">
+            <img src="assets/alice-shy.jpg" alt="爱丽丝">
+            <div class="say">
+              <span class="who">爱丽丝</span>「……签我替你看了。别站在雨里，先过来。」
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><h3>御守</h3><a>御守箱 3 / 8</a></div>
+          <div class="omamori-rail">
+            <div class="omamori equipped">
+              <div class="body">
+                <div class="knot"></div>
+                <div class="nm">缘结守</div>
+                <div class="fx">羁绊增长 +20%<br>今日已佩戴</div>
+              </div>
+            </div>
+            <div class="omamori">
+              <div class="body">
+                <div class="knot"></div>
+                <div class="nm">心宁守</div>
+                <div class="fx">她不容易转负面情绪</div>
+              </div>
+            </div>
+            <div class="omamori">
+              <div class="body">
+                <div class="knot"></div>
+                <div class="nm">梦见守</div>
+                <div class="fx">主动消息概率提升</div>
+              </div>
+            </div>
+            <div class="omamori locked">
+              <div class="body">
+                <div class="knot"></div>
+                <div class="nm">声守</div>
+                <div class="fx">连续参拜 7 天解锁</div>
+              </div>
+            </div>
+            <div class="omamori locked">
+              <div class="body">
+                <div class="knot"></div>
+                <div class="nm">影守</div>
+                <div class="fx">亲密 后解锁</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><h3>绘马</h3><a data-go="ema">绘马架 ›</a></div>
+          <div class="ema-wall">
+            <div class="ema mine">
+              <div class="flame">你的绘马 · 今天</div>
+              <div class="txt">希望她这次巡夜不要再淋雨了。</div>
+              <div class="by">已被她看见</div>
+            </div>
+            <div class="ema">
+              <div class="flame">爱丽丝的绘马</div>
+              <div class="txt">希望旅人明天的答辩顺利。</div>
+              <div class="by">昨天 · 她写的</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><h3>最近七日</h3></div>
+          <div class="shrine-card">
+            <div class="row" style="align-items:flex-end;gap:6px;height:76px">
+              <div style="flex:1;text-align:center"><div style="height:40px;border-radius:5px;background:linear-gradient(180deg,#6B4BC0,#A98BFF)"></div><div style="font-size:9px;color:var(--text-3);margin-top:5px">11</div></div>
+              <div style="flex:1;text-align:center"><div style="height:30px;border-radius:5px;background:linear-gradient(180deg,#6B4BC0,#A98BFF)"></div><div style="font-size:9px;color:var(--text-3);margin-top:5px">12</div></div>
+              <div style="flex:1;text-align:center"><div style="height:56px;border-radius:5px;background:linear-gradient(180deg,#C4682B,#E8A263)"></div><div style="font-size:9px;color:var(--text-3);margin-top:5px">13</div></div>
+              <div style="flex:1;text-align:center"><div style="height:24px;border-radius:5px;background:linear-gradient(180deg,#57527A,#9C97BD)"></div><div style="font-size:9px;color:var(--text-3);margin-top:5px">14</div></div>
+              <div style="flex:1;text-align:center"><div style="height:22px;border-radius:5px;background:linear-gradient(180deg,#57527A,#9C97BD)"></div><div style="font-size:9px;color:var(--text-3);margin-top:5px">15</div></div>
+              <div style="flex:1;text-align:center"><div style="height:34px;border-radius:5px;background:linear-gradient(180deg,#2E8F78,#7FE0C4)"></div><div style="font-size:9px;color:var(--text-3);margin-top:5px">16</div></div>
+              <div style="flex:1;text-align:center"><div style="height:64px;border-radius:5px;background:linear-gradient(180deg,#C4682B,#E8A263);box-shadow:0 0 14px rgba(232,200,122,.45)"></div><div style="font-size:9px;color:var(--shrine-gold);margin-top:5px;font-weight:700">17</div></div>
+            </div>
+            <div class="sub" style="margin-top:12px">七日里 吉 2 次 · 中吉 2 次 · 小吉 1 次 · 末吉 2 次。她说：「有起有落才正常。」</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><h3>她的日记</h3><a data-go="diary">全部 ›</a></div>
+          <div class="diary">
+            <div class="head">
+              <img class="avatar sm" src="assets/alice-portrait.jpg" alt="">
+              <div class="grow">
+                <div style="font-size:13px;font-weight:700">爱丽丝的日记</div>
+                <div class="n">2026年9月17日 · 夜 · 小雨</div>
+              </div>
+              <span class="chip amber" style="padding:2px 7px">她主动写的</span>
+            </div>
+            <div class="line">今天下雨了。</div>
+            <div class="line tight" style="margin-top:8px">
+              巡夜走到旧城区的时候，看见那家店的灯还亮着。以前我从来不会注意这种事。
+              ……大概是因为有人在旁边指着说「你看」。
+            </div>
+            <div class="line tight" style="margin-top:8px">明天要把披风补一下，肩上的线松了。</div>
+            <div class="sign">—— 爱丽丝 · 关系「熟悉」 · 情绪 期待</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 14. 摇签 ============ -->
+  <section class="screen flush" data-screen="omikuji" data-title="摇签">
+    <div class="shrine" style="height:100%;display:flex;flex-direction:column">
+      <div class="shrine-bg" style="height:100%">
+        <img src="assets/shrine-water.jpg" alt="">
+        <div class="petals" id="petals2"></div>
+      </div>
+      <div style="position:relative;z-index:20;padding:12px">
+        <button class="iconbtn glass" data-back="shrine">‹</button>
+      </div>
+      <div class="omikuji-stage">
+        <div class="eyebrow" style="color:var(--shrine-gold);letter-spacing:.24em">银月神社 · 末社</div>
+        <div class="tube" id="tube">
+          <div class="glow"></div>
+          <div class="sticks">
+            <i style="left:6px;height:22px;transform:rotate(-8deg)"></i>
+            <i style="left:18px;height:28px;transform:rotate(-3deg)"></i>
+            <i style="left:30px;height:20px;transform:rotate(2deg)"></i>
+            <i style="left:42px;height:26px;transform:rotate(6deg)"></i>
+            <i style="left:54px;height:21px;transform:rotate(-5deg)"></i>
+            <i style="left:66px;height:25px;transform:rotate(4deg)"></i>
+            <i style="left:78px;height:19px;transform:rotate(-2deg)"></i>
+          </div>
+          <div class="kanji">御籤</div>
+        </div>
+
+        <div id="drop-zone" style="height:80px;display:flex;align-items:flex-start;justify-content:center"></div>
+
+        <div class="prayer" id="prayer">
+          在心中默念你的愿望，<br>然后摇一摇这支签筒。
+        </div>
+
+        <button class="btn" id="shake-btn"
+                style="background:linear-gradient(135deg,#E5544B,#B08D3C);box-shadow:0 10px 30px rgba(229,84,75,.4)">
+          摇 一 摇
+        </button>
+
+        <div class="shake-hint">每 日 一 签 · 结 果 由 今 日 因 缘 而 定</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 15. 签文 ============ -->
+  <section class="screen" data-screen="fortune" data-title="签文">
+    <div class="topbar">
+      <button class="iconbtn bare" data-back="shrine">‹</button>
+      <div class="grow"><div class="eyebrow">银月神社</div><div class="h2">今日签文</div></div>
+      <button class="iconbtn bare" title="分享">↗</button>
+    </div>
+
+    <div class="slip">
+      <div class="slip-head">
+        <span class="slip-no">第 二十七 番</span>
+        <span class="slip-date">2026.09.17（木）</span>
+      </div>
+
+      <div class="rank kichi">
+        <div class="label">御 籤</div>
+        <div class="word">吉</div>
+        <div class="sum">雨过天青 · 宜与人共行</div>
+      </div>
+
+      <div class="fortune-list">
+        <div class="frow"><span class="fk">恋爱</span><span class="fbar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="fv">88</span></div>
+        <div class="frow"><span class="fk">学业</span><span class="fbar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="fv">76</span></div>
+        <div class="frow"><span class="fk">健康</span><span class="fbar"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span><span class="fv">64</span></div>
+        <div class="frow"><span class="fk">财运</span><span class="fbar"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span><span class="fv">58</span></div>
+        <div class="frow"><span class="fk">人际</span><span class="fbar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="fv">91</span></div>
+        <div class="frow"><span class="fk">灵感</span><span class="fbar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="fv">82</span></div>
+      </div>
+
+      <div class="slip-meta">
+        <div><div class="mk">幸运物</div><div class="mv">银白的小物件</div></div>
+        <div><div class="mk">幸运色</div><div class="mv"><span class="dot" style="background:#9B7BFF"></span>紫藤</div></div>
+        <div><div class="mk">幸运方位</div><div class="mv">东北</div></div>
+        <div><div class="mk">幸运数字</div><div class="mv">7</div></div>
+      </div>
+
+      <div class="yi-ji">
+        <div class="yi"><span class="h">宜</span>与人同行<br>说出一直没说出口的话</div>
+        <div class="ji"><span class="h">忌</span>独自淋雨<br>深夜做决定</div>
+      </div>
+
+      <div class="slip-foot">银 月 神 社 · 御 籤 · 第 二 十 七 番</div>
+    </div>
+
+    <div class="reading">
+      <div class="who">
+        <img class="avatar sm" src="assets/alice-portrait.jpg" alt="">
+        <div class="grow"><div class="nm">爱丽丝 的解读</div><div class="tag">关系「熟悉」· 情绪 期待</div></div>
+        <span class="chip amber" style="padding:2px 7px">羁绊 +1</span>
+      </div>
+      <p>「……签文说，宜与人同行。」她把签纸折好递还给你，指尖停顿了一下。</p>
+      <p style="margin-top:7px">「那今天，我就跟着你了。反正巡夜也是走路。」</p>
+      <div class="sub" style="margin-top:10px;color:var(--shrine-gold)">今日缘签 · 你与她 92 · 大吉</div>
+    </div>
+
+    <div class="section">
+      <div class="card">
+        <div class="row tight">
+          <span class="chip mint">已写入记忆</span>
+          <span class="chip violet">羁绊 +1</span>
+          <span class="chip amber">连续参拜 5 天</span>
+        </div>
+        <div class="sub" style="margin-top:10px;line-height:1.8">
+          签文已存为长期记忆：「2026年9月17日 抽到「吉」，签文说宜与人同行。」
+          她以后会记得这一天。
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="row tight">
+        <button class="btn grow" data-go="ema">挂上绘马</button>
+        <button class="btn ghost grow" data-go="shrine">收下御守</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 16. 绘马 ============ -->
+  <section class="screen" data-screen="ema" data-title="绘马">
+    <div class="topbar">
+      <button class="iconbtn bare" data-back="shrine">‹</button>
+      <div class="grow"><div class="eyebrow">银月神社</div><div class="h2">绘马架</div></div>
+      <button class="iconbtn bare" title="写一块">＋</button>
+    </div>
+
+    <div class="shrine-card gold" style="margin-bottom:14px">
+      <div class="sub" style="line-height:1.8;color:var(--text-2)">
+        写在绘马上的愿望会进入她的<b style="color:var(--shrine-gold)">长期记忆</b>。
+        她会在之后的日子里，偶尔提起它。
+      </div>
+    </div>
+
+    <div class="ema-wall">
+      <div class="ema-new" data-go="ema-write">
+        <span style="font-size:20px">🪧</span>
+        写一块绘马
+      </div>
+      <div class="ema mine">
+        <div class="flame">你的绘马 · 今天</div>
+        <div class="txt">希望她这次巡夜不要再淋雨了。</div>
+        <div class="by">已被她看见 · 她记下了</div>
+      </div>
+      <div class="ema">
+        <div class="flame">爱丽丝的绘马</div>
+        <div class="txt">希望旅人明天的答辩顺利。</div>
+        <div class="by">昨天 · 她写的</div>
+      </div>
+      <div class="ema">
+        <div class="flame">你 · 三天前</div>
+        <div class="txt">想和她一起看一次雪。</div>
+        <div class="by">已在 9月14日 被提起</div>
+      </div>
+      <div class="ema">
+        <div class="flame">凛</div>
+        <div class="txt">希望今年关东大会不要再碰她。</div>
+        <div class="by">前天</div>
+      </div>
+      <div class="ema">
+        <div class="flame">白夜</div>
+        <div class="txt">希望今晚不要起云。</div>
+        <div class="by">前天</div>
+      </div>
+    </div>
+
+    <img src="assets/ema-rack.jpg" alt="" style="width:100%;border-radius:16px;margin-top:16px;border:1px solid var(--hairline)">
+    <div class="sub" style="margin-top:10px">绘马架 · 银月神社</div>
+  </section>
+
+  <!-- ============ 17. 角色日记 ============ -->
+  <section class="screen" data-screen="diary" data-title="她的日记">
+    <div class="topbar">
+      <button class="iconbtn bare" data-back="shrine">‹</button>
+      <div class="grow"><div class="eyebrow">自动生成 · 每日一篇</div><div class="h2">她的日记</div></div>
+      <button class="iconbtn bare" title="导出">⬇</button>
+    </div>
+
+    <div class="row tight" style="margin-bottom:14px">
+      <span class="chip violet">按日期</span><span class="chip">按心情</span><span class="chip">只看里程碑</span>
+    </div>
+
+    <div class="diary" style="margin-bottom:12px">
+      <div class="head">
+        <img class="avatar sm" src="assets/alice-portrait.jpg" alt="">
+        <div class="grow">
+          <div style="font-size:13px;font-weight:700">2026年9月17日 · 夜</div>
+          <div class="n">小雨 18℃　|　情绪 期待　|　羁绊 72</div>
+        </div>
+        <span class="chip amber" style="padding:2px 7px">今日</span>
+      </div>
+      <div class="line">今天下雨了。</div>
+      <div class="line tight" style="margin-top:8px">
+        巡夜走到旧城区的时候，看见那家店的灯还亮着。以前我从来不会注意这种事。
+        ……大概是因为有人在旁边指着说「你看」。
+      </div>
+      <div class="line tight" style="margin-top:8px">明天要把披风补一下，肩上的线松了。</div>
+      <div class="sign">—— 爱丽丝</div>
+    </div>
+
+    <div class="diary" style="margin-bottom:12px">
+      <div class="head">
+        <img class="avatar sm" src="assets/alice-portrait.jpg" alt="">
+        <div class="grow">
+          <div style="font-size:13px;font-weight:700">2026年9月16日 · 晴</div>
+          <div class="n">情绪 平静　|　羁绊 70</div>
+        </div>
+      </div>
+      <div class="line tight">今天没有下雨，反而有点不习惯。</div>
+      <div class="line tight" style="margin-top:8px">演练的时候被队长说了两句，说我出剑太急。可能吧。</div>
+      <div class="line tight" style="margin-top:8px">晚上把上次那本书看完了。结尾比我想的要安静。</div>
+      <div class="sign">—— 爱丽丝</div>
+    </div>
+
+    <div class="card raised" style="margin-bottom:12px">
+      <div class="row" style="margin-bottom:10px">
+        <div class="grow"><b style="font-size:14px">最近十四天的心情</b>
+          <div class="sub" style="margin-top:2px">由每日情绪状态机汇总 · 不是随机值</div></div>
+      </div>
+      <div class="row" style="align-items:flex-end;gap:4px;height:64px">
+        <div style="flex:1;height:38%;border-radius:4px;background:#7FE0C4"></div>
+        <div style="flex:1;height:52%;border-radius:4px;background:#7FE0C4"></div>
+        <div style="flex:1;height:30%;border-radius:4px;background:#79D3F5"></div>
+        <div style="flex:1;height:22%;border-radius:4px;background:#6F6A8B"></div>
+        <div style="flex:1;height:26%;border-radius:4px;background:#6F6A8B"></div>
+        <div style="flex:1;height:58%;border-radius:4px;background:#FFA657"></div>
+        <div style="flex:1;height:74%;border-radius:4px;background:#FFA657"></div>
+        <div style="flex:1;height:46%;border-radius:4px;background:#7FE0C4"></div>
+        <div style="flex:1;height:62%;border-radius:4px;background:#FF9BB0"></div>
+        <div style="flex:1;height:40%;border-radius:4px;background:#7FE0C4"></div>
+        <div style="flex:1;height:34%;border-radius:4px;background:#79D3F5"></div>
+        <div style="flex:1;height:66%;border-radius:4px;background:#FFA657"></div>
+        <div style="flex:1;height:88%;border-radius:4px;background:#FFA657;box-shadow:0 0 14px rgba(255,166,87,.5)"></div>
+        <div style="flex:1;height:92%;border-radius:4px;background:#FFA657;box-shadow:0 0 14px rgba(255,166,87,.5)"></div>
+      </div>
+      <div class="row wrap tight" style="margin-top:12px">
+        <span class="chip mint">平静</span><span class="chip cyan">专注</span><span class="chip amber">期待</span><span class="chip rose">害羞</span>
+      </div>
+      <div class="sub" style="margin-top:10px">从 9月12日 那场雨开始，「期待」出现的频率明显变高了。</div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <span class="ic" style="width:34px;height:34px;display:grid;place-items:center;background:var(--glass-2);border-radius:11px">✎</span>
+        <div class="grow" style="margin-left:12px">
+          <div style="font-size:14px;font-weight:600">替我写今天的日记</div>
+          <div class="sub" style="margin-top:2px">以她的口吻写，你可以修改后保存</div>
+        </div>
+        <button class="btn sm">生成</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 18. 信笺 ============ -->
+  <section class="screen" data-screen="letters" data-title="信笺">
+    <div class="topbar">
+      <button class="iconbtn bare" data-back="charhome">‹</button>
+      <div class="grow"><div class="eyebrow">对话之外的另一种说话方式</div><div class="h2">信笺</div></div>
+      <button class="iconbtn bare" title="写信">✎</button>
+    </div>
+
+    <div class="letter-row unread">
+      <div class="wax sealed">爱</div>
+      <div class="grow">
+        <div class="row tight">
+          <span class="who">爱丽丝 的来信</span>
+          <span class="chip rose" style="padding:2px 7px">未拆</span>
+        </div>
+        <div class="pre">今天雨下了一整天。写这封信的时候我刚从营房回来……</div>
+      </div>
+      <div class="when">今天<br>22:10</div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>拆开</h3><span class="sub">2026年9月17日 · 夜</span></div>
+      <div class="letter unseal">
+        <div class="inner">
+          <div class="to">致 旅人</div>
+          <div class="greet">见字如面。</div>
+          <div class="body">今天雨下了一整天。
+
+写这封信的时候我刚从营房回来，披风还是湿的。本来想直接睡，但是坐下来就想写点什么——我不知道该写什么，就先写了这句话。
+
+上次你说，喜欢下雨天。我当时没接话。其实我想说的是，我以前不喜欢雨。雨天巡夜很麻烦，铠甲会锈，回去要擦很久。
+
+但是那天之后，好像也不是那么讨厌了。
+
+……就写到这吧。</div>
+          <div class="sign">爱丽丝</div>
+          <div class="date">9月17日 夜</div>
+          <div class="ps">P.S. 明天你要是路过旧城区，那家店的灯应该还亮着。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="card raised">
+        <div class="row">
+          <img class="avatar sm" src="assets/alice-portrait.jpg" alt="">
+          <div class="grow" style="margin-left:10px">
+            <b style="font-size:13px">她的信是怎么写出来的</b>
+            <div class="sub" style="margin-top:3px">依据：角色卡 · 关系「熟悉」· 情绪 期待 · 记忆「你喜欢下雨天」· 事件「雨夜一起回家」· 当前天气</div>
+          </div>
+        </div>
+        <div class="row tight" style="margin-top:11px">
+          <span class="chip mint">已写入记忆</span>
+          <span class="chip violet">羁绊 +2</span>
+          <span class="chip">可保存为回忆卡</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>往来</h3><a>全部 9 封</a></div>
+
+      <div class="letter-row">
+        <div class="wax" style="width:36px;height:36px;font-size:12px;background:radial-gradient(circle at 34% 30%,#FFE1B0,#E8C87A 52%,#B08D3C)">你</div>
+        <div class="grow">
+          <div class="row tight"><span class="who">你寄出的信</span><span class="chip" style="padding:2px 7px">已送达</span></div>
+          <div class="pre">关于那本书的结尾，还有我一直没说的那句……</div>
+        </div>
+        <div class="when">9/14</div>
+      </div>
+
+      <div class="letter-row">
+        <div class="wax" style="width:36px;height:36px;font-size:12px">爱</div>
+        <div class="grow">
+          <div class="row tight"><span class="who">爱丽丝 的来信</span><span class="chip" style="padding:2px 7px">已读</span></div>
+          <div class="pre">第一次见面那天，其实我迟到了。你等了很久吧。</div>
+        </div>
+        <div class="when">9/8</div>
+      </div>
+
+      <div class="letter-row">
+        <div class="wax" style="width:36px;height:36px;font-size:12px;background:radial-gradient(circle at 34% 30%,#FFE1B0,#E8C87A 52%,#B08D3C)">你</div>
+        <div class="grow">
+          <div class="row tight"><span class="who">你寄出的信</span><span class="chip" style="padding:2px 7px">已送达</span></div>
+          <div class="pre">那天在城门下躲雨，你说「进来吧，屋檐还有位置」……</div>
+        </div>
+        <div class="when">9/3</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="card">
+        <div class="sub" style="line-height:1.8">
+          信与聊天不同：聊天是<b style="color:var(--text-1)">说</b>，信是<b style="color:var(--text-1)">写</b>。
+          信可以很长，可以停顿，可以说一半就停。她回信时会用比日常更慢的语气。
+        </div>
+        <button class="btn block" style="margin-top:12px">写一封信给她</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 19. 时间胶囊 ============ -->
+  <section class="screen" data-screen="capsule" data-title="时间胶囊">
+    <div class="topbar">
+      <button class="iconbtn bare" data-back="me">‹</button>
+      <div class="grow"><div class="eyebrow">写给未来的话</div><div class="h2">时间胶囊</div></div>
+      <button class="iconbtn bare" title="新建">＋</button>
+    </div>
+
+    <div class="capsule">
+      <div class="jar"></div>
+      <div class="ct">把话，留到那一天再说</div>
+      <div class="cs">写下一段话并指定开启日期。<br>到那一天，她会把它作为一条消息发给你。</div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>她留给你的</h3><span class="sub">她也会写</span></div>
+      <div class="capsule-row locked">
+        <div class="cd">99<small>天</small></div>
+        <div class="grow">
+          <div class="row tight">
+            <span class="ct2">爱丽丝 写给你的胶囊</span>
+            <span class="chip amber" style="padding:2px 7px">未到开启日</span>
+          </div>
+          <div class="cs2">开启日 2026年12月25日<br>她说：「到时候再给你看。」</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h3>你留给她的</h3><a>全部 3 个</a></div>
+      <div class="capsule-row">
+        <div class="cd">12<small>天</small></div>
+        <div class="grow">
+          <div class="ct2">她生日那天要说的话</div>
+          <div class="cs2">开启日 2026年9月29日 · 会在当天清晨作为第一条消息发出</div>
+        </div>
+      </div>
+      <div class="capsule-row">
+        <div class="cd">8<small>天</small></div>
+        <div class="grow">
+          <div class="ct2">中秋那天想跟她一起做的三件事</div>
+          <div class="cs2">开启日 2026年9月25日</div>
+        </div>
+      </div>
+      <div class="capsule-row">
+        <div class="cd">365<small>天</small></div>
+        <div class="grow">
+          <div class="ct2">一年后再打开 —— 关于我们</div>
+          <div class="cs2">开启日 2027年9月17日 · 那时关系会变成什么样呢</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="card raised">
+        <div class="row">
+          <span class="ic" style="width:34px;height:34px;display:grid;place-items:center;background:rgba(232,200,122,.16);border-radius:11px">🔒</span>
+          <div class="grow" style="margin-left:12px">
+            <div style="font-size:14px;font-weight:600">封存期间不可提前打开</div>
+            <div class="sub" style="margin-top:2px">内容以加密形式保存在本地，连她也不会在到期前引用它</div>
+          </div>
+        </div>
+      </div>
+      <div class="sub" style="margin-top:12px;line-height:1.8">
+        到期当天，胶囊会以「特别消息」的形式送达：一条主动消息 + 一次记忆写入 + 一条事件。
+        如果你愿意，也可以让它成为剧情分支的一个入口。
+      </div>
+    </div>
+  </section>
+
+  </div><!-- /viewport -->
+
+  <!-- ==================== 消息操作菜单 ==================== -->
+  <div class="overlay" id="ov-msgMenu">
+    <div class="mask" data-close></div>
+    <div class="sheet">
+      <div class="grip"></div>
+      <div class="title">消息操作</div>
+      <div class="menu">
+        <button><i>↻</i>重新生成</button>
+        <button><i>→</i>继续生成</button>
+        <button><i>✎</i>编辑</button>
+        <button><i>⧉</i>复制</button>
+        <button><i>★</i>收藏</button>
+        <button><i>🧠</i>加入记忆</button>
+        <button><i>📖</i>创建事件</button>
+        <button><i>⑂</i>从这里分支</button>
+        <button><i>▶</i>转为语音</button>
+        <button><i>⬇</i>导出图片</button>
+        <button class="danger"><i>🗑</i>删除</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 主动消息设置 ==================== -->
+  <div class="overlay" id="ov-proactiveSheet">
+    <div class="mask" data-close></div>
+    <div class="sheet">
+      <div class="grip"></div>
+      <div class="title">主动消息</div>
+      <div class="row" style="padding:10px 2px"><div class="grow"><b style="font-size:14px">允许角色主动找你</b>
+        <div class="sub" style="margin-top:2px">关闭后角色只在回复中说话</div></div><span class="switch on"></span></div>
+      <hr class="hairline">
+      <div class="row" style="padding:10px 2px"><div class="grow"><b style="font-size:14px">仅 Wi-Fi</b>
+        <div class="sub" style="margin-top:2px">避免消耗移动数据</div></div><span class="switch on"></span></div>
+      <hr class="hairline">
+      <div class="row" style="padding:10px 2px"><div class="grow"><b style="font-size:14px">每天最多</b>
+        <div class="sub" style="margin-top:2px">超出后自动延后到次日</div></div><span class="chip violet">5 条</span></div>
+      <hr class="hairline">
+      <div class="row" style="padding:10px 2px"><div class="grow"><b style="font-size:14px">勿扰时间</b>
+        <div class="sub" style="margin-top:2px">该时段内不推送</div></div><span class="chip">23:30 – 07:30</span></div>
+      <hr class="hairline">
+      <div class="row" style="padding:10px 2px"><div class="grow"><b style="font-size:14px">主动程度</b>
+        <div class="sub" style="margin-top:2px">克制 ←→ 黏人</div></div></div>
+      <div class="meter" style="margin:6px 2px 2px"><i style="width:55%;background:linear-gradient(90deg,#9B7BFF,#FFA657)"></i></div>
+      <div class="sub" style="margin:8px 2px 4px">当前：适中 · 会结合天气 / 时间 / 记忆 / 未完成事件决定是否发消息</div>
+    </div>
+  </div>
+
+  <!-- ==================== 底部 Tab ==================== -->
+  <nav class="tabbar" id="tabbar">
+    <button class="on" data-go="home"><i>◉</i>陪伴</button>
+    <button data-go="moments"><i>✦</i>世界</button>
+    <button data-go="discover"><i>⌕</i>发现</button>
+    <button data-go="me"><i>☺</i>我的</button>
+  </nav>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

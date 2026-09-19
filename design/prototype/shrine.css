@@ -1,0 +1,540 @@
+/* ==========================================================================
+   EchoFlow · 神社 / 每日运势
+   在「星轨」深色系统里开出一块暖色飞地：朱（鸟居）· 金（御守）· 和纸。
+   仍复用 Tokens 的圆角/字阶/动效，因此不破坏整体一致性。
+   ========================================================================== */
+
+:root {
+  --shrine-red: #E5544B;        /* 鸟居朱 */
+  --shrine-red-deep: #A8322C;
+  --shrine-gold: #E8C87A;       /* 御守金 */
+  --shrine-gold-deep: #B08D3C;
+  --washi: #F4ECDC;             /* 和纸 */
+  --washi-2: #E7DCC6;
+  --washi-ink: #3A3128;         /* 和纸上的墨 */
+  --washi-ink-2: #6B5E4C;
+  --shrine-night: #0E0A12;      /* 神社底色（比全局稍暖） */
+}
+
+/* ---------------- 神社主页 ---------------- */
+.shrine {
+  position: relative;
+  min-height: 100%;
+  background: var(--shrine-night);
+}
+.shrine-bg {
+  position: absolute; left: 0; right: 0; top: 0; height: 420px;
+  overflow: hidden;
+}
+.shrine-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+.shrine-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(7,7,13,.62) 0%, rgba(7,7,13,.08) 34%, rgba(14,10,18,.86) 78%, var(--shrine-night) 100%);
+}
+.shrine-nav { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; z-index: 20; }
+.shrine-body { position: relative; z-index: 10; padding: 0 16px 110px; }
+
+/* 花瓣飘落：只在她「在场」的页面出现，不与全局动效冲突 */
+.petals { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 5; }
+.petals i {
+  position: absolute; top: -6%; width: 9px; height: 9px;
+  background: radial-gradient(circle at 30% 30%, #FFD9E6, #F5A9C4);
+  border-radius: 60% 20% 60% 20%;
+  opacity: .75; animation: petal-fall linear infinite;
+}
+@keyframes petal-fall {
+  0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+  12%  { opacity: .8; }
+  100% { transform: translateY(460px) rotate(320deg) translateX(34px); opacity: 0; }
+}
+
+/* 朱印：神社的「已参拜」凭证 */
+.seal {
+  width: 54px; height: 54px; border-radius: 8px; flex: 0 0 auto;
+  border: 2.5px solid var(--shrine-red);
+  color: var(--shrine-red);
+  display: grid; place-items: center; text-align: center;
+  font-size: 13px; font-weight: 800; line-height: 1.15; letter-spacing: .5px;
+  transform: rotate(-6deg);
+  background: rgba(229,84,75,.08);
+  box-shadow: 0 0 18px rgba(229,84,75,.28);
+}
+.seal.blank { border-style: dashed; border-color: var(--text-3); color: var(--text-3); box-shadow: none; transform: rotate(0); }
+
+.shrine-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(232,200,122,.18);
+  border-radius: var(--r-lg);
+  padding: 14px;
+  backdrop-filter: blur(14px);
+}
+.shrine-card.gold { border-color: rgba(232,200,122,.42); background: rgba(232,200,122,.07); }
+
+.streak { display: flex; gap: 5px; align-items: center; }
+.streak i {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: rgba(255,255,255,.12); display: block;
+}
+.streak i.on { background: linear-gradient(135deg, var(--shrine-red), var(--shrine-gold)); box-shadow: 0 0 8px rgba(229,84,75,.55); }
+
+/* 陪你来参拜的角色：立绘「在场」 */
+.attendant { position: relative; height: 236px; margin: 0 -16px; }
+.attendant img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center 10%;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 72%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 72%, transparent 100%);
+}
+.attendant .say {
+  position: absolute; left: 16px; right: 16px; bottom: 4px;
+  background: rgba(20,16,26,.82); border: 1px solid var(--hairline);
+  border-radius: 16px 16px 16px 6px; padding: 11px 13px;
+  font-size: 13px; line-height: 1.65; backdrop-filter: blur(14px);
+}
+.attendant .say .who { color: var(--shrine-gold); font-weight: 700; margin-right: 6px; }
+
+/* ---------------- 摇签 ---------------- */
+/* .shrine-bg 是绝对定位的，静态兄弟节点会被它盖住，因此舞台上必须显式抬层 */
+.omikuji-stage {
+  position: relative; z-index: 10;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 560px; gap: 26px; padding: 20px 16px 40px;
+}
+.tube {
+  width: 108px; height: 190px; position: relative;
+  border-radius: 12px 12px 16px 16px;
+  background: linear-gradient(100deg, #8C3A2E 0%, #C4553F 22%, #E5804F 50%, #A5412F 78%, #7A2E24 100%);
+  box-shadow: 0 18px 40px rgba(0,0,0,.6), inset 0 0 26px rgba(0,0,0,.35);
+  border: 1px solid rgba(232,200,122,.35);
+}
+.tube::before { /* 筒口 */
+  content: ""; position: absolute; top: -7px; left: -4px; right: -4px; height: 16px;
+  border-radius: 50%; background: linear-gradient(180deg, #5E241C, #8C3A2E);
+  box-shadow: inset 0 2px 5px rgba(0,0,0,.7);
+}
+.tube .kanji {
+  position: absolute; top: 74px; left: 0; right: 0; text-align: center;
+  font-size: 30px; font-weight: 800; color: var(--shrine-gold);
+  text-shadow: 0 2px 6px rgba(0,0,0,.6); letter-spacing: 2px;
+}
+.tube .sticks { position: absolute; top: -26px; left: 12px; right: 12px; height: 34px; }
+.tube .sticks i {
+  position: absolute; bottom: 0; width: 7px; border-radius: 4px;
+  background: linear-gradient(180deg, #F4ECDC, #D9CBAC);
+  box-shadow: 0 0 3px rgba(0,0,0,.4);
+}
+.tube.shaking { animation: shake-tube .46s cubic-bezier(.36,.07,.19,.97) infinite; }
+@keyframes shake-tube {
+  0%,100% { transform: translateX(0) rotate(0); }
+  20% { transform: translateX(-11px) rotate(-3.5deg); }
+  50% { transform: translateX(9px) rotate(3deg); }
+  80% { transform: translateX(-5px) rotate(-1.5deg); }
+}
+.tube .glow {
+  position: absolute; inset: -30px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,200,122,.34), transparent 66%);
+  filter: blur(12px); opacity: 0; transition: opacity .4s var(--ease);
+}
+.tube.shaking .glow { opacity: 1; }
+
+.falling-stick {
+  width: 9px; height: 74px; border-radius: 5px;
+  background: linear-gradient(180deg, #F4ECDC, #CBB98F);
+  box-shadow: 0 6px 14px rgba(0,0,0,.5);
+  animation: stick-drop 1s var(--ease) forwards;
+}
+@keyframes stick-drop {
+  0%   { transform: translateY(-120px) rotate(-14deg); opacity: 0; }
+  60%  { transform: translateY(6px) rotate(6deg); opacity: 1; }
+  80%  { transform: translateY(-4px) rotate(-3deg); }
+  100% { transform: translateY(0) rotate(0); opacity: 1; }
+}
+
+.shake-hint { font-size: 12px; color: var(--shrine-gold); letter-spacing: .16em; }
+.prayer { font-size: 13px; color: var(--text-2); text-align: center; line-height: 1.8; max-width: 268px; }
+
+/* ---------------- 签文（和纸） ---------------- */
+.slip {
+  background:
+    radial-gradient(120% 80% at 20% 0%, #FFFFFF 0%, transparent 46%),
+    linear-gradient(158deg, var(--washi) 0%, var(--washi-2) 58%, #DCCFB4 100%);
+  color: var(--washi-ink);
+  border-radius: 6px 6px 10px 10px;
+  padding: 20px 18px 18px;
+  box-shadow: 0 22px 50px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.7);
+  position: relative;
+  overflow: hidden;
+}
+/* 和纸纤维感 */
+.slip::before {
+  content: ""; position: absolute; inset: 0; opacity: .5; pointer-events: none;
+  background-image:
+    repeating-linear-gradient(94deg, rgba(0,0,0,.028) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(2deg, rgba(0,0,0,.02) 0 1px, transparent 1px 6px);
+}
+.slip::after { /* 上下压痕 */
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 10px;
+  background: linear-gradient(180deg, rgba(0,0,0,.09), transparent);
+}
+.slip .slip-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  border-bottom: 1px solid rgba(58,49,40,.18); padding-bottom: 10px; margin-bottom: 12px;
+  position: relative; z-index: 2;
+}
+.slip .slip-no { font-size: 11px; color: var(--washi-ink-2); letter-spacing: .1em; font-variant-numeric: tabular-nums; }
+.slip .slip-date { font-size: 11px; color: var(--washi-ink-2); font-variant-numeric: tabular-nums; }
+
+.rank {
+  text-align: center; padding: 6px 0 12px;
+  position: relative; z-index: 2;
+}
+.rank .label { font-size: 11px; letter-spacing: .34em; color: var(--washi-ink-2); }
+.rank .word {
+  font-size: 62px; font-weight: 900; line-height: 1.06; letter-spacing: .06em;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  margin-top: 2px;
+}
+.rank.daikichi .word { background-image: linear-gradient(160deg, #C99A22, #E8C87A 46%, #A87A16); }
+.rank.kichi    .word { background-image: linear-gradient(160deg, #C4682B, #E8A263); }
+.rank.chukichi .word { background-image: linear-gradient(160deg, #6B4BC0, #A98BFF); }
+.rank.shokichi .word { background-image: linear-gradient(160deg, #2E8F78, #7FE0C4); }
+.rank.suekichi .word { background-image: linear-gradient(160deg, #57527A, #9C97BD); }
+.rank.kyo      .word { background-image: linear-gradient(160deg, #4A5A7A, #8FA6C9); }
+.rank .sum { font-size: 12px; color: var(--washi-ink-2); margin-top: 4px; line-height: 1.7; }
+
+.fortune-list { position: relative; z-index: 2; margin-top: 6px; }
+.frow {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 0; border-bottom: 1px dashed rgba(58,49,40,.16);
+}
+.frow:last-child { border-bottom: 0; }
+.frow .fk { font-size: 12px; font-weight: 700; width: 62px; flex: 0 0 auto; color: var(--washi-ink); }
+.frow .fbar { flex: 1; display: flex; gap: 3px; }
+.frow .fbar i {
+  flex: 1; height: 6px; border-radius: 3px; background: rgba(58,49,40,.14);
+}
+.frow .fbar i.on { background: linear-gradient(90deg, var(--shrine-red), var(--shrine-gold)); }
+.frow .fv { font-size: 11px; color: var(--washi-ink-2); width: 44px; text-align: right; flex: 0 0 auto; font-variant-numeric: tabular-nums; }
+
+.slip-meta { position: relative; z-index: 2; margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.slip-meta div {
+  background: rgba(58,49,40,.06); border-radius: 10px; padding: 8px 10px;
+  border: 1px solid rgba(58,49,40,.1);
+}
+.slip-meta .mk { font-size: 10px; color: var(--washi-ink-2); letter-spacing: .06em; }
+.slip-meta .mv { font-size: 13px; font-weight: 700; color: var(--washi-ink); margin-top: 2px; }
+.slip-meta .mv .dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; border: 1px solid rgba(0,0,0,.18); }
+
+.yi-ji { position: relative; z-index: 2; margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.yi-ji div { border-radius: 10px; padding: 9px 11px; font-size: 12px; line-height: 1.7; }
+.yi-ji .yi { background: rgba(46,143,120,.10); border: 1px solid rgba(46,143,120,.26); color: #1F6B58; }
+.yi-ji .ji { background: rgba(200,74,60,.09); border: 1px solid rgba(200,74,60,.24); color: #8E3227; }
+.yi-ji .h { font-size: 10px; letter-spacing: .18em; opacity: .8; display: block; margin-bottom: 3px; }
+
+.slip-foot {
+  position: relative; z-index: 2; margin-top: 16px; text-align: center;
+  font-size: 10px; color: var(--washi-ink-2); letter-spacing: .1em;
+  border-top: 1px solid rgba(58,49,40,.14); padding-top: 10px;
+}
+
+/* 角色解读：签文下方，她的语气 */
+.reading {
+  margin-top: 14px; padding: 14px;
+  border-radius: var(--r-lg);
+  background: linear-gradient(150deg, rgba(155,123,255,.16), rgba(232,200,122,.09));
+  border: 1px solid rgba(232,200,122,.28);
+}
+.reading .who { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; }
+.reading .who .nm { font-size: 13px; font-weight: 700; color: var(--shrine-gold); }
+.reading .who .tag { font-size: 10px; color: var(--text-3); }
+.reading p { font-size: 13px; line-height: 1.75; color: var(--text-1); }
+
+/* ---------------- 御守 ---------------- */
+.omamori-rail { display: flex; gap: 10px; overflow-x: auto; padding: 2px 16px 6px; margin: 0 -16px; scrollbar-width: none; }
+.omamori-rail::-webkit-scrollbar { display: none; }
+.omamori {
+  flex: 0 0 auto; width: 96px; border-radius: 14px; overflow: hidden;
+  background: linear-gradient(165deg, #2A2140, #1A1526);
+  border: 1px solid rgba(232,200,122,.26);
+  padding: 10px 8px 11px; text-align: center;
+  position: relative;
+}
+.omamori::before { /* 御守的织锦纹 */
+  content: ""; position: absolute; inset: 0; opacity: .5;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(232,200,122,.12) 0 2px, transparent 2px 7px),
+    repeating-linear-gradient(-45deg, rgba(232,200,122,.09) 0 2px, transparent 2px 7px);
+}
+.omamori .body { position: relative; z-index: 2; }
+.omamori .knot {
+  width: 22px; height: 22px; margin: 0 auto 7px; border-radius: 50%;
+  background: linear-gradient(140deg, var(--shrine-gold), var(--shrine-gold-deep));
+  box-shadow: 0 0 12px rgba(232,200,122,.4);
+  position: relative;
+}
+.omamori .knot::after {
+  content: ""; position: absolute; left: 50%; top: 100%; transform: translateX(-50%);
+  width: 2px; height: 10px; background: var(--shrine-gold);
+}
+.omamori .nm { font-size: 12px; font-weight: 800; color: var(--shrine-gold); letter-spacing: .04em; }
+.omamori .fx { font-size: 9.5px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
+.omamori.equipped { border-color: var(--shrine-gold); box-shadow: 0 0 22px rgba(232,200,122,.3); }
+.omamori.locked { opacity: .4; }
+
+/* ---------------- 绘马 ---------------- */
+.ema-wall {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.ema {
+  position: relative; border-radius: 10px 10px 14px 14px;
+  background: linear-gradient(168deg, #E7D3A8 0%, #D6BE8C 62%, #C4A876 100%);
+  color: #453A28; padding: 12px 11px 14px; min-height: 96px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.5);
+  overflow: hidden;
+}
+.ema::before { /* 木纹 */
+  content: ""; position: absolute; inset: 0; opacity: .55;
+  background-image: repeating-linear-gradient(97deg, rgba(90,70,40,.09) 0 1px, transparent 1px 5px);
+}
+.ema::after { /* 顶部挂绳孔 */
+  content: ""; position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
+  width: 7px; height: 7px; border-radius: 50%; background: #8B7040;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.6);
+}
+.ema .flame { font-size: 10px; font-weight: 700; color: #8A6A2E; position: relative; z-index: 2; text-align: center; }
+.ema .txt { font-size: 12px; line-height: 1.62; margin-top: 6px; position: relative; z-index: 2; }
+.ema .by { font-size: 10px; color: #7A6540; margin-top: 7px; position: relative; z-index: 2; }
+.ema.mine { box-shadow: 0 0 0 2px var(--shrine-red), 0 8px 24px rgba(229,84,75,.35); }
+.ema-new {
+  border-radius: 12px; border: 1px dashed rgba(232,200,122,.45);
+  background: rgba(232,200,122,.06); min-height: 96px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  color: var(--shrine-gold); font-size: 12px; font-weight: 700;
+}
+
+/* ---------------- 每日一言 / 角色日记 ---------------- */
+.diary {
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(120% 100% at 100% 0%, rgba(232,200,122,.10), transparent 52%),
+    rgba(255,255,255,.045);
+  border: 1px solid var(--hairline);
+  padding: 16px;
+}
+.diary .head { display: flex; align-items: center; gap: 10px; margin-bottom: 11px; }
+.diary .head .n { font-size: 11px; color: var(--text-3); letter-spacing: .1em; }
+.diary .line {
+  font-size: 14px; line-height: 1.95; color: var(--text-1);
+  letter-spacing: .02em;
+}
+.diary .line.tight { color: var(--text-2); }
+.diary .sign { text-align: right; font-size: 11px; color: var(--text-3); margin-top: 12px;
+  border-top: 1px dashed var(--hairline); padding-top: 9px; }
+
+/* ---------------- 纪念日倒计时 ---------------- */
+.anniv { display: flex; gap: 10px; overflow-x: auto; padding: 2px 16px 6px; margin: 0 -16px; scrollbar-width: none; }
+.anniv::-webkit-scrollbar { display: none; }
+.anniv-card {
+  flex: 0 0 auto; width: 138px; border-radius: 16px; padding: 12px;
+  background: linear-gradient(160deg, rgba(229,84,75,.14), rgba(232,200,122,.08));
+  border: 1px solid rgba(232,200,122,.26);
+}
+.anniv-card .d { font-size: 26px; font-weight: 800; letter-spacing: -.5px;
+  background: linear-gradient(120deg, var(--shrine-red), var(--shrine-gold));
+  -webkit-background-clip: text; background-clip: text; color: transparent; }
+.anniv-card .d small { font-size: 11px; font-weight: 700; -webkit-text-fill-color: var(--text-3); margin-left: 2px; }
+.anniv-card .t { font-size: 12px; font-weight: 700; margin-top: 4px; }
+.anniv-card .s { font-size: 10px; color: var(--text-3); margin-top: 3px; line-height: 1.5; }
+
+/* ---------------- 通用：屏幕颗粒质感 ---------------- */
+.screen::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  opacity: .035;
+  background-image: repeating-linear-gradient(0deg, #fff 0 1px, transparent 1px 3px);
+  mix-blend-mode: overlay;
+}
+
+/* ---------------- 美术升级：用真实场景图替换纯色面 ---------------- */
+
+/* 聊天背景：银月城的雨夜，压暗后不干扰文字可读性 */
+.screen[data-screen="chat"] {
+  background-image:
+    linear-gradient(180deg, rgba(11,11,20,.66) 0%, rgba(11,11,20,.88) 55%, rgba(11,11,20,.94) 100%),
+    url("assets/chat-bg-alice.jpg");
+  background-size: cover;
+  background-position: center 30%;
+}
+
+/* 发现页顶部：一层很淡的银杏，给页面一点季节感 */
+.screen[data-screen="discover"] {
+  background-image:
+    linear-gradient(180deg, rgba(11,11,20,.58) 0%, rgba(11,11,20,.90) 34%, rgba(11,11,20,.97) 56%, var(--night-800) 74%),
+    url("assets/campus-autumn.jpg");
+  background-size: 100% 420px;
+  background-repeat: no-repeat;
+  background-position: top center;
+}
+
+/* 角色主页立绘再压一层顶部渐隐，让返回按钮区域更干净 */
+.profile-hero .scrim::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(7,7,13,.45) 0%, rgba(7,7,13,0) 22%);
+}
+.profile-hero .scrim { position: relative; }
+
+/* 语音通话：用爱丽丝立绘做更柔和的底 */
+.call .bg img { object-position: center 12%; }
+
+/* 卡片轻微高光：给玻璃面一点「有厚度」的感觉 */
+.card, .shrine-card, .ef-glass-hl {
+  position: relative;
+}
+.card::after, .shrine-card::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(160deg, rgba(255,255,255,.055) 0%, rgba(255,255,255,0) 38%);
+}
+
+/* 首页英雄卡：底部按钮区再多一层保障可读性的暗部 */
+.hero-card .scrim::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 96px;
+  background: linear-gradient(180deg, rgba(7,7,13,0), rgba(7,7,13,.72));
+}
+.hero-card .scrim { position: relative; }
+
+/* ==========================================================================
+   信笺 Letters —— 对话之外的另一种说话方式
+   聊天是「说」，信是「写」。信可以很长，可以停顿，可以说一半就停。
+   ========================================================================== */
+
+:root {
+  --letter-paper: #F5F1FA;   /* 信纸 */
+  --letter-2: #E6DEF2;
+  --letter-ink: #3A3350;
+  --letter-ink-2: #6E6688;
+  --wax: #B03A2E;            /* 火漆 */
+  --wax-deep: #7E2620;
+}
+
+.letter {
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(120% 70% at 12% 0%, #FFFFFF 0%, transparent 44%),
+    linear-gradient(162deg, var(--letter-paper) 0%, var(--letter-2) 66%, #D8CEEC 100%);
+  color: var(--letter-ink);
+  border-radius: 4px 4px 12px 12px;
+  padding: 20px 18px 18px;
+  box-shadow: 0 20px 46px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.8);
+}
+/* 横格纸的暗示 */
+.letter::before {
+  content: ""; position: absolute; inset: 0; opacity: .5; pointer-events: none;
+  background-image: repeating-linear-gradient(180deg, transparent 0 27px, rgba(58,51,80,.10) 27px 28px);
+}
+.letter::after {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 26px;
+  background: linear-gradient(90deg, rgba(58,51,80,.07), transparent);
+  pointer-events: none;
+}
+.letter .inner { position: relative; z-index: 2; }
+.letter .to { font-size: 13px; font-weight: 700; color: var(--letter-ink); }
+.letter .greet { font-size: 12px; color: var(--letter-ink-2); margin-top: 3px; }
+.letter .body { font-size: 14px; line-height: 28px; margin-top: 14px; white-space: pre-wrap; }
+.letter .sign { text-align: right; font-size: 13px; margin-top: 16px; font-weight: 700; }
+.letter .date { text-align: right; font-size: 10px; color: var(--letter-ink-2); margin-top: 3px; letter-spacing: .1em; }
+.letter .ps { font-size: 12px; color: var(--letter-ink-2); margin-top: 14px;
+  border-top: 1px dashed rgba(58,51,80,.2); padding-top: 10px; line-height: 1.8; }
+.letter.mine { background: linear-gradient(162deg, #FFFDF7, #F3EEE2 66%, #E6DCC6); }
+
+/* 火漆封缄 */
+.wax {
+  width: 46px; height: 46px; border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #D0503F, var(--wax) 52%, var(--wax-deep));
+  box-shadow: 0 3px 10px rgba(0,0,0,.4), inset 0 -3px 8px rgba(0,0,0,.28), inset 0 3px 8px rgba(255,255,255,.18);
+  display: grid; place-items: center;
+  color: rgba(255,255,255,.85); font-size: 15px; font-weight: 800;
+  position: relative;
+}
+.wax::after { /* 压印的凹痕 */
+  content: ""; position: absolute; inset: 8px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,.22);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.35);
+}
+.wax.sealed { animation: wax-pulse 3.4s var(--ease) infinite; }
+@keyframes wax-pulse {
+  0%,100% { box-shadow: 0 3px 10px rgba(0,0,0,.4), inset 0 -3px 8px rgba(0,0,0,.28), inset 0 3px 8px rgba(255,255,255,.18), 0 0 0 0 rgba(176,58,46,.5); }
+  60% { box-shadow: 0 3px 10px rgba(0,0,0,.4), inset 0 -3px 8px rgba(0,0,0,.28), inset 0 3px 8px rgba(255,255,255,.18), 0 0 0 12px rgba(176,58,46,0); }
+}
+
+.letter-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 14px; border-radius: var(--r-md);
+  background: var(--glass); border: 1px solid var(--hairline);
+  margin-bottom: 9px;
+}
+.letter-row.unread { border-color: rgba(176,58,46,.38); background: rgba(176,58,46,.07); }
+.letter-row .who { font-size: 13px; font-weight: 700; }
+.letter-row .pre { font-size: 12px; color: var(--text-2); margin-top: 3px; line-height: 1.55;
+  display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.letter-row .when { font-size: 10px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+
+/* ==========================================================================
+   时间胶囊 Time Capsule —— 写给未来的话
+   ========================================================================== */
+
+.capsule {
+  position: relative; border-radius: var(--r-lg); overflow: hidden;
+  background:
+    radial-gradient(90% 70% at 50% 0%, rgba(232,200,122,.16), transparent 60%),
+    linear-gradient(168deg, #26203A 0%, #171327 68%, #100D1C 100%);
+  border: 1px solid rgba(232,200,122,.3);
+  padding: 18px 16px 16px;
+  text-align: center;
+}
+.capsule .jar {
+  width: 62px; height: 74px; margin: 0 auto 12px; position: relative;
+  border-radius: 10px 10px 16px 16px;
+  background: linear-gradient(160deg, rgba(232,200,122,.28), rgba(232,200,122,.08));
+  border: 1.5px solid rgba(232,200,122,.5);
+  box-shadow: 0 0 26px rgba(232,200,122,.22), inset 0 0 20px rgba(232,200,122,.14);
+}
+.capsule .jar::before { /* 瓶塞 */
+  content: ""; position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+  width: 30px; height: 10px; border-radius: 4px;
+  background: linear-gradient(180deg, #C9A24E, #8A6C2A);
+}
+.capsule .jar::after { /* 里面的光点 */
+  content: ""; position: absolute; left: 50%; top: 56%; transform: translate(-50%, -50%);
+  width: 12px; height: 12px; border-radius: 50%;
+  background: radial-gradient(circle, #FFF0C4, rgba(232,200,122,0));
+  animation: ember 2.8s var(--ease) infinite;
+}
+@keyframes ember {
+  0%,100% { opacity: .45; transform: translate(-50%,-50%) scale(.85); }
+  50%     { opacity: 1;   transform: translate(-50%,-50%) scale(1.25); }
+}
+.capsule .ct { font-size: 15px; font-weight: 800; color: var(--shrine-gold); }
+.capsule .cs { font-size: 11px; color: var(--text-2); margin-top: 5px; line-height: 1.7; }
+
+.capsule-row {
+  display: flex; gap: 11px; align-items: center;
+  padding: 13px 14px; border-radius: var(--r-md);
+  background: linear-gradient(150deg, rgba(232,200,122,.09), rgba(155,123,255,.06));
+  border: 1px solid rgba(232,200,122,.22);
+  margin-bottom: 9px;
+}
+.capsule-row .cd { font-size: 22px; font-weight: 800; letter-spacing: -.5px; min-width: 54px;
+  background: linear-gradient(120deg, var(--shrine-red), var(--shrine-gold));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  font-variant-numeric: tabular-nums; text-align: center; }
+.capsule-row .cd small { font-size: 10px; font-weight: 700; -webkit-text-fill-color: var(--text-3); display: block; }
+.capsule-row .ct2 { font-size: 13px; font-weight: 700; }
+.capsule-row .cs2 { font-size: 11px; color: var(--text-3); margin-top: 3px; line-height: 1.55; }
+.capsule-row.locked .ct2 { color: var(--text-2); }
+
+/* 拆封：未读信被打开时的纸张展开 */
+.unseal { animation: unseal .5s var(--ease) both; }
+@keyframes unseal {
+  from { transform: translateY(14px) scale(.97); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}

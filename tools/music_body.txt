@@ -1,0 +1,254 @@
+    /** 音乐：内置一首真曲子，能播能暂停能拖进度 */
+    private View musicBody() {
+        ScrollView sv = new ScrollView(this);
+        LinearLayout box = new LinearLayout(this);
+        box.setOrientation(LinearLayout.VERTICAL);
+        box.setBackgroundColor(0xFF14101F);
+        box.setPadding(dp(20), dp(20), dp(20), dp(24));
+        sv.addView(box);
+
+        // ---- 播放器卡片 ----
+        LinearLayout card = new LinearLayout(this);
+        card.setOrientation(LinearLayout.VERTICAL);
+        card.setGravity(Gravity.CENTER_HORIZONTAL);
+        card.setPadding(dp(18), dp(22), dp(18), dp(20));
+        card.setBackground(EfUi.roundRectPx(0x26FFFFFF, 0x1FFFFFFF, dp(18)));
+
+        // 封面：用当前角色的头像
+        ImageView cover = new ImageView(this);
+        int cs = dp(150);
+        cover.setLayoutParams(new LinearLayout.LayoutParams(cs, cs));
+        cover.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        cover.setBackground(EfUi.roundRectPx(0x22000000, 0x22FFFFFF, dp(16)));
+        cover.setClipToOutline(true);
+        List<CharacterCard> cards = PhoneStore.recentCards(this);
+        if (!cards.isEmpty()) {
+            android.graphics.Bitmap bmp = CardStore.loadAvatar(this, cards.get(0).id);
+            if (bmp != null) {
+                cover.setImageBitmap(bmp);
+            } else {
+                cover.setImageResource(R.drawable.app_icon);
+            }
+        } else {
+            cover.setImageResource(R.drawable.app_icon);
+        }
+        card.addView(cover);
+
+        TextView title = new TextView(this);
+        title.setText(MusicPlayer.builtinTitle());
+        title.setTextSize(17);
+        title.setTextColor(0xFFF4F2FF);
+        title.setTypeface(null, Typeface.BOLD);
+        title.setPadding(0, dp(16), 0, 0);
+        card.addView(title);
+
+        TextView sub = new TextView(this);
+        sub.setText("内置曲 · 182 秒 · 96kbps");
+        sub.setTextSize(11);
+        sub.setTextColor(0xFF8B84A8);
+        sub.setPadding(0, dp(4), 0, 0);
+        card.addView(sub);
+
+        // 进度条
+        seekBar = new android.widget.SeekBar(this);
+        LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        slp.topMargin = dp(16);
+        seekBar.setLayoutParams(slp);
+        seekBar.setMax(1000);
+        seekBar.setOnSeekBarChangeListener(new android.widget.SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(android.widget.SeekBar sb, int progress, boolean fromUser) {
+                if (fromUser && musicPlayer != null && musicPlayer.duration() > 0) {
+                    musicPlayer.seekTo(progress * musicPlayer.duration() / 1000);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(android.widget.SeekBar sb) {
+                dragging = true;
+            }
+
+            @Override
+            public void onStopTrackingTouch(android.widget.SeekBar sb) {
+                dragging = false;
+            }
+        });
+        card.addView(seekBar);
+
+        // 时间标签
+        LinearLayout timeRow = new LinearLayout(this);
+        timeRow.setOrientation(LinearLayout.HORIZONTAL);
+        timeRow.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        posText = new TextView(this);
+        posText.setText("0:00");
+        posText.setTextSize(11);
+        posText.setTextColor(0xFF8B84A8);
+        posText.setLayoutParams(new LinearLayout.LayoutParams(0,
+                ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+        timeRow.addView(posText);
+        durText = new TextView(this);
+        durText.setText("3:02");
+        durText.setTextSize(11);
+        durText.setTextColor(0xFF8B84A8);
+        timeRow.addView(durText);
+        card.addView(timeRow);
+
+        // 播放按钮
+        playBtn = new TextView(this);
+        playBtn.setText("▶");
+        playBtn.setTextSize(24);
+        playBtn.setGravity(Gravity.CENTER);
+        playBtn.setTextColor(0xFFFFFFFF);
+        LinearLayout.LayoutParams plp = new LinearLayout.LayoutParams(dp(64), dp(64));
+        plp.topMargin = dp(14);
+        playBtn.setLayoutParams(plp);
+        playBtn.setBackground(EfUi.roundRectPx(0xFF9B7BFF, 0, dp(32)));
+        playBtn.setOnClickListener(v -> {
+            if (musicPlayer == null) {
+                musicPlayer = new MusicPlayer();
+                musicPlayer.setListener((playing, pos, dur) -> runOnUiThread(() -> {
+                    playBtn.setText(playing ? "❚❚" : "▶");
+                }));
+            }
+            musicPlayer.play(this, MusicPlayer.builtinRes(), MusicPlayer.builtinTitle());
+            startProgressTimer();
+        });
+        card.addView(playBtn);
+
+        box.addView(card);
+
+        // ---- 说明 ----
+        TextView note = new TextView(this);
+        note.setText("这是应用内置的曲子，不需要联网，也不消耗任何额度。\n"
+                + "下面是她会在听这首歌时说的一句话。");
+        note.setTextSize(12);
+        note.setTextColor(0xFF8B84A8);
+        note.setLineSpacing(dp(4), 1f);
+        note.setPadding(dp(4), dp(18), dp(4), dp(10));
+        box.addView(note);
+
+        // ---- 每个角色对这首歌的说法 ----
+        for (int i = 0; i < cards.size(); i++) {
+            CharacterCard c = cards.get(i);
+            Schedule.Now now = Schedule.now(Schedule.load(this, c.id));
+            EmotionState emo = CharacterStateStore.loadEmotion(this, c.id);
+
+            LinearLayout row = new LinearLayout(this);
+            row.setOrientation(LinearLayout.HORIZONTAL);
+            row.setGravity(Gravity.CENTER_VERTICAL);
+            LinearLayout.LayoutParams rlp = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            rlp.bottomMargin = dp(8);
+            row.setLayoutParams(rlp);
+            row.setBackground(EfUi.roundRectPx(0x14FFFFFF, 0, dp(12)));
+            row.setPadding(dp(12), dp(10), dp(12), dp(10));
+
+            ImageView iv = new ImageView(this);
+            iv.setLayoutParams(new LinearLayout.LayoutParams(dp(34), dp(34)));
+            iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            android.graphics.Bitmap bmp = CardStore.loadAvatar(this, c.id);
+            if (bmp != null) {
+                iv.setImageBitmap(bmp);
+            } else {
+                iv.setImageResource(R.drawable.app_icon);
+            }
+            row.addView(iv);
+
+            TextView say = new TextView(this);
+            say.setText(c.name + "：" + songLine(c.id, now, emo));
+            say.setTextSize(12);
+            say.setTextColor(0xFFDDD8F0);
+            say.setPadding(dp(10), 0, 0, 0);
+            say.setLayoutParams(new LinearLayout.LayoutParams(0,
+                    ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+            row.addView(say);
+
+            final String cid = c.id;
+            row.setOnClickListener(v -> {
+                android.widget.Toast.makeText(this,
+                        CardStore.getCard(this, cid) == null ? "" :
+                                CardStore.getCard(this, cid).name + " 也在听这首",
+                        android.widget.Toast.LENGTH_SHORT).show();
+            });
+            box.addView(row);
+        }
+
+        return sv;
+    }
+
+    /** 每个角色对这首曲子的说法（按人设 + 当下状态） */
+    private String songLine(String cardId, Schedule.Now now, EmotionState emo) {
+        if (cardId == null) {
+            return "这首还行。";
+        }
+        switch (cardId) {
+            case "builtin_alice":
+                return "巡夜的时候听。这首正好。";
+            case "builtin_rin":
+                return "节奏不错。跑步能跟上。";
+            case "builtin_hakuyo":
+                return "像长曝光的时候，等快门的那段时间。";
+            case "builtin_rocco":
+                return "这首我循环了一下午，零件都装错两次。";
+            case "builtin_elian":
+                return "店里放这首，客人会坐久一点。";
+            case "builtin_yueling":
+                return "下雨的晚上听正合适。";
+            default:
+                return "这首还行。";
+        }
+    }
+
+    // 音乐播放相关
+    private MusicPlayer musicPlayer;
+    private android.widget.SeekBar seekBar;
+    private TextView posText, durText, playBtn;
+    private boolean dragging = false;
+    private android.os.Handler progressHandler;
+
+    private void startProgressTimer() {
+        if (progressHandler == null) {
+            progressHandler = new android.os.Handler(android.os.Looper.getMainLooper());
+        }
+        progressHandler.removeCallbacksAndMessages(null);
+        progressHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (musicPlayer != null && seekBar != null && !dragging) {
+                    int dur = musicPlayer.duration();
+                    int pos = musicPlayer.position();
+                    if (dur > 0) {
+                        seekBar.setProgress(pos * 1000 / dur);
+                        if (posText != null) {
+                            posText.setText(fmt(pos));
+                        }
+                        if (durText != null) {
+                            durText.setText(fmt(dur));
+                        }
+                    }
+                }
+                progressHandler.postDelayed(this, 500);
+            }
+        });
+    }
+
+    private String fmt(int ms) {
+        int s = ms / 1000;
+        return (s / 60) + ":" + (s % 60 < 10 ? "0" : "") + (s % 60);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (progressHandler != null) {
+            progressHandler.removeCallbacksAndMessages(null);
+        }
+        if (musicPlayer != null) {
+            musicPlayer.release();
+            musicPlayer = null;
+        }
+    }
+
+    /** 音乐：点进去看她为什么在听这首（用本地模型生成一句） */

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      应用名：星语 EchoFlow
+      「星语」是中文主名，「EchoFlow」保留为副名/英文名。
+      命名理由：「星」呼应设计系统的「星轨」与神社的「星念卡」，「语」直指对话本身。
+      两个字，好念、好记、不像工具。
+    -->
+    <string name="app_name">星语</string>
+    <string name="app_name_en">EchoFlow</string>
+    <string name="app_slogan">与你有关的，都会被记住</string>
+
+    <string name="input_hint">输入消息，Enter 发送</string>
+    <string name="send">发送</string>
+    <string name="generating">生成中…</string>
+    <string name="new_chat">新建</string>
+    <string name="settings">设置</string>
+    <string name="settings_title">设置</string>
+    <string name="label_base_url">API 地址</string>
+    <string name="label_api_key">API 密钥（Keystore 加密存储）</string>
+    <string name="label_model">模型名称</string>
+    <string name="save">保存配置</string>
+    <string name="back">返回</string>
+    <string name="toast_saved">配置已安全保存</string>
+    <string name="toast_need_key">请先到设置页填写 API 密钥</string>
+    <string name="current_model">当前模型：%1$s</string>
+</resources>

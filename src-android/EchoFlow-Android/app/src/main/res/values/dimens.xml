@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 「星轨」设计系统 · 尺寸与字阶 token -->
+    <dimen name="ef_page">16dp</dimen>
+    <dimen name="ef_section">22dp</dimen>
+    <dimen name="ef_s1">4dp</dimen>
+    <dimen name="ef_s2">8dp</dimen>
+    <dimen name="ef_s3">12dp</dimen>
+    <dimen name="ef_s4">16dp</dimen>
+    <dimen name="ef_s5">20dp</dimen>
+    <dimen name="ef_s6">24dp</dimen>
+
+    <dimen name="ef_r_xs">8dp</dimen>
+    <dimen name="ef_r_sm">12dp</dimen>
+    <dimen name="ef_r_md">16dp</dimen>
+    <dimen name="ef_r_lg">20dp</dimen>
+    <dimen name="ef_r_xl">28dp</dimen>
+    <dimen name="ef_r_tab">24dp</dimen>
+
+    <dimen name="ef_t_cap">11sp</dimen>
+    <dimen name="ef_t_foot">12sp</dimen>
+    <dimen name="ef_t_body">14sp</dimen>
+    <dimen name="ef_t_title">16sp</dimen>
+    <dimen name="ef_t_h3">20sp</dimen>
+    <dimen name="ef_t_h2">24sp</dimen>
+    <dimen name="ef_t_h1">30sp</dimen>
+
+    <!-- 触控最小区域 -->
+    <dimen name="ef_touch">44dp</dimen>
+</resources>

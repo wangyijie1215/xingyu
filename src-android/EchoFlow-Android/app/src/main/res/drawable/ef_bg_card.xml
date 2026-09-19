@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  内容卡片（v2）。
+  三处提升质感：
+    · 用「外层渐变描边 + 内层实底」叠出 1dp 渐变边（顶亮底暗，模拟受光）
+    · 顶部一道极淡高光，不是一圈等宽描边
+    · 圆角 20dp，更接近卡片而非按钮
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 描边层 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:startColor="#24FFFFFF"
+                android:endColor="#0AFFFFFF"
+                android:type="linear" />
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+    <!-- 实底层 -->
+    <item android:top="1dp" android:left="1dp" android:right="1dp" android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/surface" />
+            <corners android:radius="19dp" />
+        </shape>
+    </item>
+    <!-- 顶部高光 -->
+    <item android:gravity="top" android:top="1dp" android:left="20dp" android:right="20dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:startColor="#33FFFFFF"
+                android:endColor="#00FFFFFF"
+                android:type="linear" />
+            <size android:height="1dp" />
+        </shape>
+    </item>
+</layer-list>

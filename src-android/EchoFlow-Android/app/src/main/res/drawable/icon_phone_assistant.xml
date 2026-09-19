@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 通用助手：聊天气泡 + 齿轮（表示工具性） -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp" android:height="48dp"
+    android:viewportWidth="48" android:viewportHeight="48">
+    <path android:fillColor="#607D8B"
+        android:pathData="M10,2 L38,2 A8,8 0 0 1 46,10 L46,38 A8,8 0 0 1 38,46 L10,46 A8,8 0 0 1 2,38 L2,10 A8,8 0 0 1 10,2 Z" />
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M24,13 C17,13 11.5,17.4 11.5,22.9 C11.5,26.1 13.4,28.9 16.4,30.8 L15.2,35.2 L20.2,32.4 C21.4,32.8 22.7,33 24,33 C31,33 36.5,28.6 36.5,23.1 C36.5,17.4 31,13 24,13 Z" />
+    <path android:fillColor="#607D8B"
+        android:pathData="M20,20 A2,2 0 1,1 19.99,20 Z" />
+    <path android:fillColor="#607D8B"
+        android:pathData="M28,20 A2,2 0 1,1 27.99,20 Z" />
+    <path android:fillColor="#607D8B" android:pathData="M21,26 L27,26 L27,28 L21,28 Z" />
+</vector>

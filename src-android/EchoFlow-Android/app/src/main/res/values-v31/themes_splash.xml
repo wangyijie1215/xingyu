@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 12+ 的启动画面由系统接管，不看 windowBackground。
+  必须在这里显式把底色设成深紫，否则冷启动会闪白屏。
+-->
+<resources>
+    <style name="Theme.EchoFlow.Splash" parent="Theme.EchoFlow">
+        <item name="android:windowSplashScreenBackground">#170F2C</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher_large</item>
+        <item name="android:windowSplashScreenAnimationDuration">0</item>
+        <item name="android:windowBackground">@drawable/splash_bg</item>
+        <item name="android:statusBarColor">#170F2C</item>
+        <item name="android:navigationBarColor">#0B0813</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>

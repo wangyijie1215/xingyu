@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 天气：云 + 太阳 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp" android:height="48dp"
+    android:viewportWidth="48" android:viewportHeight="48">
+    <path android:fillColor="#4FC3F7"
+        android:pathData="M10,2 L38,2 A8,8 0 0 1 46,10 L46,38 A8,8 0 0 1 38,46 L10,46 A8,8 0 0 1 2,38 L2,10 A8,8 0 0 1 10,2 Z" />
+    <path android:fillColor="#FFD54F" android:pathData="M31,15 A6,6 0 1,1 30.99,15 Z" />
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M16,32 C12.7,32 10,29.7 10,26.8 C10,24.1 12.2,21.9 15,21.6 C15.9,18.5 18.8,16.4 22.2,16.4 C26.2,16.4 29.5,19.2 30.1,22.9 C33.4,23.1 36,25.6 36,28.7 C36,31.9 33.3,34.4 30,34.4 L16,34.4 Z" />
+</vector>

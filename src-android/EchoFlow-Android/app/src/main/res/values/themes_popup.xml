@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  弹出菜单 / 对话框的专用主题。
+
+  问题：PopupMenu 的item文字颜色来自 theme 的 textColorPrimary，
+  而 Theme.Material3.DayNight 在系统处于浅色模式时会给出**深色文字**，
+  弹在我们深紫背景上就成了"看不清"。
+
+  修法：显式指定一个深色底的 popup 主题，把背景和文字都钉死，
+  不跟随系统浅色/深色切换。
+-->
+<resources>
+    <style name="Theme.EchoFlow.PopupMenu" parent="Theme.Material3.Dark">
+        <item name="android:colorBackground">#241A3D</item>
+        <item name="android:textColorPrimary">#F4F2FF</item>
+        <item name="android:textColorSecondary">#B9A8FF</item>
+        <item name="colorPrimary">#9B7BFF</item>
+        <item name="colorSurface">#2C2148</item>
+        <item name="android:popupBackground">@drawable/ef_popup_bg</item>
+    </style>
+
+    <!-- 对话框（关于、菜单等）也用深色 -->
+    <style name="Theme.EchoFlow.Dialog" parent="Theme.Material3.Dark.Dialog.Alert">
+        <item name="android:colorBackground">#241A3D</item>
+        <item name="android:textColorPrimary">#F4F2FF</item>
+        <item name="colorPrimary">#9B7BFF</item>
+        <item name="colorSurface">#2C2148</item>
+    </style>
+</resources>

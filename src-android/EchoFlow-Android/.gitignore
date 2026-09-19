@@ -1,0 +1,54 @@
+# ── 凭证：绝对不能提交 ──────────────────────────
+#
+# 密钥库能让任何人签出冒充你更新的安装包。
+keystore.properties
+*.jks
+*.keystore
+
+# ── 构建产物 ──────────────────────────────────
+build/
+.gradle/
+local.properties
+*.apk
+*.aab
+*.ap_
+*.dex
+captures/
+.cxx/
+
+# ── IDE ──────────────────────────────────────
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.project
+.classpath
+.settings/
+
+# ── 系统 ─────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# ── 临时与调试 ────────────────────────────────
+#
+# 编译日志（我调试时 generate 的一堆）
+be*.txt
+t[0-9]*.txt
+o[0-9]*.txt
+p[0-9]*.txt
+q[0-9]*.txt
+rel*.txt
+*.log
+
+# 反编译输出、临时工作目录
+decompiled/
+_cls*/
+tmp/
+temp/
+
+# 源码备份（这些是我改坏源码时的恢复点，不该进版本库 ——
+# 有 git 之后本就不需要它们了）
+_backup*/

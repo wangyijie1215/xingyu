@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ======================================================================
+         星语「星轨 · 夜色」设计系统 v2
+
+         与 v1 的差别（这次美术升级的核心）：
+           · **拉开了背景层次**：原来底色 #07070D 到 #242438 之间跨度过大，
+             卡片直接压在底上显得"浮"。现在是四级递进的夜色阶。
+           · **提高了正文对比度**：text_2 从 #ABA6C6 提到 #C3BEDB，
+             原来在深底上偏灰、字看着"脏"。
+           · **收紧了描边**：描边统一用 8% 白，不再有的地方 10% 有的 6%。
+           · **新增 surface / overlay / danger 三组**，弹窗和遮罩不再各写各的。
+
+         页面禁止硬编码色值，一律引用此处。
+         ====================================================================== -->
+
+    <!-- ============ 夜色阶（背景四级，从底到顶）============ -->
+    <color name="ef_night_900">#08060F</color>
+    <color name="ef_night_800">#0D0A18</color>
+    <color name="ef_night_700">#141026</color>
+    <color name="ef_night_600">#1B1533</color>
+    <color name="ef_night_500">#231B40</color>
+    <color name="ef_night_400">#2C2350</color>
+
+    <!-- 语义别名：按"用途"引用，不按"明度" -->
+    <color name="bg_page">#0D0A18</color>
+    <color name="bg_card">#1B1533</color>
+    <color name="surface">#1B1533</color>
+    <color name="surface_hi">#231B40</color>
+    <color name="surface_hi2">#2C2350</color>
+    <color name="overlay">#B308060F</color>
+
+    <!-- ============ 主色 · 星轨紫 ============ -->
+    <color name="ef_primary">#9B7BFF</color>
+    <color name="ef_primary_light">#C7A8FF</color>
+    <color name="ef_primary_deep">#7A54F0</color>
+    <color name="ef_primary_16">#2A9B7BFF</color>
+    <color name="ef_primary_42">#6B9B7BFF</color>
+
+    <!-- ============ 羁绊 · 灯火橙 ============ -->
+    <color name="ef_bond">#FFA657</color>
+    <color name="ef_bond_light">#FFC78A</color>
+    <color name="ef_bond_14">#24FFA657</color>
+    <color name="ef_bond_38">#61FFA657</color>
+
+    <!-- ============ 情绪 · 蔷薇 ============ -->
+    <color name="ef_emotion">#FF9BB0</color>
+    <color name="ef_emotion_14">#24FF9BB0</color>
+    <color name="ef_emotion_38">#61FF9BB0</color>
+    <color name="ef_emotion_deep">#8E3227</color>
+
+    <!-- ============ 记忆 · 薄荷 ============ -->
+    <color name="ef_memory">#7FE0C4</color>
+    <color name="ef_memory_14">#247FE0C4</color>
+    <color name="ef_memory_38">#617FE0C4</color>
+
+    <!-- ============ 语音 · 天青 ============ -->
+    <color name="ef_voice">#79D3F5</color>
+    <color name="ef_voice_14">#2479D3F5</color>
+    <color name="ef_voice_38">#6179D3F5</color>
+
+    <!-- ============ 成长 · 新芽 ============ -->
+    <color name="ef_growth">#B9E07F</color>
+
+    <!-- ============ 警示 ============ -->
+    <color name="ef_danger">#FF6B6B</color>
+    <color name="ef_danger_14">#24FF6B6B</color>
+
+    <!-- ============ 文字（四级）============ -->
+    <color name="ef_text_1">#F6F4FF</color>
+    <color name="ef_text_2">#C3BEDB</color>
+    <color name="ef_text_3">#8B84A8</color>
+    <color name="ef_text_4">#5A5478</color>
+
+    <!-- ============ 面 / 描边（统一 8% 白）============ -->
+    <color name="ef_hairline">#14FFFFFF</color>
+    <color name="ef_hairline_strong">#24FFFFFF</color>
+    <color name="ef_glass">#0EFFFFFF</color>
+    <color name="ef_glass_2">#17FFFFFF</color>
+    <color name="ef_track">#1AFFFFFF</color>
+    <color name="ef_mask">#B308060F</color>
+
+    <!-- ===== 神社暖色飞地（仅神社 / 信笺 / 胶囊相关页面使用） ===== -->
+    <color name="ef_shrine_red">#E5544B</color>
+    <color name="ef_shrine_red_deep">#A8322C</color>
+    <color name="ef_shrine_gold">#E8C87A</color>
+    <color name="ef_shrine_gold_deep">#B08D3C</color>
+    <color name="ef_shrine_gold_20">#33E8C87A</color>
+    <color name="ef_shrine_gold_42">#6BE8C87A</color>
+    <color name="ef_washi">#F4ECDC</color>
+    <color name="ef_washi_2">#E7DCC6</color>
+    <color name="ef_washi_3">#DCCFB4</color>
+    <color name="ef_washi_ink">#3A3128</color>
+    <color name="ef_washi_ink_2">#6B5E4C</color>
+    <color name="ef_shrine_night">#0E0A12</color>
+
+    <!-- 签运等级色（六档，各自两色做渐变） -->
+    <color name="ef_rank_daikichi_a">#C99A22</color>
+    <color name="ef_rank_daikichi_b">#E8C87A</color>
+    <color name="ef_rank_kichi_a">#C4682B</color>
+    <color name="ef_rank_kichi_b">#E8A263</color>
+    <color name="ef_rank_chukichi_a">#6B4BC0</color>
+    <color name="ef_rank_chukichi_b">#A98BFF</color>
+    <color name="ef_rank_shokichi_a">#2E8F78</color>
+    <color name="ef_rank_shokichi_b">#7FE0C4</color>
+    <color name="ef_rank_suekichi_a">#57527A</color>
+    <color name="ef_rank_suekichi_b">#9C97BD</color>
+    <color name="ef_rank_kyo_a">#4A5A7A</color>
+    <color name="ef_rank_kyo_b">#8FA6C9</color>
+
+    <!-- ===== 漂流瓶 · 海 ===== -->
+    <color name="sea_deep">#0A0F1D</color>
+    <color name="sea_mid">#121A2E</color>
+    <color name="sea_high">#1B2540</color>
+    <color name="moon">#F6EFD8</color>
+
+    <!-- ===== 微信风（手机内的应用）===== -->
+    <color name="wx_bg">#EDEDED</color>
+    <color name="wx_green">#07C160</color>
+    <color name="wx_bubble_me">#95EC69</color>
+    <color name="wx_text">#1A1A1A</color>
+    <color name="wx_text_2">#999999</color>
+    <color name="wx_red">#FA5151</color>
+
+    <!-- ===== 兼容旧引用（v3.0 原有资源名，逐步废弃）===== -->
+    <color name="brand_blue">#9B7BFF</color>
+    <color name="accent_cyan">#79D3F5</color>
+    <color name="accent_purple">#9B7BFF</color>
+    <color name="bg_ai_bubble">#1B1533</color>
+    <color name="bg_input">#231B40</color>
+    <color name="text_primary">#F6F4FF</color>
+    <color name="text_secondary">#C3BEDB</color>
+    <color name="divider">#14FFFFFF</color>
+    <color name="user_bubble_end">#7A54F0</color>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 用户气泡：星轨紫渐变，与设计系统的「你的气泡」一致 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="135"
+        android:startColor="@color/ef_primary"
+        android:endColor="@color/ef_primary_deep"
+        android:type="linear" />
+    <corners android:radius="18dp" />
+</shape>

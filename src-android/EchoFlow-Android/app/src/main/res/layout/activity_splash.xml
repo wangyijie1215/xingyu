@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  开屏动画：图标从中心放大淡入，标语随后上浮。
+  用纯 XML + 代码动画实现，不引入 Lottie（一个开屏不值得加个依赖）。
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_bg">
+
+    <!-- 背景光晕 -->
+    <View
+        android:id="@+id/splash_glow"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_gravity="center"
+        android:background="@drawable/splash_glow" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/splash_icon"
+            android:layout_width="108dp"
+            android:layout_height="108dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_launcher_large" />
+
+        <TextView
+            android:id="@+id/splash_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:letterSpacing="0.18"
+            android:text="@string/app_name"
+            android:textColor="#F4F2FF"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/splash_slogan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:letterSpacing="0.08"
+            android:text="@string/app_slogan"
+            android:textColor="#8B84A8"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- 底部品牌行 -->
+    <TextView
+        android:id="@+id/splash_footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="42dp"
+        android:letterSpacing="0.1"
+        android:text="EchoFlow · 本地模型可用"
+        android:textColor="#5A5478"
+        android:textSize="11sp" />
+</FrameLayout>

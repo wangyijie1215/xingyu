@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 开屏背景：深紫夜空 + 中心微亮 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:startColor="#241540"
+                android:centerColor="#170F2C"
+                android:endColor="#0B0813"
+                android:type="linear" />
+        </shape>
+    </item>
+</layer-list>

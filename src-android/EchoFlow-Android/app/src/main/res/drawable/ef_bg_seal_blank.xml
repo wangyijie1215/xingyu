@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 朱印：虚线灰印（未参拜） -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@android:color/transparent" />
+    <stroke android:width="2dp" android:color="@color/ef_text_3" android:dashWidth="5dp" android:dashGap="3dp" />
+    <corners android:radius="8dp" />
+</shape>

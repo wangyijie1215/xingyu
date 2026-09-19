@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 语音/通话图标：一支话筒 + 声波 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- 话筒头 -->
+    <path
+        android:fillColor="#79D3F5"
+        android:pathData="M12,2.6c-1.9,0 -3.4,1.5 -3.4,3.4v5.6c0,1.9 1.5,3.4 3.4,3.4s3.4,-1.5 3.4,-3.4V6c0,-1.9 -1.5,-3.4 -3.4,-3.4z" />
+
+    <!-- 话筒支架 -->
+    <path
+        android:strokeColor="#EEF4FF"
+        android:strokeWidth="1.5"
+        android:fillColor="#00000000"
+        android:strokeLineCap="round"
+        android:pathData="M6.2,10.6v1.1c0,3.2 2.6,5.8 5.8,5.8s5.8,-2.6 5.8,-5.8v-1.1" />
+
+    <!-- 立柱 -->
+    <path
+        android:strokeColor="#EEF4FF"
+        android:strokeWidth="1.5"
+        android:fillColor="#00000000"
+        android:strokeLineCap="round"
+        android:pathData="M12,17.5v3.4" />
+
+    <!-- 底座 -->
+    <path
+        android:strokeColor="#EEF4FF"
+        android:strokeWidth="1.5"
+        android:fillColor="#00000000"
+        android:strokeLineCap="round"
+        android:pathData="M8.6,20.9h6.8" />
+
+    <!-- 左侧声波 -->
+    <path
+        android:strokeColor="#9B7BFF"
+        android:strokeWidth="1.4"
+        android:fillColor="#00000000"
+        android:strokeLineCap="round"
+        android:pathData="M3.4,9.6v4.8" />
+
+    <!-- 右侧声波 -->
+    <path
+        android:strokeColor="#9B7BFF"
+        android:strokeWidth="1.4"
+        android:fillColor="#00000000"
+        android:strokeLineCap="round"
+        android:pathData="M20.6,9.6v4.8" />
+</vector>

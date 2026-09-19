@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  头像外圈：描边圆环，不填充。
+  原实现是实心白圆 + padding，会把 PNG 挤在中间压扁（截图中头像变成扁的）。
+  改成只画 stroke，让图片自己铺满。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@android:color/transparent" />
+    <stroke android:width="2dp" android:color="#40FFFFFF" />
+</shape>

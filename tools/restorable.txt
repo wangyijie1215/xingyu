@@ -1,0 +1,11 @@
+﻿BuiltinLorebooks.java
+CapsuleActivity.java
+CapsuleService.java
+CardChatActivity.java
+CharacterProfileActivity.java
+DiaryActivity.java
+DiaryService.java
+EmaActivity.java
+EmaStore.java
+FortuneActivity.java
+FortuneService.java

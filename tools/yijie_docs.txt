@@ -1,0 +1,96 @@
+    /** 我的文档：列出写文档技能的产物 */
+    private void showDocs() {
+        java.util.List<File> docs = Skill.documents(this);
+        if (docs.isEmpty()) {
+            new androidx.appcompat.app.AlertDialog.Builder(this)
+                    .setTitle("我的文档")
+                    .setMessage("还没有文档。\n\n"
+                            + "在菜单里选「写文档」技能，然后让它写点什么，"
+                            + "生成的 Markdown 会自动存到这里。")
+                    .setPositiveButton("好", null)
+                    .show();
+            return;
+        }
+        String[] names = new String[docs.size()];
+        for (int i = 0; i < docs.size(); i++) {
+            names[i] = docs.get(i).getName();
+        }
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("我的文档（" + docs.size() + "）")
+                .setItems(names, (d, which) -> openDoc(names[which]))
+                .setNeutralButton("全删", (d, w) -> {
+                    for (String n : names) {
+                        Skill.deleteDoc(this, n);
+                    }
+                    Toast.makeText(this, "已清空", Toast.LENGTH_SHORT).show();
+                })
+                .show();
+    }
+
+    /** 打开一篇文档：可读、可复制、可分享 */
+    private void openDoc(String name) {
+        File f = Skill.docFile(this, name);
+        if (!f.exists()) {
+            Toast.makeText(this, "文件不见了", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String content;
+        try {
+            StringBuilder sb = new StringBuilder();
+            try (java.io.FileReader fr = new java.io.FileReader(f)) {
+                char[] buf = new char[4096];
+                int n;
+                while ((n = fr.read(buf)) > 0) {
+                    sb.append(buf, 0, n);
+                }
+            }
+            content = sb.toString();
+        } catch (Exception e) {
+            Toast.makeText(this, "读取失败", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        android.widget.ScrollView sv = new android.widget.ScrollView(this);
+        android.widget.TextView tv = new android.widget.TextView(this);
+        tv.setText(content);
+        tv.setTextSize(13);
+        tv.setTextIsSelectable(true);
+        tv.setPadding(dp(16), dp(16), dp(16), dp(16));
+        tv.setLineSpacing(dp(3), 1f);
+        sv.addView(tv);
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle(name)
+                .setView(sv)
+                .setPositiveButton("关", null)
+                .setNeutralButton("导出", (d, w) -> exportDoc(name, content))
+                .show();
+    }
+
+    /** 导出到外部存储的 Downloads（无需权限，走 MediaStore 或用应用私有目录） */
+    private void exportDoc(String name, String content) {
+        try {
+            File outDir = new File(getExternalFilesDir(null), "docs");
+            if (!outDir.exists()) {
+                outDir.mkdirs();
+            }
+            File out = new File(outDir, name);
+            try (java.io.FileWriter fw = new java.io.FileWriter(out)) {
+                fw.write(content);
+            }
+            new androidx.appcompat.app.AlertDialog.Builder(this)
+                    .setTitle("已导出")
+                    .setMessage("文件位置：\n" + out.getAbsolutePath()
+                            + "\n\n这个路径在 Android/data/com.echoflow.chat/files/docs 下，"
+                            + "用文件管理器能找到。")
+                    .setPositiveButton("好", null)
+                    .show();
+        } catch (Exception e) {
+            Toast.makeText(this, "导出失败：" + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private int dp(int v) {
+        return Math.round(v * getResources().getDisplayMetrics().density);
+    }
+

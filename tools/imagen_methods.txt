@@ -1,0 +1,138 @@
+    /** 自定义提示词输入框 */
+    private EditText promptInput;
+    /** 渠道信息展示 */
+    private TextView channelInfo;
+
+    /** 用用户自己写的提示词生成 */
+    private void genCustomPrompt() {
+        String p = promptInput == null ? "" : promptInput.getText().toString().trim();
+        if (p.isEmpty()) {
+            Toast.makeText(this, "先写一句提示词吧", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        // key 用提示词的哈希，所以同一个提示词永远出同一张图
+        run(p, "custom_" + Math.abs(p.hashCode()), 640, 896);
+    }
+
+    /** 渠道选择 + ComfyUI 探测 */
+    private void openChannelPicker() {
+        final ImageProvider.Config cfg = ImageProvider.load(this);
+        String[] items = {
+                (ImageProvider.KIND_CLOUD.equals(cfg.kind) ? "● " : "○ ") + "Pollinations（免费，画质一般）",
+                (ImageProvider.KIND_COMFY.equals(cfg.kind) ? "● " : "○ ") + "本地 ComfyUI（画质最好）",
+                (ImageProvider.KIND_CUSTOM.equals(cfg.kind) ? "● " : "○ ") + "自定义 HTTP 端点",
+                "── 设置画风后缀",
+                "── 检测 ComfyUI"
+        };
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("生图渠道")
+                .setItems(items, (d, w) -> {
+                    switch (w) {
+                        case 0:
+                            cfg.kind = ImageProvider.KIND_CLOUD;
+                            ImageProvider.save(this, cfg);
+                            updateChannelInfo();
+                            Toast.makeText(this, "已切到 Pollinations", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 1:
+                            cfg.kind = ImageProvider.KIND_COMFY;
+                            ImageProvider.save(this, cfg);
+                            updateChannelInfo();
+                            editComfyHost(cfg);
+                            break;
+                        case 2:
+                            cfg.kind = ImageProvider.KIND_CUSTOM;
+                            ImageProvider.save(this, cfg);
+                            updateChannelInfo();
+                            editCustomUrl(cfg);
+                            break;
+                        case 3:
+                            editStyle(cfg);
+                            break;
+                        case 4:
+                            detectComfy(cfg);
+                            break;
+                    }
+                })
+                .show();
+    }
+
+    private void editComfyHost(ImageProvider.Config cfg) {
+        final EditText in = new EditText(this);
+        in.setText(cfg.comfyHost);
+        in.setHint("192.168.1.100:8188");
+        in.setTextColor(0xFF1A1A1A);
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("ComfyUI 地址")
+                .setMessage("模拟器填 10.0.2.2:8188\n真机填电脑的局域网 IP，例如 192.168.1.100:8188")
+                .setView(in)
+                .setPositiveButton("保存并检测", (d, w) -> {
+                    cfg.comfyHost = in.getText().toString().trim();
+                    ImageProvider.save(this, cfg);
+                    updateChannelInfo();
+                    detectComfy(cfg);
+                })
+                .setNegativeButton("取消", null)
+                .show();
+    }
+
+    private void editCustomUrl(ImageProvider.Config cfg) {
+        final EditText in = new EditText(this);
+        in.setText(cfg.customUrl);
+        in.setHint("https://your-api/gen?prompt={prompt}&w={width}&h={height}");
+        in.setTextColor(0xFF1A1A1A);
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("自定义端点")
+                .setMessage("任何「给提示词返回图片」的 HTTP 服务都可以。\n"
+                        + "可用占位符：{prompt} {width} {height}")
+                .setView(in)
+                .setPositiveButton("保存", (d, w) -> {
+                    cfg.customUrl = in.getText().toString().trim();
+                    ImageProvider.save(this, cfg);
+                    updateChannelInfo();
+                })
+                .setNegativeButton("取消", null)
+                .show();
+    }
+
+    private void editStyle(ImageProvider.Config cfg) {
+        final EditText in = new EditText(this);
+        in.setText(cfg.styleSuffix);
+        in.setHint("masterpiece, best quality, anime style");
+        in.setTextColor(0xFF1A1A1A);
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("画风后缀")
+                .setMessage("这段会被追加到每个提示词后面，用来统一画风。\n留空则用默认。")
+                .setView(in)
+                .setPositiveButton("保存", (d, w) -> {
+                    cfg.styleSuffix = in.getText().toString().trim();
+                    ImageProvider.save(this, cfg);
+                    updateChannelInfo();
+                })
+                .setNegativeButton("取消", null)
+                .show();
+    }
+
+    private void detectComfy(ImageProvider.Config cfg) {
+        status.setText("正在检测 ComfyUI…");
+        status.setTextColor(0xFFE8C87A);
+        new Thread(() -> {
+            ImageProvider.Probe p = ImageProvider.probeComfy(cfg.comfyHost);
+            ui.post(() -> {
+                if (p.ok) {
+                    cfg.comfyHost = p.host;
+                    if (!p.checkpoints.isEmpty()) {
+                        cfg.comfyCkpt = p.checkpoints.get(0);
+                    }
+                    ImageProvider.save(this, cfg);
+                    updateChannelInfo();
+                    status.setText("✓ " + p.message + "\n用 " + cfg.comfyCkpt);
+                    status.setTextColor(0xFF7FE0C4);
+                } else {
+                    status.setText("✗ " + p.message);
+                    status.setTextColor(0xFFFF9BB0);
+                }
+            });
+        }).start();
+    }
+

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 手机桌面图标（矢量）：圆角方底 + 内部图形 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+
+    <path
+        android:fillColor="#3A6BD8"
+        android:pathData="M10,2 L38,2 A8,8 0 0 1 46,10 L46,38 A8,8 0 0 1 38,46 L10,46 A8,8 0 0 1 2,38 L2,10 A8,8 0 0 1 10,2 Z" />
+
+    <path android:fillColor="#FFFFFF" android:pathData="M24,14 A6,6 0 1,1 23.99,14 Z" />
+    <path android:fillColor="#FFFFFF" android:pathData="M13,37 C13,30.4 17.9,26 24,26 C30.1,26 35,30.4 35,37 Z" />
+</vector>

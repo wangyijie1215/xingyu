@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  开屏专用主题：把系统启动窗口背景设成深紫，
+  避免冷启动时先闪一下白屏再进开屏（那个白闪很明显）。
+-->
+<resources>
+    <style name="Theme.EchoFlow.Splash" parent="Theme.EchoFlow">
+        <item name="android:windowBackground">@drawable/splash_bg</item>
+        <item name="android:statusBarColor">#170F2C</item>
+        <item name="android:navigationBarColor">#0B0813</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>

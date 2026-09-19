@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 头像外环：圆角方 + 描边，配合 clipToOutline 把图片裁成圆角 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@android:color/transparent" />
+    <stroke android:width="2dp" android:color="#40FFFFFF" />
+    <corners android:radius="24dp" />
+</shape>

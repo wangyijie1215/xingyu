@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_page">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!--
+            这里必须是 ImageView：Java 侧的字段是 ImageView，且会调用 setImageBitmap。
+            原 v3.0 源码把它错写成了 TextView，导致打开"编辑角色"直接 ClassCastException 崩溃。
+        -->
+        <ImageView
+            android:id="@+id/avatar_preview"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/ef_bg_avatar_ring"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            android:src="@drawable/app_icon" />
+
+        <Button
+            android:id="@+id/btn_pick_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="选择头像（PNG）" />
+
+        <EditText
+            android:id="@+id/input_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="角色名称 *"
+            android:inputType="textCapWords"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/input_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="top"
+            android:hint="角色描述"
+            android:inputType="textMultiLine|textCapSentences"
+            android:minLines="4"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/input_personality"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="top"
+            android:hint="性格"
+            android:inputType="textMultiLine|textCapSentences"
+            android:minLines="2"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/input_scenario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="top"
+            android:hint="场景 / 世界设定"
+            android:inputType="textMultiLine|textCapSentences"
+            android:minLines="2"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/input_first_mes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="top"
+            android:hint="第一句话（First Message）"
+            android:inputType="textMultiLine|textCapSentences"
+            android:minLines="2"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/input_mes_example"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="top"
+            android:hint="示例对话（{{char}}: ... {{user}}: ...）"
+            android:inputType="textMultiLine|textCapSentences"
+            android:minLines="3"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/input_system_prompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="top"
+            android:hint="系统提示词（可选）"
+            android:inputType="textMultiLine"
+            android:minLines="2"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/input_post_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="top"
+            android:hint="Post History Instructions（可选）"
+            android:inputType="textMultiLine"
+            android:minLines="1"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/input_tags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="标签（逗号分隔）"
+            android:inputType="text"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/input_creator"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="作者"
+                android:inputType="textCapWords"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/input_version"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:hint="版本"
+                android:inputType="text"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/input_model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="覆盖模型名（留空用全局）"
+            android:inputType="text"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btn_save_card"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:text="保存角色" />
+    </LinearLayout>
+</ScrollView>

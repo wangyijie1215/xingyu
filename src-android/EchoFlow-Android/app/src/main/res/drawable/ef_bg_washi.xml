@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 和纸签文底：米白渐变 + 墨色细边 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="270"
+        android:startColor="@color/ef_washi"
+        android:centerColor="@color/ef_washi_2"
+        android:endColor="@color/ef_washi_3"
+        android:type="linear" />
+    <stroke android:width="1dp" android:color="#2E3A3128" />
+    <corners android:radius="10dp" />
+</shape>

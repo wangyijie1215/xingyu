@@ -1,0 +1,137 @@
+    private View weatherBody() {
+        ScrollView sv = new ScrollView(this);
+        LinearLayout box = new LinearLayout(this);
+        box.setOrientation(LinearLayout.VERTICAL);
+        box.setBackgroundColor(0xFF1A1030);
+        box.setPadding(dp(20), dp(28), dp(20), dp(24));
+        sv.addView(box);
+
+        // 显示"她那个世界"的天气，而不是手机所在地的天气。
+        // 天气由世界书决定：同一天 + 同一本世界书 = 同一个天气（确定性），
+        // 不同世界书的同一天，天是不一样的。
+        List<CharacterCard> allCards = PhoneStore.recentCards(this);
+        String worldId = null;
+        String worldName = null;
+        if (!allCards.isEmpty()) {
+            Lorebook w0 = Lorebook.currentWorld(this, allCards.get(0).id);
+            if (w0 != null) {
+                worldId = w0.id;
+                worldName = w0.name;
+            }
+        }
+        BuiltinLorebooks.Weather w = BuiltinLorebooks.todayWeather(worldId, Fortune.today());
+
+        TextView city = new TextView(this);
+        city.setText(worldName == null ? "本地天气" : "「" + worldName + "」今天");
+        city.setTextSize(14);
+        city.setTextColor(0xCCFFFFFF);
+        box.addView(city);
+
+        if (w != null) {
+            TextView temp = new TextView(this);
+            temp.setText(w.cond);
+            temp.setTextSize(40);
+            temp.setTextColor(0xFFFFFFFF);
+            temp.setTypeface(null, Typeface.BOLD);
+            box.addView(temp);
+
+            TextView range = new TextView(this);
+            range.setText(w.temp);
+            range.setTextSize(17);
+            range.setTextColor(0xFFE8C87A);
+            range.setPadding(0, dp(4), 0, 0);
+            box.addView(range);
+
+            TextView detail = new TextView(this);
+            detail.setText(w.detail);
+            detail.setTextSize(13);
+            detail.setTextColor(0xAAFFFFFF);
+            detail.setLineSpacing(dp(4), 1f);
+            detail.setPadding(0, dp(8), 0, dp(2));
+            box.addView(detail);
+        } else {
+            TextView no = new TextView(this);
+            no.setText("还没有世界书，无法判断那边的天气。");
+            no.setTextSize(13);
+            no.setTextColor(0xAAFFFFFF);
+            box.addView(no);
+        }
+
+        TextView note = new TextView(this);
+        note.setText("这是角色所在世界的天气，不是手机所在地的天气。\n"
+                + "由「世界书」决定 —— 换一本世界书，天就换了。");
+        note.setTextSize(11);
+        note.setTextColor(0x77FFFFFF);
+        note.setLineSpacing(dp(3), 1f);
+        note.setPadding(0, dp(12), 0, dp(4));
+        box.addView(note);
+
+        TextView when = new TextView(this);
+        when.setText(new SimpleDateFormat("M月d日 HH:mm", Locale.CHINA).format(new Date()));
+        when.setTextSize(12);
+        when.setTextColor(0x77FFFFFF);
+        when.setPadding(0, dp(4), 0, dp(24));
+        box.addView(when);
+
+        // 每个角色针对"自己世界的今天"说话
+        for (int ci = 0; ci < allCards.size(); ci++) {
+            CharacterCard c = allCards.get(ci);
+            Lorebook cw = Lorebook.currentWorld(this, c.id);
+            BuiltinLorebooks.Weather cweather =
+                    BuiltinLorebooks.todayWeather(cw == null ? null : cw.id, Fortune.today());
+
+            LinearLayout row = new LinearLayout(this);
+            row.setOrientation(LinearLayout.HORIZONTAL);
+            row.setGravity(Gravity.CENTER_VERTICAL);
+            LinearLayout.LayoutParams rlp = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            rlp.bottomMargin = dp(12);
+            row.setLayoutParams(rlp);
+            row.setBackground(EfUi.roundRectPx(0x1AFFFFFF, 0, dp(14)));
+            row.setPadding(dp(14), dp(12), dp(14), dp(12));
+
+            ImageView iv = new ImageView(this);
+            iv.setLayoutParams(new LinearLayout.LayoutParams(dp(38), dp(38)));
+            iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            android.graphics.Bitmap bmp = CardStore.loadAvatar(this, c.id);
+            if (bmp != null) {
+                iv.setImageBitmap(bmp);
+            } else {
+                iv.setImageResource(R.drawable.app_icon);
+            }
+            row.addView(iv);
+
+            String line;
+            if (cweather != null && cweather.lines.length > 0) {
+                int idx = Math.abs((c.id + Fortune.today()).hashCode()) % cweather.lines.length;
+                line = cweather.lines[idx];
+            } else {
+                line = "今天天气还行。";
+            }
+
+            LinearLayout col = new LinearLayout(this);
+            col.setOrientation(LinearLayout.VERTICAL);
+            col.setLayoutParams(new LinearLayout.LayoutParams(0,
+                    ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+            col.setPadding(dp(12), 0, 0, 0);
+
+            TextView say = new TextView(this);
+            say.setText(c.name);
+            say.setTextSize(12);
+            say.setTextColor(0xFFB9A8FF);
+            col.addView(say);
+
+            TextView say2 = new TextView(this);
+            say2.setText(line);
+            say2.setTextSize(13);
+            say2.setTextColor(0xEEFFFFFF);
+            say2.setLineSpacing(dp(3), 1f);
+            say2.setPadding(0, dp(3), 0, 0);
+            col.addView(say2);
+
+            row.addView(col);
+            box.addView(row);
+        }
+        return sv;
+    }
+

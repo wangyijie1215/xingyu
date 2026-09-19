@@ -1,0 +1,127 @@
+                        .setMessage("use Pollinations; no API key needed")
+                        .setPositiveButton("OK", null)
+                        .show());
+        bar.addView(info);
+        return bar;
+    }
+
+    // ==================================================================
+    // 生成
+    // ==================================================================
+
+    private void genPortrait() {
+        if (card == null) {
+            Toast.makeText(this, "no card", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String prompt = "full body portrait of " + safe(card.name) + ", "
+                + (card.personality == null ? "" : safe(card.personality)) + ", "
+                + "anime illustration, soft lighting, detailed, standing, "
+                + "clean background, high quality";
+        run(prompt, "portrait_" + card.id, 512, 768);
+    }
+
+    private void genScene() {
+        String cid = card == null ? null : card.id;
+        Lorebook world = Lorebook.currentWorld(this, cid);
+        String wname = world == null ? "modern city" : safe(world.name);
+        String desc = world == null ? "" : safe(world.description);
+        String prompt = "atmospheric scenery of " + wname + ", " + desc + ", "
+                + "anime background art, no people, cinematic lighting, detailed";
+        run(prompt, "scene_" + (world == null ? "none" : world.id), 768, 512);
+    }
+
+    private void genSelfie() {
+        if (card == null) {
+            Toast.makeText(this, "no card", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Schedule.Now now = Schedule.now(Schedule.load(this, card.id));
+        EmotionState emo = CharacterStateStore.loadEmotion(this, card.id);
+        Lorebook world = Lorebook.currentWorld(this, card.id);
+        String prompt = "selfie photo of " + safe(card.name) + ", "
+                + (emo == null ? "" : safe(emo.mood) + " mood, ")
+                + ((now == null || now.what == null) ? "" : safe(now.what) + ", ")
+                + (world == null ? "" : "in " + safe(world.name) + ", ")
+                + "anime style, close up, casual, natural lighting";
+        // 自拍用"此刻"做 key 的一部分，所以状态变了图也会换
+        String key = "selfie_" + card.id + "_" + Fortune.today()
+                + "_" + (now == null ? "" : now.what);
+        run(prompt, key, 512, 768);
+    }
+
+    private void run(String prompt, String key, int w, int h) {
+        if (working) {
+            Toast.makeText(this, "正在生成，稍等一下", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        working = true;
+        status.setText("生成中…（免费公共服务，首次可能要 10~40 秒）");
+        status.setTextColor(0xFFE8C87A);
+
+        ImageGen.generate(this, prompt, key, w, h, new ImageGen.Callback() {
+            @Override
+            public void onImage(Bitmap bmp, java.io.File cacheFile) {
+                ui.post(() -> {
+                    working = false;
+                    preview.setImageBitmap(bmp);
+                    status.setText("完成 · 已缓存，下次秒开");
+                    status.setTextColor(0xFF7FE0C4);
+                });
+            }
+
+            @Override
+            public void onError(String msg) {
+                ui.post(() -> {
+                    working = false;
+                    status.setText(msg);
+                    status.setTextColor(0xFFFF9BB0);
+                });
+            }
+        });
+    }
+
+    private void showCached(String key) {
+        java.io.File f = ImageGen.cacheFile(this, key);
+        if (!f.exists()) {
+            return;
+        }
+        Bitmap b = android.graphics.BitmapFactory.decodeFile(f.getAbsolutePath());
+        if (b != null) {
+            preview.setImageBitmap(b);
+            status.setText("这是上次生成的（已缓存）");
+            status.setTextColor(0xFF8B84A8);
+        }
+    }
+
+    /** 把中文角色名/描述转成提示词里安全的形式（去掉会导致 URL 过长的内容） */
+    private String safe(String s) {
+        if (s == null) {
+            return "";
+        }
+        String t = s.replaceAll("[\\r\\n\\t]", " ").trim();
+        if (t.length() > 80) {
+            t = t.substring(0, 80);
+        }
+        return t;
+    }
+
+    private View button(String label, Runnable action) {
+        TextView b = new TextView(this);
+        b.setText(label);
+        b.setTextSize(14);
+        b.setTextColor(0xFFFFFFFF);
+        b.setGravity(Gravity.CENTER);
+        b.setBackground(EfUi.roundRectPx(0x339B7BFF, 0x669B7BFF, dp(12)));
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(46));
+        lp.topMargin = dp(8);
+        b.setLayoutParams(lp);
+        b.setOnClickListener(v -> action.run());
+        return b;
+    }
+
+    private int dp(int v) {
+        return Math.round(v * getResources().getDisplayMetrics().density);
+    }
+}
