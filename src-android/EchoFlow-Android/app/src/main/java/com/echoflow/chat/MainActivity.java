@@ -370,13 +370,18 @@ public class MainActivity extends AppCompatActivity {
                 unread.setVisibility(View.GONE);
             }
 
+            // 「继续对话」—— 点角色卡直接进**角色扮演**聊天。
+            //
+            // 这里原来进的是手机模式（微信风）聊天，和首页那个
+            // 「开始对话」按钮是同一个毛病：把角色扮演藏起来了。
+            // 手机模式改到长按，两种模式各有一个手势。
             item.setOnClickListener(v -> {
-                Intent i = new Intent(this, PhoneChatActivity.class);
+                Intent i = new Intent(this, CardChatActivity.class);
                 i.putExtra("card_id", c.id);
                 startActivity(i);
             });
             item.setOnLongClickListener(v -> {
-                Intent i = new Intent(this, CharacterProfileActivity.class);
+                Intent i = new Intent(this, PhoneChatActivity.class);
                 i.putExtra("card_id", c.id);
                 startActivity(i);
                 return true;

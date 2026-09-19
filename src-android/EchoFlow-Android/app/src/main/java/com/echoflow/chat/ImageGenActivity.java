@@ -48,22 +48,35 @@ public class ImageGenActivity extends AppCompatActivity {
         new PhoneStatusBar(this, sb).bind();
         root.addView(topBar());
 
+        // 预览区：**高度自适应**，不要吃掉剩余空间。
+        //
+        // 原来这里用 weight=1 撑满剩余空间，结果图片下方的状态提示
+        // 被挤出可视区 —— 生成失败时用户看不到任何错误，
+        // 表现就是"点了没反应"。改成 wrap_content 之后，
+        // 图片、状态文字、按钮会依次往下排，都能看到。
         LinearLayout previewBox = new LinearLayout(this);
         previewBox.setOrientation(LinearLayout.VERTICAL);
-        previewBox.setGravity(Gravity.CENTER);
-        previewBox.setPadding(dp(20), dp(16), dp(20), dp(16));
+        previewBox.setGravity(Gravity.CENTER_HORIZONTAL);
+        previewBox.setPadding(dp(20), dp(16), dp(20), dp(8));
         previewBox.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f));
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
 
         preview = new ImageView(this);
-        // FIT_CENTER 而不是 CENTER_CROP：
-        // 生成的是 512x768 竖图，塞进固定尺寸的预览框时如果按 CROP 处理，
-        // 会从中间裁一块出来（实测立绘只剩腰部以下，脸完全看不到）。
-        // FIT_CENTER 保证整张图都在，等比缩放。
+        // 预览框的尺寸要**跟着图片走**，不能写死。
+        //
+        // 踩过的两个坑：
+        //   1. CENTER_CROP + 固定尺寸 → 512x768 的图被从中间裁一块，脸看不到
+        //   2. 改成 FIT_CENTER 但高度仍写死 → 图被"信箱化"塞进形状不对的框里，
+        //      看起来还是只有一半
+        // 正解：让 ImageView 按图片宽高比自己撑开
+        // （adjustViewBounds + 高度 wrap_content + 宽度 match_parent）。
         preview.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, dp(360)));
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
         preview.setScaleType(ImageView.ScaleType.FIT_CENTER);
         preview.setAdjustViewBounds(true);
+        preview.setMinimumHeight(dp(200));
         preview.setBackground(EfUi.roundRectPx(0x14FFFFFF, 0x22FFFFFF, dp(16)));
         preview.setClipToOutline(true);
         previewBox.addView(preview);
@@ -149,6 +162,11 @@ public class ImageGenActivity extends AppCompatActivity {
                 name = "本地 ComfyUI\n" + ProviderStore.cleanHost(cfg.comfyHost)
                         + "\n模型：" + cfg.comfyCkpt + " · " + cfg.steps + " 步";
                 break;
+            case ImageProvider.KIND_OPENAI:
+                name = "Grok / OpenAI 兼容\n" + cfg.openaiUrl
+                        + "\n模型：" + cfg.openaiModel
+                        + (cfg.openaiUseSharedKey ? "\n用设置页那个 Key" : "\n用单独填的 Key");
+                break;
             case ImageProvider.KIND_CUSTOM:
                 name = "自定义端点\n" + (cfg.customUrl.isEmpty() ? "（还没填地址）" : cfg.customUrl);
                 break;
@@ -184,6 +202,7 @@ public class ImageGenActivity extends AppCompatActivity {
         String[] items = {
                 (ImageProvider.KIND_CLOUD.equals(cfg.kind) ? "● " : "○ ") + "Pollinations（免费，画质一般）",
                 (ImageProvider.KIND_COMFY.equals(cfg.kind) ? "● " : "○ ") + "本地 ComfyUI（画质最好）",
+                (ImageProvider.KIND_OPENAI.equals(cfg.kind) ? "● " : "○ ") + "Grok / OpenAI 兼容生图",
                 (ImageProvider.KIND_CUSTOM.equals(cfg.kind) ? "● " : "○ ") + "自定义 HTTP 端点",
                 "── 设置画风后缀",
                 "── 检测 ComfyUI"
@@ -205,15 +224,21 @@ public class ImageGenActivity extends AppCompatActivity {
                             editComfyHost(cfg);
                             break;
                         case 2:
+                            cfg.kind = ImageProvider.KIND_OPENAI;
+                            ImageProvider.save(this, cfg);
+                            updateChannelInfo();
+                            editOpenAiImage(cfg);
+                            break;
+                        case 3:
                             cfg.kind = ImageProvider.KIND_CUSTOM;
                             ImageProvider.save(this, cfg);
                             updateChannelInfo();
                             editCustomUrl(cfg);
                             break;
-                        case 3:
+                        case 4:
                             editStyle(cfg);
                             break;
-                        case 4:
+                        case 5:
                             detectComfy(cfg);
                             break;
                     }
@@ -257,6 +282,73 @@ public class ImageGenActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("取消", null)
                 .show();
+    }
+
+    /** 配 Grok / OpenAI 兼容生图 */
+    private void editOpenAiImage(final ImageProvider.Config cfg) {
+        final android.widget.LinearLayout box = new android.widget.LinearLayout(this);
+        box.setOrientation(android.widget.LinearLayout.VERTICAL);
+        box.setPadding(dp(20), dp(8), dp(20), dp(8));
+
+        box.addView(hintText("接口地址（会拼上 /v1/images/generations）"));
+        final EditText urlIn = input(cfg.openaiUrl, "https://aibridgea.com");
+        box.addView(urlIn);
+
+        box.addView(hintText("模型名"));
+        final EditText modelIn = input(cfg.openaiModel, "grok-imagine-image-2.0");
+        box.addView(modelIn);
+
+        box.addView(hintText("尺寸（有的中转只认 1024x1024）"));
+        final EditText sizeIn = input(cfg.openaiSize, "1024x1024");
+        box.addView(sizeIn);
+
+        box.addView(hintText("API Key 用设置页里那个（对话和生图共用一个）"));
+        final android.widget.CheckBox shared =
+                new android.widget.CheckBox(this);
+        shared.setText("用设置页的 Key");
+        shared.setTextColor(0xFFC3BEDB);
+        shared.setChecked(cfg.openaiUseSharedKey);
+        box.addView(shared);
+
+        final EditText keyIn = input(cfg.openaiKey, "sk-...（不共用时填这里）");
+        keyIn.setEnabled(!cfg.openaiUseSharedKey);
+        shared.setOnCheckedChangeListener((b, checked) -> keyIn.setEnabled(!checked));
+        box.addView(keyIn);
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Grok / OpenAI 兼容生图")
+                .setView(box)
+                .setPositiveButton("保存并试一张", (d, w) -> {
+                    cfg.openaiUrl = urlIn.getText().toString().trim();
+                    cfg.openaiModel = modelIn.getText().toString().trim();
+                    cfg.openaiSize = sizeIn.getText().toString().trim();
+                    cfg.openaiUseSharedKey = shared.isChecked();
+                    cfg.openaiKey = keyIn.getText().toString().trim();
+                    ImageProvider.save(this, cfg);
+                    updateChannelInfo();
+                    genCustomPrompt();
+                })
+                .setNegativeButton("取消", null)
+                .show();
+    }
+
+    private EditText input(String value, String hint) {
+        EditText e = new EditText(this);
+        e.setText(value == null ? "" : value);
+        e.setHint(hint);
+        e.setTextColor(0xFFEDE8FF);
+        e.setHintTextColor(0xFF5A5478);
+        e.setTextSize(14);
+        return e;
+    }
+
+    private TextView hintText(String t) {
+        TextView tv = new TextView(this);
+        tv.setText(t);
+        tv.setTextSize(11);
+        tv.setTextColor(0xFF8B84A8);
+        tv.setPadding(0, dp(10), 0, dp(2));
+        return tv;
     }
 
     private void editStyle(ImageProvider.Config cfg) {

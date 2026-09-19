@@ -41,6 +41,8 @@ public class ImageProvider {
     public static final String KIND_CLOUD = "cloud";
     public static final String KIND_COMFY = "comfy";
     public static final String KIND_CUSTOM = "custom";
+    /** OpenAI 兼容的 /v1/images/generations（Grok / DALL·E / 各种中转站） */
+    public static final String KIND_OPENAI = "openai";
 
     private static final String PREFS = "echoflow_image";
 
@@ -49,6 +51,13 @@ public class ImageProvider {
         /** ComfyUI 地址，例如 192.168.1.100:8188 */
         public String comfyHost = "10.0.2.2:8188";
         public String comfyCkpt = "ponyDiffusionV6XL_v6.safetensors";
+        /** OpenAI 兼容生图：接口地址、模型名、尺寸 */
+        public String openaiUrl = "https://aibridgea.com";
+        public String openaiModel = "grok-imagine-image-2.0";
+        public String openaiSize = "1024x1024";
+        /** 复用设置页里那个 API Key */
+        public boolean openaiUseSharedKey = true;
+        public String openaiKey = "";
         public int steps = 26;
         public float cfg = 7.0f;
         /** 自定义端点的 URL 模板，含 {prompt} 占位符 */
@@ -67,6 +76,11 @@ public class ImageProvider {
         c.cfg = p.getFloat("cfg", 7.0f);
         c.customUrl = p.getString("customUrl", "");
         c.styleSuffix = p.getString("styleSuffix", "");
+        c.openaiUrl = p.getString("openaiUrl", "https://aibridgea.com");
+        c.openaiModel = p.getString("openaiModel", "grok-imagine-image-2.0");
+        c.openaiSize = p.getString("openaiSize", "1024x1024");
+        c.openaiUseSharedKey = p.getBoolean("openaiUseSharedKey", true);
+        c.openaiKey = p.getString("openaiKey", "");
         return c;
     }
 
@@ -79,6 +93,11 @@ public class ImageProvider {
                 .putFloat("cfg", c.cfg)
                 .putString("customUrl", c.customUrl)
                 .putString("styleSuffix", c.styleSuffix)
+                .putString("openaiUrl", c.openaiUrl)
+                .putString("openaiModel", c.openaiModel)
+                .putString("openaiSize", c.openaiSize)
+                .putBoolean("openaiUseSharedKey", c.openaiUseSharedKey)
+                .putString("openaiKey", c.openaiKey)
                 .apply();
     }
 
@@ -180,6 +199,8 @@ public class ImageProvider {
         switch (cfg.kind) {
             case KIND_COMFY:
                 return genComfy(cfg, fullPrompt, negative, seed, width, height);
+            case KIND_OPENAI:
+                return genOpenAi(ctx, cfg, fullPrompt, width, height);
             case KIND_CUSTOM:
                 return genCustom(cfg, fullPrompt, width, height);
             case KIND_CLOUD:
@@ -218,6 +239,121 @@ public class ImageProvider {
         }
     }
 
+    // ---------------- OpenAI 兼容生图 ----------------
+
+    /**
+     * OpenAI 兼容的 /v1/images/generations。
+     *
+     * 适用于 Grok 画图、DALL·E、以及各种中转站。
+     * 请求：POST {base}/v1/images/generations
+     *   {"model":"grok-imagine-image-2.0","prompt":"...","n":1,"size":"1024x1024"}
+     * 响应：{"data":[{"url":"https://..."}]} 或 {"data":[{"b64_json":"..."}]}
+     *
+     * 两种返回都支持 —— 有的中转给 URL，有的给 base64。
+     */
+    private static Bitmap genOpenAi(Context ctx, Config cfg, String prompt,
+                                    int w, int h) throws Exception {
+        String key = cfg.openaiUseSharedKey ? SecureStore.get(ctx) : cfg.openaiKey;
+        if (key == null || key.isEmpty()) {
+            throw new Exception("OpenAI 兼容生图需要 API Key（在设置页填，或在本页单独填）");
+        }
+        String base = cfg.openaiUrl;
+        if (base == null || base.trim().isEmpty()) {
+            throw new Exception("还没填生图接口地址");
+        }
+        String url = base.replaceAll("/+$", "") + "/v1/images/generations";
+
+        JSONObject body = new JSONObject();
+        body.put("model", cfg.openaiModel);
+        body.put("prompt", prompt);
+        body.put("n", 1);
+        // 尺寸用配置里的；ComfyUI 走的宽高参数在这里不适用
+        if (cfg.openaiSize != null && !cfg.openaiSize.isEmpty()) {
+            body.put("size", cfg.openaiSize);
+        }
+
+        HttpResponse resp = postJsonWithDetail(url, body.toString(), key);
+        if (resp.code != 200) {
+            throw new Exception("生图接口返回 HTTP " + resp.code
+                    + (resp.body.isEmpty() ? "" : "：" + cut(resp.body)));
+        }
+
+        JSONObject root = new JSONObject(resp.body);
+        JSONArray data = root.optJSONArray("data");
+        if (data == null || data.length() == 0) {
+            throw new Exception("返回里没有图片数据：" + cut(resp.body));
+        }
+        JSONObject first = data.getJSONObject(0);
+
+        // 情况一：给了 URL
+        String u = first.optString("url", "");
+        if (!u.isEmpty()) {
+            return downloadImage(u);
+        }
+        // 情况二：给了 base64
+        String b64 = first.optString("b64_json", "");
+        if (!b64.isEmpty()) {
+            byte[] raw = android.util.Base64.decode(b64, android.util.Base64.DEFAULT);
+            Bitmap bmp = android.graphics.BitmapFactory.decodeByteArray(raw, 0, raw.length);
+            if (bmp == null) {
+                throw new Exception("base64 解码后不是有效图片");
+            }
+            return bmp;
+        }
+        throw new Exception("返回里既没有 url 也没有 b64_json：" + cut(resp.body));
+    }
+
+    /**
+     * 带响应码和响应体的 POST。
+     *
+     * 不能直接用 Http.postJson —— 它在非 2xx 时会抛异常，
+     * 而这里需要拿到**原始错误内容**展示给用户
+     * （比如中转站会回「API Key 所属分组已删除」这种具体原因）。
+     */
+    private static HttpResponse postJsonWithDetail(String urlStr, String json, String key)
+            throws Exception {
+        java.net.HttpURLConnection conn =
+                (java.net.HttpURLConnection) new java.net.URL(urlStr).openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/json");
+        conn.setRequestProperty("Authorization", "Bearer " + key);
+        conn.setRequestProperty("Expect", "");
+        conn.setDoOutput(true);
+        conn.setConnectTimeout(15000);
+        conn.setReadTimeout(180000);
+        byte[] payload = json.getBytes("UTF-8");
+        conn.setFixedLengthStreamingMode(payload.length);
+        try {
+            try (java.io.OutputStream os = conn.getOutputStream()) {
+                os.write(payload);
+                os.flush();
+            }
+            int code = conn.getResponseCode();
+            java.io.InputStream is = (code >= 200 && code < 300)
+                    ? conn.getInputStream() : conn.getErrorStream();
+            String text = "";
+            if (is != null) {
+                try {
+                    text = Http.readLines(is);
+                } finally {
+                    is.close();
+                }
+            }
+            return new HttpResponse(code, text);
+        } finally {
+            conn.disconnect();
+        }
+    }
+
+    private static class HttpResponse {
+        final int code;
+        final String body;
+
+        HttpResponse(int code, String body) {
+            this.code = code;
+            this.body = body == null ? "" : body;
+        }
+    }
     // ---------------- 自定义端点 ----------------
 
     private static Bitmap genCustom(Config cfg, String prompt, int w, int h) throws Exception {
