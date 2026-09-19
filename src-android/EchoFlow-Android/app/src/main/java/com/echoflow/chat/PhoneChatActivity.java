@@ -130,7 +130,7 @@ public class PhoneChatActivity extends AppCompatActivity {
         send = findViewById(R.id.wx_send);
         send.setOnClickListener(v -> sendMessage());
         findViewById(R.id.wx_voice).setOnClickListener(v ->
-                Toast.makeText(this, "按住说话（语音输入待接入）", Toast.LENGTH_SHORT).show());
+                VoiceInputHelper.start(this, input, "按住说话"));
 
         // 载入独立历史；首次进入给一条开场白
         messages.addAll(PhoneStore.list(this, card.id));
@@ -143,6 +143,19 @@ public class PhoneChatActivity extends AppCompatActivity {
         }
         adapter.notifyDataSetChanged();
         scrollToBottom(false);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int code, String[] perms, int[] results) {
+        super.onRequestPermissionsResult(code, perms, results);
+        VoiceInputHelper.onPermissionResult(code, perms, results);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // 离开页面时释放识别器，否则下次进来会 BUSY
+        VoiceInputHelper.release();
     }
 
     @Override

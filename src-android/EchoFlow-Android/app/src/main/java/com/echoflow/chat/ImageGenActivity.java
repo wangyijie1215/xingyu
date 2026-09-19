@@ -294,7 +294,7 @@ public class ImageGenActivity extends AppCompatActivity {
         final EditText urlIn = input(cfg.openaiUrl, "https://aibridgea.com");
         box.addView(urlIn);
 
-        box.addView(hintText("模型名"));
+        box.addView(hintText("模型名（不确定就点下面的「拉取模型列表」）"));
         final EditText modelIn = input(cfg.openaiModel, "grok-imagine-image-2.0");
         box.addView(modelIn);
 
@@ -313,7 +313,54 @@ public class ImageGenActivity extends AppCompatActivity {
         final EditText keyIn = input(cfg.openaiKey, "sk-...（不共用时填这里）");
         keyIn.setEnabled(!cfg.openaiUseSharedKey);
         shared.setOnCheckedChangeListener((b, checked) -> keyIn.setEnabled(!checked));
-        box.addView(keyIn);
+
+        // 拉取模型列表 —— 模型名手填容易错，而且中转站的模型说变就变
+        final TextView listBtn = new TextView(this);
+        listBtn.setText("⟳ 拉取模型列表");
+        listBtn.setTextSize(13);
+        listBtn.setTextColor(0xFF9B7BFF);
+        listBtn.setPadding(0, dp(6), 0, dp(6));
+        listBtn.setGravity(Gravity.CENTER);
+        listBtn.setBackground(EfUi.roundRectPx(0x14FFFFFF, 0x1FFFFFFF, dp(10)));
+        box.addView(listBtn);
+
+        final TextView listStatus = hunt("");
+        box.addView(listStatus);
+
+        listBtn.setOnClickListener(v -> {
+            listStatus.setText("正在拉取…");
+            listStatus.setTextColor(0xFFE8C87A);
+            // 先用当前填的值试，避免用户改完地址还没保存
+            final ImageProvider.Config probe = new ImageProvider.Config();
+            probe.openaiUrl = urlIn.getText().toString().trim();
+            probe.openaiUseSharedKey = shared.isChecked();
+            probe.openaiKey = keyIn.getText().toString().trim();
+            new Thread(() -> {
+                final ImageProvider.ModelList ml = ImageProvider.listOpenAiModels(this, probe);
+                runOnUiThread(() -> {
+                    if (!ml.ok) {
+                        listStatus.setText("✗ " + ml.message);
+                        listStatus.setTextColor(0xFFFF9BB0);
+                        return;
+                    }
+                    listStatus.setText("✓ " + ml.message);
+                    listStatus.setTextColor(0xFF7FE0C4);
+                    // 优先列画图类；没有就列全部
+                    final java.util.List<String> show = ml.imageModels.isEmpty()
+                            ? ml.allModels : ml.imageModels;
+                    if (show.isEmpty()) {
+                        return;
+                    }
+                    String title = ml.imageModels.isEmpty()
+                            ? "全部模型（没识别出画图类）" : "可能是画图模型";
+                    new androidx.appcompat.app.AlertDialog.Builder(this)
+                            .setTitle(title)
+                            .setItems(show.toArray(new String[0]), (dd, ww) ->
+                                    modelIn.setText(show.get(ww)))
+                            .show();
+                });
+            }).start();
+        });
 
         new androidx.appcompat.app.AlertDialog.Builder(this)
                 .setTitle("Grok / OpenAI 兼容生图")
@@ -340,6 +387,16 @@ public class ImageGenActivity extends AppCompatActivity {
         e.setHintTextColor(0xFF5A5478);
         e.setTextSize(14);
         return e;
+    }
+
+    private TextView hunt(String t) {
+        TextView tv = new TextView(this);
+        tv.setText(t);
+        tv.setTextSize(12);
+        tv.setTextColor(0xFF8B84A8);
+        tv.setLineSpacing(dp(3), 1f);
+        tv.setPadding(0, dp(4), 0, dp(4));
+        return tv;
     }
 
     private TextView hintText(String t) {

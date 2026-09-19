@@ -7,7 +7,7 @@
 对话模型  → 本地 Ollama（或任意 OpenAI 兼容接口）
 语音合成  → 本地 edge-tts 服务 / 阿里云 CosyVoice / 手机自带
 角色立绘  → 本地 ComfyUI（Pony Diffusion V6 XL）
-语音识别  → 暂未接入
+语音识别  → 手机自带 / 本地 whisper
 ```
 
 **为什么强调"全本地"**：对一个陪你说话的 App 来说，"你的对话没有发到任何人的服务器上"比任何功能都重要。默认配置下它就是这样。
@@ -46,7 +46,7 @@ App 里有一个**模拟手机**——微信风的聊天、朋友圈、角色库
 ### 1. 装 APK
 
 ```
-dist/EchoFlow-v3.9-稳定版.apk
+dist/EchoFlow-v4.0-语音输入.apk
 ```
 
 需要 Android 8.0+（minSdk 26）。

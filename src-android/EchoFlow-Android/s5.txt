@@ -1,0 +1,336 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+
+> Task :app:compileDebugJavaWithJavac FAILED
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:300: 错误: 非法的类型开始
+            }).start();
+             ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:300: 错误: 方法声明无效; 需要返回类型
+            }).start();
+               ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:301: 错误: 需要 class、interface、enum 或 record
+        });
+         ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:303: 错误: 需要 class、interface、enum 或 record
+        box.addView(hintText("尺寸（有的中转只认 1024x1024）"));
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:304: 错误: 需要 class、interface、enum 或 record
+        final EditText sizeIn = input(cfg.openaiSize, "1024x1024");
+              ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:305: 错误: 需要 class、interface、enum 或 record
+        box.addView(sizeIn);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:307: 错误: 需要 class、interface、enum 或 record
+        box.addView(hintText("API Key 用设置页里那个（对话和生图共用一个）"));
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:308: 错误: 需要 class、interface、enum 或 record
+        final android.widget.CheckBox shared =
+              ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:310: 错误: 需要 class、interface、enum 或 record
+        shared.setText("用设置页的 Key");
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:311: 错误: 需要 class、interface、enum 或 record
+        shared.setTextColor(0xFFC3BEDB);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:312: 错误: 需要 class、interface、enum 或 record
+        shared.setChecked(cfg.openaiUseSharedKey);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:313: 错误: 需要 class、interface、enum 或 record
+        box.addView(shared);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:315: 错误: 需要 class、interface、enum 或 record
+        final EditText keyIn = input(cfg.openaiKey, "sk-...（不共用时填这里）");
+              ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:316: 错误: 需要 class、interface、enum 或 record
+        keyIn.setEnabled(!cfg.openaiUseSharedKey);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:317: 错误: 需要 class、interface、enum 或 record
+        shared.setOnCheckedChangeListener((b, checked) -> keyIn.setEnabled(!checked));
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:320: 错误: 需要 class、interface、enum 或 record
+        final TextView listBtn = new TextView(this);
+              ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:321: 错误: 需要 class、interface、enum 或 record
+        listBtn.setText("? 拉取模型列表");
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:322: 错误: 需要 class、interface、enum 或 record
+        listBtn.setTextSize(13);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:323: 错误: 需要 class、interface、enum 或 record
+        listBtn.setTextColor(0xFF9B7BFF);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:324: 错误: 需要 class、interface、enum 或 record
+        listBtn.setPadding(0, dp(6), 0, dp(6));
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:325: 错误: 需要 class、interface、enum 或 record
+        listBtn.setGravity(Gravity.CENTER);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:326: 错误: 需要 class、interface、enum 或 record
+        listBtn.setBackground(EfUi.roundRectPx(0x14FFFFFF, 0x1FFFFFFF, dp(10)));
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:327: 错误: 需要 class、interface、enum 或 record
+        box.addView(listBtn);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:329: 错误: 需要 class、interface、enum 或 record
+        final TextView listStatus = hunt("");
+              ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:330: 错误: 需要 class、interface、enum 或 record
+        box.addView(listStatus);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:332: 错误: 需要 class、interface、enum 或 record
+        listBtn.setOnClickListener(v -> {
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:334: 错误: 需要 class、interface、enum 或 record
+            listStatus.setTextColor(0xFFE8C87A);
+            ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:336: 错误: 需要 class、interface、enum 或 record
+            final ImageProvider.Config probe = new ImageProvider.Config();
+                  ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:337: 错误: 需要 class、interface、enum 或 record
+            probe.openaiUrl = urlIn.getText().toString().trim();
+            ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:338: 错误: 需要 class、interface、enum 或 record
+            probe.openaiUseSharedKey = shared.isChecked();
+            ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:339: 错误: 需要 class、interface、enum 或 record
+            probe.openaiKey = keyIn.getText().toString().trim();
+            ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:340: 错误: 需要 class、interface、enum 或 record
+            new Thread(() -> {
+            ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:341: 错误: 需要 class、interface、enum 或 record
+                final ImageProvider.ModelList ml = ImageProvider.listOpenAiModels(this, probe);
+                      ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:342: 错误: 需要 class、interface、enum 或 record
+                runOnUiThread(() -> {
+                ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:345: 错误: 需要 class、interface、enum 或 record
+                        listStatus.setTextColor(0xFFFF9BB0);
+                        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:346: 错误: 需要 class、interface、enum 或 record
+                        return;
+                        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:347: 错误: 需要 class、interface、enum 或 record
+                    }
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:349: 错误: 需要 class、interface、enum 或 record
+                    listStatus.setTextColor(0xFF7FE0C4);
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:351: 错误: 需要 class、interface、enum 或 record
+                    final java.util.List<String> show = ml.imageModels.isEmpty()
+                          ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:353: 错误: 需要 class、interface、enum 或 record
+                    if (show.isEmpty()) {
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:355: 错误: 需要 class、interface、enum 或 record
+                    }
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:358: 错误: 需要 class、interface、enum 或 record
+                    new androidx.appcompat.app.AlertDialog.Builder(this)
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:363: 错误: 需要 class、interface、enum 或 record
+                });
+                ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:364: 错误: 需要 class、interface、enum 或 record
+        box.addView(keyIn);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:366: 错误: 需要 class、interface、enum 或 record
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:371: 错误: 需要 class、interface、enum 或 record
+                    cfg.openaiModel = modelIn.getText().toString().trim();
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:372: 错误: 需要 class、interface、enum 或 record
+                    cfg.openaiSize = sizeIn.getText().toString().trim();
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:373: 错误: 需要 class、interface、enum 或 record
+                    cfg.openaiUseSharedKey = shared.isChecked();
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:374: 错误: 需要 class、interface、enum 或 record
+                    cfg.openaiKey = keyIn.getText().toString().trim();
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:375: 错误: 需要 class、interface、enum 或 record
+                    ImageProvider.save(this, cfg);
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:376: 错误: 需要 class、interface、enum 或 record
+                    updateChannelInfo();
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:377: 错误: 需要 class、interface、enum 或 record
+                    genCustomPrompt();
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:378: 错误: 需要 class、interface、enum 或 record
+                })
+                ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:381: 错误: 需要 class、interface、enum 或 record
+    }
+    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:385: 错误: 需要 class、interface、enum 或 record
+        e.setText(value == null ? "" : value);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:386: 错误: 需要 class、interface、enum 或 record
+        e.setHint(hint);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:387: 错误: 需要 class、interface、enum 或 record
+        e.setTextColor(0xFFEDE8FF);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:388: 错误: 需要 class、interface、enum 或 record
+        e.setHintTextColor(0xFF5A5478);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:389: 错误: 需要 class、interface、enum 或 record
+        e.setTextSize(14);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:390: 错误: 需要 class、interface、enum 或 record
+        return e;
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:391: 错误: 需要 class、interface、enum 或 record
+    }
+    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:395: 错误: 需要 class、interface、enum 或 record
+        tv.setText(t);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:396: 错误: 需要 class、interface、enum 或 record
+        tv.setTextSize(12);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:397: 错误: 需要 class、interface、enum 或 record
+        tv.setTextColor(0xFF8B84A8);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:398: 错误: 需要 class、interface、enum 或 record
+        tv.setLineSpacing(dp(3), 1f);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:399: 错误: 需要 class、interface、enum 或 record
+        tv.setPadding(0, dp(4), 0, dp(4));
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:400: 错误: 需要 class、interface、enum 或 record
+        return tv;
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:401: 错误: 需要 class、interface、enum 或 record
+    }
+    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:405: 错误: 需要 class、interface、enum 或 record
+        tv.setText(t);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:406: 错误: 需要 class、interface、enum 或 record
+        tv.setTextSize(11);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:407: 错误: 需要 class、interface、enum 或 record
+        tv.setTextColor(0xFF8B84A8);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:408: 错误: 需要 class、interface、enum 或 record
+        tv.setPadding(0, dp(10), 0, dp(2));
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:409: 错误: 需要 class、interface、enum 或 record
+        return tv;
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:410: 错误: 需要 class、interface、enum 或 record
+    }
+    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:413: 错误: 需要 class、interface、enum 或 record
+        final EditText in = new EditText(this);
+              ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:414: 错误: 需要 class、interface、enum 或 record
+        in.setText(cfg.styleSuffix);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:415: 错误: 需要 class、interface、enum 或 record
+        in.setHint("masterpiece, best quality, anime style");
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:416: 错误: 需要 class、interface、enum 或 record
+        in.setTextColor(0xFF1A1A1A);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:417: 错误: 需要 class、interface、enum 或 record
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:423: 错误: 需要 class、interface、enum 或 record
+                    ImageProvider.save(this, cfg);
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:424: 错误: 需要 class、interface、enum 或 record
+                    updateChannelInfo();
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:425: 错误: 需要 class、interface、enum 或 record
+                })
+                ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:428: 错误: 需要 class、interface、enum 或 record
+    }
+    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:432: 错误: 需要 class、interface、enum 或 record
+        status.setTextColor(0xFFE8C87A);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:433: 错误: 需要 class、interface、enum 或 record
+        new Thread(() -> {
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:435: 错误: 需要 class、interface、enum 或 record
+            ui.post(() -> {
+            ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:438: 错误: 需要 class、interface、enum 或 record
+                    if (!p.checkpoints.isEmpty()) {
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:440: 错误: 需要 class、interface、enum 或 record
+                    }
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:442: 错误: 需要 class、interface、enum 或 record
+                    updateChannelInfo();
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:443: 错误: 需要 class、interface、enum 或 record
+                    status.setText("? " + p.message + "\n用 " + cfg.comfyCkpt);
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:444: 错误: 需要 class、interface、enum 或 record
+                    status.setTextColor(0xFF7FE0C4);
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:445: 错误: 需要 class、interface、enum 或 record
+                } else {
+                ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:447: 错误: 需要 class、interface、enum 或 record
+                    status.setTextColor(0xFFFF9BB0);
+                    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:448: 错误: 需要 class、interface、enum 或 record
+                }
+                ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:450: 错误: 需要 class、interface、enum 或 record
+        }).start();
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:451: 错误: 需要 class、interface、enum 或 record
+    }
+    ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:454: 错误: 需要 class、interface、enum 或 record
+        bar.setOrientation(LinearLayout.HORIZONTAL);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:455: 错误: 需要 class、interface、enum 或 record
+        bar.setGravity(Gravity.CENTER_VERTICAL);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:456: 错误: 需要 class、interface、enum 或 record
+        bar.setBackgroundResource(R.drawable.wx_topbar);
+        ^
+C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\java\com\echoflow\chat\ImageGenActivity.java:457: 错误: 需要 class、interface、enum 或 record
+        bar.setLayoutParams(new LinearLayout.LayoutParams(
+        ^
+100 个错误
+仅显示前 100 个错误（共 227 个）；若要查看更多错误，请使用 -Xmaxerrs
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileDebugJavaWithJavac'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 17s
+15 actionable tasks: 1 executed, 14 up-to-date

@@ -59,6 +59,24 @@ public class CardChatActivity extends androidx.appcompat.app.AppCompatActivity {
         this.list.setAdapter(messageAdapter);
         android.widget.EditText editText = (android.widget.EditText) findViewById(com.echoflow.chat.R.id.card_input);
         this.input = editText;
+        // 语音输入：识别结果填进输入框，不自动发送（识别难免有错字，给用户改的机会）。
+        //
+        // 注意：这里用**匿名内部类**而不是 lambda。
+        // 这个文件是从 APK 反编译来的，里面已经有 lambda$onCreate$0 这类
+        // 编译器合成名；再加一个 lambda 会和它撞名，报
+        // "名称与 compiler-synthesized 冲突"。
+        android.view.View micBtn = findViewById(com.echoflow.chat.R.id.btn_card_voice);
+        if (micBtn != null) {
+            micBtn.setOnClickListener(new android.view.View.OnClickListener() {
+                @Override
+                public void onClick(android.view.View view) {
+                    com.echoflow.chat.VoiceInputHelper.start(
+                            CardChatActivity.this,
+                            CardChatActivity.this.input,
+                            "和 TA 说点什么");
+                }
+            });
+        }
         editText.setInputType(147457);
         this.input.setOnEditorActionListener(new android.widget.TextView.OnEditorActionListener() { // from class: com.echoflow.chat.CardChatActivity$$ExternalSyntheticLambda1
             @Override // android.widget.TextView.OnEditorActionListener
@@ -192,6 +210,19 @@ public class CardChatActivity extends androidx.appcompat.app.AppCompatActivity {
         updateStatusBar(loadRelationship, loadEmotion);
         com.echoflow.chat.ApiClient.streamChat(this.baseUrl, this.apiKey, this.modelName, com.echoflow.chat.PromptBuilder.buildMessages(this.card, this.persona, arrayList, list, loadRelationship, loadEmotion, load, buildLifeContext), com.echoflow.chat.ProviderStore.isOllama(this), new com.echoflow.chat.CardChatActivity.AnonymousClass1(message));
     }
+    @Override
+    public void onRequestPermissionsResult(int code, String[] perms, int[] results) {
+        super.onRequestPermissionsResult(code, perms, results);
+        com.echoflow.chat.VoiceInputHelper.onPermissionResult(code, perms, results);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // 释放语音识别器，否则下次进来会 BUSY
+        com.echoflow.chat.VoiceInputHelper.release();
+    }
+
 
     /* JADX INFO: Access modifiers changed from: package-private */
     /* renamed from: com.echoflow.chat.CardChatActivity$1, reason: invalid class name */

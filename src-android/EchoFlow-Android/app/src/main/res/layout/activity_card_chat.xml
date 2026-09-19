@@ -97,6 +97,17 @@
         android:paddingTop="6dp"
         android:paddingBottom="10dp">
 
+        <!-- 语音输入：点一下说，识别结果填进输入框 -->
+        <TextView
+            android:id="@+id/btn_card_voice"
+            android:layout_width="42dp"
+            android:layout_height="46dp"
+            android:gravity="center"
+            android:text="🎙"
+            android:textSize="20sp"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="语音输入" />
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"

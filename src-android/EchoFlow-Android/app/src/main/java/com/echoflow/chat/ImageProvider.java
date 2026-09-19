@@ -239,6 +239,68 @@ public class ImageProvider {
         }
     }
 
+    /**
+     * 拉取 OpenAI 兼容服务的模型列表。
+     *
+     * 为什么要这个：模型名是手填的，填错只能得到一个含糊的报错。
+     * 拉一次列表让用户选，比让他猜准确得多 ——
+     * 而且中转站的模型说变就变（实测 grok-2 下线、grok-4.20 上线）。
+     */
+    public static class ModelList {
+        public boolean ok;
+        public String message = "";
+        /** 只保留可能用于画图的 */
+        public java.util.List<String> imageModels = new java.util.ArrayList<>();
+        /** 全部模型（供用户手动选） */
+        public java.util.List<String> allModels = new java.util.ArrayList<>();
+    }
+
+    public static ModelList listOpenAiModels(Context ctx, Config cfg) {
+        ModelList out = new ModelList();
+        String key = cfg.openaiUseSharedKey ? SecureStore.get(ctx) : cfg.openaiKey;
+        if (key == null || key.isEmpty()) {
+            out.message = "需要 API Key";
+            return out;
+        }
+        String base = cfg.openaiUrl;
+        if (base == null || base.trim().isEmpty()) {
+            out.message = "还没填接口地址";
+            return out;
+        }
+        try {
+            String body = Http.get(base.replaceAll("/+$", "") + "/v1/models",
+                    key, 10000, 30000).orThrow("拉取模型列表").body;
+            org.json.JSONArray arr = new org.json.JSONObject(body).optJSONArray("data");
+            if (arr == null) {
+                out.message = "返回格式异常：" + cut(body);
+                return out;
+            }
+            for (int i = 0; i < arr.length(); i++) {
+                org.json.JSONObject o = arr.optJSONObject(i);
+                if (o == null) {
+                    continue;
+                }
+                String id = o.optString("id", "");
+                if (id.isEmpty()) {
+                    continue;
+                }
+                out.allModels.add(id);
+                // 粗筛：名字里带 image / imagine / dall 的都可能是画图模型
+                String low = id.toLowerCase();
+                if (low.contains("image") || low.contains("imagine")
+                        || low.contains("dall") || low.contains("flux")
+                        || low.contains("sd") || low.contains("diffusion")) {
+                    out.imageModels.add(id);
+                }
+            }
+            out.ok = true;
+            out.message = "发现 " + out.allModels.size() + " 个模型，其中 "
+                    + out.imageModels.size() + " 个可能用于画图";
+        } catch (Exception e) {
+            out.message = e.getMessage() == null ? "拉取失败" : e.getMessage();
+        }
+        return out;
+    }
     // ---------------- OpenAI 兼容生图 ----------------
 
     /**
