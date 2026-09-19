@@ -73,13 +73,40 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_more).setOnClickListener(this::showMoreMenu);
 
         // 底部
+        // btn_quick_chat 是那个「说点什么…」输入框 —— 点了进手机模式聊天
         View btnQuick = findViewById(R.id.btn_quick_chat);
         btnQuick.setOnClickListener(v -> openPrimaryChat());
-        findViewById(R.id.btn_cards).setOnClickListener(v ->
-                startActivity(new Intent(this, CardListActivity.class)));
+
+        // 「开始对话」这个按钮的 id 叫 btn_cards（历史遗留，和卡片无关）。
+        // 它以前跳角色库，用户得再点角色、再点聊天才进得去 ——
+        // 这就是"手机外对话没了"的真正原因：入口被藏在两层之后。
+        // 现在直接进**角色扮演**聊天。
+        findViewById(R.id.btn_cards).setOnClickListener(v -> openRoleplayChat());
 
         findViewById(R.id.btn_open_moments).setOnClickListener(v ->
                 startActivity(new Intent(this, PhoneMomentsActivity.class)));
+    }
+
+    /**
+     * 直接进入角色扮演聊天。
+     *
+     * 没有角色时引导去创建，而不是静默跳角色库让人一头雾水。
+     */
+    private void openRoleplayChat() {
+        List<CharacterCard> cards = PhoneStore.recentCards(this);
+        if (cards.isEmpty()) {
+            List<CharacterCard> all = CardStore.listCards(this);
+            if (all.isEmpty()) {
+                android.widget.Toast.makeText(this, "还没有角色，先创建一个",
+                        android.widget.Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, CardEditActivity.class));
+                return;
+            }
+            cards = all;
+        }
+        Intent i = new Intent(this, CardChatActivity.class);
+        i.putExtra("card_id", cards.get(0).id);
+        startActivity(i);
     }
 
     @Override

@@ -61,11 +61,45 @@ public class PhoneChatActivity extends AppCompatActivity {
         title.setText(card.name);
         findViewById(R.id.wx_back).setOnClickListener(v -> finish());
         findViewById(R.id.wx_more).setOnClickListener(v -> {
-            // 切回主聊天（写法讲究的角色扮演模式）
-            Intent i = new Intent(this, CardChatActivity.class);
-            i.putExtra("card_id", card.id);
-            startActivity(i);
-            finish();
+            // 弹一个明确的菜单，而不是直接跳走 ——
+            // 原来点 ··· 会静默切到角色扮演模式，用户不知道发生了什么。
+            new androidx.appcompat.app.AlertDialog.Builder(this)
+                    .setTitle(card.name)
+                    .setItems(new String[]{
+                            "角色扮演模式（有动作、神态描写）",
+                            "清空这次对话",
+                            "查看角色资料"
+                    }, (d, w) -> {
+                        switch (w) {
+                            case 0: {
+                                Intent i = new Intent(this, CardChatActivity.class);
+                                i.putExtra("card_id", card.id);
+                                startActivity(i);
+                                finish();
+                                break;
+                            }
+                            case 1:
+                                new androidx.appcompat.app.AlertDialog.Builder(this)
+                                        .setTitle("清空对话？")
+                                        .setMessage("这里的历史会被删除，角色卡和记忆不受影响。")
+                                        .setPositiveButton("清空", (dd, ww) -> {
+                                            PhoneStore.clear(this, card.id);
+                                            messages.clear();
+                                            adapter.notifyDataSetChanged();
+                                            Toast.makeText(this, "已清空", Toast.LENGTH_SHORT).show();
+                                        })
+                                        .setNegativeButton("取消", null)
+                                        .show();
+                                break;
+                            default: {
+                                Intent i = new Intent(this, CharacterProfileActivity.class);
+                                i.putExtra("card_id", card.id);
+                                startActivity(i);
+                                break;
+                            }
+                        }
+                    })
+                    .show();
         });
 
         // 状态栏（真实时间 / 电量）

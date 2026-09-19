@@ -63,23 +63,42 @@ public class ProviderStore {
                 .putString(KEY_BASE, baseUrl == null ? "" : baseUrl.trim())
                 .putString(KEY_MODEL, model == null ? "" : model.trim())
                 .apply();
+        // 同步一份到老的全局配置（echoflow_config）。
+        //
+        // 为什么需要：神社 / 日记 / 信笺 / 胶囊 / 占卜那几个页面还在读
+        // ChatStore.getBaseUrl()，如果不同步，用户配了云端 API 之后
+        // 只有一半的页面认 —— 表现就是"有些功能说模型不存在"。
+        //
+        // 更彻底的办法是把那些调用点都改成 ProviderStore，
+        // 但在那之前，双写能保证两边一致，不会再出现"配了却没用上"。
+        ChatStore.saveConfig(ctx, baseUrl, model);
     }
 
-    /** 当前生效的 baseUrl：Provider 未配置时回退到旧的全局配置 */
+    /** 当前生效的 baseUrl（永远有值，除非用户什么都没配且没有默认） */
     public static String effectiveBaseUrl(Context ctx) {
         String b = baseUrl(ctx);
         if (b != null && !b.isEmpty()) {
             return b;
         }
-        return isOllama(ctx) ? OLLAMA_HOST_DEFAULT : ChatStore.getBaseUrl(ctx);
+        if (isOllama(ctx)) {
+            return OLLAMA_HOST_DEFAULT;
+        }
+        // Provider 没配就看老的全局配置，再没有就用它的默认值
+        String legacy = ChatStore.getBaseUrl(ctx);
+        return legacy == null ? "" : legacy;
     }
 
+    /** 当前生效的模型名 */
     public static String effectiveModel(Context ctx) {
         String m = model(ctx);
         if (m != null && !m.isEmpty()) {
             return m;
         }
-        return isOllama(ctx) ? "qwen2.5:7b" : ChatStore.getModel(ctx);
+        if (isOllama(ctx)) {
+            return "qwen2.5:7b";
+        }
+        String legacy = ChatStore.getModel(ctx);
+        return legacy == null ? "" : legacy;
     }
 
     private static SharedPreferences prefs(Context ctx) {

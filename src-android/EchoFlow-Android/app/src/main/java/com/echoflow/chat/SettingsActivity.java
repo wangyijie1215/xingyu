@@ -39,9 +39,12 @@ public class SettingsActivity extends androidx.appcompat.app.AppCompatActivity {
         this.boxModels = (android.widget.LinearLayout) findViewById(com.echoflow.chat.R.id.box_models);
         this.btnDetect = (com.google.android.material.button.MaterialButton) findViewById(com.echoflow.chat.R.id.btn_detect);
         this.currentKind = com.echoflow.chat.ProviderStore.kind(this);
-        this.inputOllamaHost.setText(com.echoflow.chat.ProviderStore.baseUrl(this).isEmpty() ? com.echoflow.chat.ProviderStore.OLLAMA_HOST_EMULATOR : com.echoflow.chat.ProviderStore.baseUrl(this));
-        this.inputBaseUrl.setText(com.echoflow.chat.ChatStore.getBaseUrl(this));
-        this.inputModel.setText(com.echoflow.chat.ChatStore.getModel(this));
+        this.inputOllamaHost.setText(com.echoflow.chat.ProviderStore.cleanHost(com.echoflow.chat.ProviderStore.baseUrl(this)).isEmpty() ? com.echoflow.chat.ProviderStore.OLLAMA_HOST_EMULATOR : com.echoflow.chat.ProviderStore.cleanHost(com.echoflow.chat.ProviderStore.baseUrl(this)));
+        // 回填必须读**同一个** store，否则进页面永远是空的、一保存又把刚填的覆盖掉。
+        // 原来这里读 ChatStore（老配置）、save() 写 ProviderStore（新配置），
+        // 两边不通 —— 这是"模型不存在"的直接原因。
+        this.inputBaseUrl.setText(com.echoflow.chat.ProviderStore.baseUrl(this));
+        this.inputModel.setText(com.echoflow.chat.ProviderStore.model(this));
         this.inputPersona.setText(com.echoflow.chat.ChatStore.getPersona(this));
         java.lang.String str = com.echoflow.chat.SecureStore.get(this);
         com.google.android.material.textfield.TextInputEditText textInputEditText = this.inputApiKey;
