@@ -46,7 +46,7 @@ App 里有一个**模拟手机**——微信风的聊天、朋友圈、角色库
 ### 1. 装 APK
 
 ```
-dist/EchoFlow-v3.6-*.apk
+dist/EchoFlow-v3.6-工程重构.apk
 ```
 
 需要 Android 8.0+（minSdk 26）。
