@@ -1,7 +1,7 @@
 #requires -Version 5
 # 审计布局声明类型与 Java findViewById 类型是否冲突（曾出过一次 ClassCastException）
 $ErrorActionPreference = 'Stop'
-$root = 'C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main'
+$root = '.\src-android\EchoFlow-Android\app\src\main'
 
 $map = @{
   'ImageView' = 'ImageView'; 'TextView' = 'TextView'; 'MaterialTextView' = 'TextView';

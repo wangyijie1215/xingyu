@@ -2,7 +2,7 @@
 # Convert ComfyUI PNG outputs to web-friendly JPG in the prototype assets dir.
 # ASCII-only (Windows PowerShell 5.1 + UTF-8 .ps1 without BOM issue).
 param(
-  [string]$Src = 'C:\Users\30828\.qclaw\dsh-next\_echoflow\design\prototype\assets',
+  [string]$Src = '.\design\prototype\assets',
   [int]$MaxW = 860,
   [int]$Quality = 88
 )

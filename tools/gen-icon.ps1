@@ -3,7 +3,7 @@
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 
-$res = 'C:\Users\30828\.qclaw\dsh-next\_echoflow\src-android\EchoFlow-Android\app\src\main\res'
+$res = '.\src-android\EchoFlow-Android\app\src\main\res'
 
 function P([double]$x, [double]$y, [double]$s) {
   return (New-Object System.Drawing.PointF([float]($x * $s), [float]($y * $s)))

@@ -3,7 +3,7 @@
 $ErrorActionPreference = 'Stop'
 
 $api      = 'http://127.0.0.1:8188'
-$outDir   = 'C:\Users\30828\.qclaw\dsh-next\_echoflow\design\prototype\assets'
+$outDir   = '.\design\prototype\assets'
 $comfyOut = 'D:\ComfyUI\ComfyUI_windows_portable\ComfyUI\output'
 $ckpt     = 'ponyDiffusionV6XL_v6.safetensors'
 $DETAIL   = 'AddMicroDetails_pony.safetensors'

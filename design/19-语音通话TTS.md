@@ -96,9 +96,9 @@ caption.setText(text.substring(0, i[0]++));
 **坑 2：默认 `python` 不是你要的那个**
 
 `python -c "import edge_tts"` 报模块不存在，但 `edge-tts.exe` 明明在。
-原因是 Doubao 沙箱的 Python 3.14 抢占了 `PATH`：
+原因是另一个 Python（Doubao 沙箱的 3.14）抢占了 `PATH`：
 ```
-C:\Users\30828\AppData\Local\Doubao\User Data\sandbox_runtime\bases\...\python.exe
+<某个沙箱目录>\python.exe
 ```
 真正装了 edge-tts 的是 `Python311\python.exe`。服务脚本本身没问题，
 是**用错了解释器**。
@@ -145,11 +145,12 @@ adb shell "run-as com.echoflow.chat cat files/tts/x.mp3 | base64" > a.b64
 
 ```powershell
 cd <星语目录>\tools
-& "C:\Users\30828\AppData\Local\Programs\Python\Python311\python.exe" tts-server.py
+python tts-server.py
 ```
 
-注意**必须用 Python311 那个解释器** —— 直接敲 `python` 会用到 Doubao 沙箱的
-Python 3.14，那里没装 edge-tts。
+注意：如果机器上有多个 Python，**要用装了 edge-tts 的那个解释器**。
+直接敲 `python` 可能命中另一个没装依赖的版本（我遇到过，报模块不存在）。
+用 `python -c "import edge_tts"` 能先确认。
 
 **2. 真机连接**
 
